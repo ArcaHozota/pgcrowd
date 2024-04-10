@@ -1,0 +1,23 @@
+server:
+  port: 8688
+spring:
+  application:
+    name: pgcrowd2
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://52.199.163.241:5432/pgcrowd
+    username: postgres
+    password: postgres
+    hikari:
+      maximum-pool-size: 30
+      max-lifetime: 1500000
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    show-sql: true
+    open-in-view: false
+  output:
+    ansi:
+      enabled: ALWAYS

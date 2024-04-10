@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja-JP" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{commons::header}"></div>
+
+<body>
+	<div th:replace="~{commons::navibar}"></div>
+	<div class="container-fluid">
+		<div class="row">
+			<div th:insert="~{commons::sidebar}"></div>
+			<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
+				<div class="card border-naples mb-3">
+					<div class="card-header text-bg-naples mb-3">
+						<h5 class="card-title" style="padding-top: 8px;">
+							<i class="fa-solid fa-bars-staggered"></i> 役割情報メンテナンス
+						</h5>
+					</div>
+					<div class="card-body">
+						<div class="row">
+							<form class="form-inline col-md-5" role="form">
+								<div class="input-group col-md-5">
+									<input id="keywordInput" class="form-control" type="text"
+										placeholder="検索条件を入力してください">
+									<button id="searchBtn2" class="btn btn-danger my-2 my-sm-0" type="button">
+										<i class="fa-solid fa-magnifying-glass"></i> 検索
+									</button>
+								</div>
+							</form>
+							<div class="col-md-2 offset-md-4">
+								<button class="btn btn-warning my-2 my-sm-0" id="addRoleBtn">
+									<i class="fa-solid fa-id-badge"></i> 役割情報追加
+								</button>
+							</div>
+						</div>
+						<table class="table table-sm table-hover">
+							<caption style="font-size: 10px;">役割情報一覧</caption>
+							<thead>
+								<tr class="table-warning">
+									<th scope="col" class="text-center" style="width: 70px;">ID</th>
+									<th scope="col" class="text-center" style="width: 120px;">名称</th>
+									<th scope="col" class="text-center" style="width: 120px;">操作</th>
+								</tr>
+							</thead>
+							<tbody id="tableBody" class="table-group-divider"></tbody>
+						</table>
+						<div class="row">
+							<div id="pageInfos" class="col-md-5" style="font-size: 12px;"></div>
+							<div id="pageNavi" class="col-md-7 d-flex justify-content-end"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="roleAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">役割情報追加</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal">
+						<div class="form-group row">
+							<label for="nameInput" class="col-sm-3 col-form-label text-end">役割名</label>
+							<div class="col-sm-9" style="height: 60px;">
+								<input type="text" class="form-control" id="nameInput" placeholder="役割の名称">
+								<span class="form-text" style="font-size: 12px;"></span>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+						<i class="fa-solid fa-xmark"></i> 閉じる
+					</button>
+					<button type="button" class="btn btn-primary" id="roleInfoSaveBtn">
+						<i class="fa-solid fa-inbox"></i> 保存
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="roleEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">役割情報変更</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal">
+						<div class="form-group row">
+							<label for="nameEdit" class="col-sm-3 col-form-label text-end">役割名</label>
+							<div class="col-sm-9" style="height: 60px;">
+								<input type="text" class="form-control" id="nameEdit" placeholder="役割の名称">
+								<span class="form-text" style="font-size: 12px;"></span>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+						<i class="fa-solid fa-xmark"></i> 閉じる
+					</button>
+					<button type="button" class="btn btn-success" id="roleInfoChangeBtn">
+						<i class="fa-solid fa-leaf"></i> 更新
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="authEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="roleName"></h4>
+				</div>
+				<div class="modal-body">
+					<ul id="authTree" class="ztree"></ul>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+						<i class="fa-solid fa-xmark"></i> 閉じる
+					</button>
+					<button type="button" class="btn btn-success" id="authChangeBtn">
+						<i class="fa-solid fa-signature"></i> 変更
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" th:src="@{/static/customizes/role-pages.js}"></script>
+</body>
+
+</html>
