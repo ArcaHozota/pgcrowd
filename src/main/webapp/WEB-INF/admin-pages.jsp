@@ -1,12 +1,13 @@
+<%@page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="ja-JP" xmlns:th="http://www.thymeleaf.org">
-<div th:replace="~{commons::header}"></div>
-
+<html lang="ja-JP">
+<%@include file="/WEB-INF/include-header.jsp"%>
 <body>
-	<div th:replace="~{commons::navibar}"></div>
+	<%@include file="/WEB-INF/include-navibar.jsp"%>
 	<div class="container-fluid">
 		<div class="row">
-			<div th:insert="~{commons::sidebar}"></div>
+			<%@include file="/WEB-INF/include-sidebar.jsp"%>
 			<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
 				<div class="card border-darkgreen mb-3">
 					<div class="card-header text-bg-darkgreen mb-3">
@@ -20,7 +21,8 @@
 								<div class="input-group col-md-5">
 									<input id="keywordInput" class="form-control" type="text"
 										placeholder="検索条件を入力してください">
-									<button id="searchBtn2" class="btn btn-info my-2 my-sm-0" type="button">
+									<button id="searchBtn2" class="btn btn-info my-2 my-sm-0"
+										type="button">
 										<i class="fa-solid fa-magnifying-glass"></i> 検索
 									</button>
 								</div>
@@ -39,7 +41,7 @@
 									<th scope="col" class="text-center" style="width: 70px;">名称</th>
 									<th scope="col" class="text-center" style="width: 100px;">メール</th>
 									<th scope="col" class="text-center" style="width: 70px;">生年月日</th>
-									<th scope="col" class="text-center" style="width: 100px;">操作</th>
+									<th scope="col" class="text-center" style="width: 100px;">操作</th>
 								</tr>
 							</thead>
 							<tbody id="tableBody" class="table-group-divider"></tbody>
@@ -53,7 +55,8 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" th:src="@{/static/customizes/employee-pages.js}"></script>
+	<script type="text/javascript"
+		src="../static/customizes/employee-pages.js"></script>
 </body>
 
 </html>

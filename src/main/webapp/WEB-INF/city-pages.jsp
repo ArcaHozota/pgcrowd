@@ -1,12 +1,14 @@
+<%@page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="ja-JP" xmlns:th="http://www.thymeleaf.org">
-<div th:replace="~{commons::header}"></div>
+<html lang="ja-JP">
+<%@include file="/WEB-INF/include-header.jsp"%>
 
 <body>
-	<div th:replace="~{commons::navibar}"></div>
+	<%@include file="/WEB-INF/include-navibar.jsp"%>
 	<div class="container-fluid">
 		<div class="row">
-			<div th:insert="~{commons::sidebar}"></div>
+			<%@include file="/WEB-INF/include-sidebar.jsp"%>
 			<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
 				<div class="card border-klein mb-3">
 					<div class="card-header text-bg-klein mb-3">
@@ -19,8 +21,9 @@
 							<form class="form-inline col-md-5" role="form">
 								<div class="input-group col-md-5">
 									<input id="keywordInput" class="form-control" type="text"
-										placeholder="検索条件を入力してください">
-									<button id="searchBtn2" class="btn btn-secondary my-2 my-sm-0" type="button">
+										placeholder="検索条件を入力してください">
+									<button id="searchBtn2" class="btn btn-secondary my-2 my-sm-0"
+										type="button">
 										<i class="fa-solid fa-magnifying-glass"></i> 検索
 									</button>
 								</div>
@@ -38,9 +41,9 @@
 									<th scope="col" class="text-center" style="width: 150px;">ID</th>
 									<th scope="col" class="text-center" style="width: 70px;">名称</th>
 									<th scope="col" class="text-center" style="width: 100px;">読み方</th>
-									<th scope="col" class="text-center" style="width: 70px;">都道府県</th>
-									<th scope="col" class="text-center" style="width: 50px;">人口数量</th>
-									<th scope="col" class="text-center" style="width: 50px;">市町村旗</th>
+									<th scope="col" class="text-center" style="width: 70px;">都道府県</th>
+									<th scope="col" class="text-center" style="width: 50px;">人口数量</th>
+									<th scope="col" class="text-center" style="width: 50px;">市町村旗</th>
 									<th scope="col" class="text-center" style="width: 100px;">操作</th>
 								</tr>
 							</thead>
@@ -55,7 +58,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="cityAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal fade" id="cityAddModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -64,43 +68,51 @@
 				<div class="modal-body">
 					<form class="form-horizontal">
 						<div class="form-group row">
-							<label for="nameInput" class="col-sm-3 col-form-label text-end">都市名</label>
+							<label for="nameInput" class="col-sm-3 col-form-label text-end">都市名</label>
 							<div class="col-sm-9" style="height: 60px;">
-								<input type="text" class="form-control" id="nameInput" placeholder="都市の名称">
-								<span class="form-text" style="font-size: 12px;"></span>
+								<input type="text" class="form-control" id="nameInput"
+									placeholder="都市の名称"> <span class="form-text"
+									style="font-size: 12px;"></span>
 							</div>
 						</div>
 						<div class="form-group row">
 							<label for="poInput" class="col-sm-3 col-form-label text-end">読み方</label>
 							<div class="col-sm-9" style="height: 60px;">
-								<input type="text" class="form-control" id="poInput" placeholder="都市名の読み方">
-								<span class="form-text" style="font-size: 12px;"></span>
+								<input type="text" class="form-control" id="poInput"
+									placeholder="都市名の読み方"> <span class="form-text"
+									style="font-size: 12px;"></span>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label for="districtInput" class="col-sm-3 col-form-label text-end">都道府県</label>
+							<label for="districtInput"
+								class="col-sm-3 col-form-label text-end">都道府県</label>
 							<div class="col-sm-9" style="height: 60px;">
 								<select id="districtInput" class="form-select"></select>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label for="populationInput" class="col-sm-3 col-form-label text-end">人口数量</label>
+							<label for="populationInput"
+								class="col-sm-3 col-form-label text-end">人口数量</label>
 							<div class="col-sm-9" style="height: 60px;">
-								<input type="text" class="form-control" id="populationInput" placeholder="都市の人口数量">
-								<span class="form-text" style="font-size: 12px;"></span>
+								<input type="text" class="form-control" id="populationInput"
+									placeholder="都市の人口数量"> <span class="form-text"
+									style="font-size: 12px;"></span>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label for="cityFlagInput" class="col-sm-3 col-form-label text-end">市町村旗</label>
+							<label for="cityFlagInput"
+								class="col-sm-3 col-form-label text-end">市町村旗</label>
 							<div class="col-sm-9" style="height: 60px;">
-								<input type="text" class="form-control" id="cityFlagInput" placeholder="市町村旗">
-								<span class="form-text" style="font-size: 12px;"></span>
+								<input type="text" class="form-control" id="cityFlagInput"
+									placeholder="市町村旗"> <span class="form-text"
+									style="font-size: 12px;"></span>
 							</div>
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">
 						<i class="fa-solid fa-xmark"></i> 閉じる
 					</button>
 					<button type="button" class="btn btn-primary" id="cityInfoSaveBtn">
@@ -110,7 +122,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="cityEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal fade" id="cityEditModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -121,44 +134,51 @@
 						<div class="form-group row">
 							<label for="nameEdit" class="col-sm-3 col-form-label text-end">都市名</label>
 							<div class="col-sm-9" style="height: 60px;">
-								<input type="text" class="form-control" id="nameEdit" placeholder="都市の名称">
-								<span class="form-text" style="font-size: 12px;"></span>
+								<input type="text" class="form-control" id="nameEdit"
+									placeholder="都市の名称"> <span class="form-text"
+									style="font-size: 12px;"></span>
 							</div>
 						</div>
 						<div class="form-group row">
 							<label for="poEdit" class="col-sm-3 col-form-label text-end">読み方</label>
 							<div class="col-sm-9" style="height: 60px;">
-								<input type="text" class="form-control" id="poEdit" placeholder="都市名の読み方">
-								<span class="form-text" style="font-size: 12px;"></span>
+								<input type="text" class="form-control" id="poEdit"
+									placeholder="都市名の読み方"> <span class="form-text"
+									style="font-size: 12px;"></span>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label for="districtEdit" class="col-sm-3 col-form-label text-end">都道府県</label>
+							<label for="districtEdit"
+								class="col-sm-3 col-form-label text-end">都道府県</label>
 							<div class="col-sm-9" style="height: 60px;">
 								<select id="districtEdit" class="form-select"></select>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label for="populationEdit" class="col-sm-3 col-form-label text-end">人口数量</label>
+							<label for="populationEdit"
+								class="col-sm-3 col-form-label text-end">人口数量</label>
 							<div class="col-sm-9" style="height: 60px;">
-								<input type="text" class="form-control" id="populationEdit" placeholder="都市の人口数量">
-								<span class="form-text" style="font-size: 12px;"></span>
+								<input type="text" class="form-control" id="populationEdit"
+									placeholder="都市の人口数量"> <span class="form-text"
+									style="font-size: 12px;"></span>
 							</div>
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">
 						<i class="fa-solid fa-xmark"></i> 閉じる
 					</button>
-					<button type="button" class="btn btn-success" id="cityInfoChangeBtn">
+					<button type="button" class="btn btn-success"
+						id="cityInfoChangeBtn">
 						<i class="fa-solid fa-leaf"></i> 更新
 					</button>
 				</div>
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" th:src="@{/static/customizes/city-pages.js}"></script>
+	<script type="text/javascript" src="../static/customizes/city-pages.js"></script>
 </body>
 
 </html>
