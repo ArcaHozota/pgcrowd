@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
  * 共通Beanツール
  *
  * @author ArkamaHozota
- * @since 4.31
+ * @since 1.00beta
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SecondBeanUtils extends BeanUtils {

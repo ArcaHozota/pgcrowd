@@ -4,7 +4,7 @@ package jp.co.sony.ppogah.utils;
  * 雪花のアルゴリズムID生成クラス
  *
  * @author JCccc
- * @since 4.36
+ * @since 1.00beta
  */
 public class SnowflakeIdGenerator {
 

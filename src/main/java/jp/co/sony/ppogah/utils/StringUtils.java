@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
  * 共通ストリング判断ツール
  *
  * @author ArkamaHozota
- * @since 1.10
+ * @since 1.00beta
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class StringUtils {
@@ -294,7 +294,7 @@ public final class StringUtils {
 	 * @return true: 空, false: 空ではない
 	 */
 	public static boolean isEmpty(@Nullable final String str) {
-		return str == null || str.isEmpty() || str.isBlank();
+		return (str == null) || str.isEmpty() || str.isBlank();
 	}
 
 	/**
@@ -305,10 +305,10 @@ public final class StringUtils {
 	 * @return true: イコール, false: イコールしない
 	 */
 	public static boolean isEqual(@Nullable final String str1, @Nullable final String str2) {
-		if (str1 == null && str2 == null) {
+		if ((str1 == null) && (str2 == null)) {
 			return true;
 		}
-		if (str1 == null || str2 == null || str1.length() != str2.length()) {
+		if ((str1 == null) || (str2 == null) || (str1.length() != str2.length())) {
 			return false;
 		}
 		return str1.trim().equals(str2.trim());

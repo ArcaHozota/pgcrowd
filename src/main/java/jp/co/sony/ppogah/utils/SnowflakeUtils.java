@@ -6,7 +6,7 @@ import java.util.Random;
  * 雪花のアルゴリズムID生成ツール
  *
  * @author ArkamaHozota
- * @since 4.36
+ * @since 1.00beta
  */
 public final class SnowflakeUtils extends SnowflakeIdGenerator {
 

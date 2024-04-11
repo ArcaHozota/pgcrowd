@@ -8,7 +8,7 @@ import lombok.Data;
  * 役割権限情報ID
  *
  * @author ArkamaHozota
- * @since 5.76
+ * @since 1.00beta
  */
 @Data
 public final class RoleAuthIds implements Serializable {
