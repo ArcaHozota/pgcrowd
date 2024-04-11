@@ -79,6 +79,17 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 		return SUCCESS;
 	}
 
+	/**
+	 * ログインする
+	 *
+	 * @return String
+	 */
+	@Action("logout")
+	public String logout() {
+		this.request.getSession().invalidate();
+		return LOGIN;
+	}
+
 	@Override
 	public void setServletRequest(final HttpServletRequest request) {
 		this.request = request;
