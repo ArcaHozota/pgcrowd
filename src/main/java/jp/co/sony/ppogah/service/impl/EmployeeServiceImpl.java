@@ -190,6 +190,23 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
+	public Boolean login(final String account, final String password) {
+		final Specification<Employee> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get("password"), password);
+		final Specification<Employee> where2 = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get("email"), account);
+		final Specification<Employee> where3 = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get("loginAccount"), account);
+		final Specification<Employee> specification = Specification.where(where1)
+				.and(Specification.where(where2).or(where3));
+		final Optional<Employee> optional = this.employeeRepository.findOne(specification);
+		if (optional.isEmpty()) {
+			return Boolean.FALSE;
+		}
+		return Boolean.TRUE;
+	}
+
+	@Override
 	public Boolean register(final EmployeeDto employeeDto) {
 		final Specification<Employee> where = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("email"),
 				employeeDto.getEmail());

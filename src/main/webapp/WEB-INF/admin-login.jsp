@@ -48,7 +48,7 @@
 			hidden /> --%>
 		<div class="login-box">
 			<%--Login Form--%>
-			<form action="/pgcrowd/employee/do/login" method="post"
+			<form action="/pgcrowd/employee/doLogin" method="post"
 				class="form-signin" role="form" id="loginForm">
 				<h2>ログイン</h2>
 				<div class="input-box">

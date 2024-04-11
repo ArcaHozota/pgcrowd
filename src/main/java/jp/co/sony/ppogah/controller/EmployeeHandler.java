@@ -1,5 +1,6 @@
 package jp.co.sony.ppogah.controller;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionSupport;
 
 import jp.co.sony.ppogah.dto.EmployeeDto;
+import jp.co.sony.ppogah.service.IEmployeeService;
 import jp.co.sony.ppogah.utils.ResultDto;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,6 +38,12 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	private static final long serialVersionUID = -6017782752547971104L;
 
 	/**
+	 * 社員サービスインターフェス
+	 */
+	@Resource
+	private IEmployeeService iEmployeeService;
+
+	/**
 	 * リクエスト
 	 */
 	private transient HttpServletRequest request;
@@ -53,6 +61,22 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	@Action("login")
 	public String initial() {
 		return LOGIN;
+	}
+
+	/**
+	 * ログインする
+	 *
+	 * @return String
+	 */
+	@Action(value = "doLogin", results = { @Result(name = "success", location = "/WEB-INF/mainmenu.jsp") })
+	public String login() {
+		final String loginAccount = this.request.getParameter("loginAcct");
+		final String password = this.request.getParameter("userPswd");
+		final Boolean loginBoolean = this.iEmployeeService.login(loginAccount, password);
+		if (Boolean.FALSE.equals(loginBoolean)) {
+			return LOGIN;
+		}
+		return SUCCESS;
 	}
 
 	@Override

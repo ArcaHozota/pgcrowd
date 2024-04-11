@@ -44,6 +44,8 @@ public interface IEmployeeService {
 	 */
 	Pagination<EmployeeDto> getEmployeesByKeyword(Integer pageNum, String keyword, Long userId);
 
+	Boolean login(String account, String password);
+
 	/**
 	 * 社員登録
 	 *
