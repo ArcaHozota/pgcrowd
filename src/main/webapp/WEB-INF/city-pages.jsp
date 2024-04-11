@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <html lang="ja-JP">
 <%@include file="/WEB-INF/include-header.jsp"%>
-
 <body>
 	<%@include file="/WEB-INF/include-navibar.jsp"%>
 	<div class="container-fluid">
@@ -180,5 +179,4 @@
 	</div>
 	<script type="text/javascript" src="../static/customizes/city-pages.js"></script>
 </body>
-
 </html>

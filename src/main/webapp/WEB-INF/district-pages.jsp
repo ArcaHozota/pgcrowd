@@ -1,12 +1,13 @@
+<%@page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="ja-JP" xmlns:th="http://www.thymeleaf.org">
-<div th:replace="~{commons::header}"></div>
-
+<html lang="ja-JP">
+<%@include file="/WEB-INF/include-header.jsp"%>
 <body>
-	<div th:replace="~{commons::navibar}"></div>
+	<%@include file="/WEB-INF/include-navibar.jsp"%>
 	<div class="container-fluid">
 		<div class="row">
-			<div th:insert="~{commons::sidebar}"></div>
+			<%@include file="/WEB-INF/include-sidebar.jsp"%>
 			<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
 				<div class="card border-success mb-3">
 					<div class="card-header text-bg-success mb-3">
@@ -20,7 +21,8 @@
 								<div class="input-group col-md-5">
 									<input id="keywordInput" class="form-control" type="text"
 										placeholder="検索条件を入力してください">
-									<button id="searchBtn2" class="btn btn-info my-2 my-sm-0" type="button">
+									<button id="searchBtn2" class="btn btn-info my-2 my-sm-0"
+										type="button">
 										<i class="fa-solid fa-magnifying-glass"></i> 検索
 									</button>
 								</div>
@@ -50,7 +52,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="districtEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal fade" id="districtEditModal" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -61,8 +64,9 @@
 						<div class="form-group row">
 							<label for="nameEdit" class="col-sm-3 col-form-label text-end">地域名称</label>
 							<div class="col-sm-9" style="height: 60px;">
-								<input type="text" class="form-control" id="nameEdit" placeholder="地域の名称">
-								<span class="form-text" style="font-size: 12px;"></span>
+								<input type="text" class="form-control" id="nameEdit"
+									placeholder="地域の名称"> <span class="form-text"
+									style="font-size: 12px;"></span>
 							</div>
 						</div>
 						<div class="form-group row">
@@ -74,12 +78,14 @@
 						<div class="form-group row">
 							<label for="chihoEdit" class="col-sm-3 col-form-label text-end">地方</label>
 							<div class="col-sm-9" style="height: 60px;">
-								<input type="text" class="form-control" id="chihoEdit" placeholder="地方">
-								<span class="form-text" style="font-size: 12px;"></span>
+								<input type="text" class="form-control" id="chihoEdit"
+									placeholder="地方"> <span class="form-text"
+									style="font-size: 12px;"></span>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label for="populationEdit" class="col-sm-3 col-form-label text-end">人口数量</label>
+							<label for="populationEdit"
+								class="col-sm-3 col-form-label text-end">人口数量</label>
 							<div class="col-sm-9" style="height: 60px;">
 								<p type="text" class="form-control" id="populationEdit"></p>
 							</div>
@@ -87,17 +93,19 @@
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">
 						<i class="fa-solid fa-xmark"></i> 閉じる
 					</button>
-					<button type="button" class="btn btn-success" id="districtInfoChangeBtn">
+					<button type="button" class="btn btn-success"
+						id="districtInfoChangeBtn">
 						<i class="fa-solid fa-leaf"></i> 更新
 					</button>
 				</div>
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" th:src="@{/static/customizes/district-pages.js}"></script>
+	<script type="text/javascript"
+		src="../static/customizes/district-pages.js"></script>
 </body>
-
 </html>

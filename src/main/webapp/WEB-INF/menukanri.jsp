@@ -1,12 +1,13 @@
+<%@page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="ja-JP" xmlns:th="http://www.thymeleaf.org">
-<div th:replace="~{commons::header}"></div>
-
+<html lang="ja-JP">
+<%@include file="/WEB-INF/include-header.jsp"%>
 <body>
-	<div th:replace="~{commons::navibar}"></div>
+	<%@include file="/WEB-INF/include-navibar.jsp"%>
 	<div class="container-fluid">
 		<div class="row">
-			<div th:insert="~{commons::sidebar}"></div>
+			<%@include file="/WEB-INF/include-sidebar.jsp"%>
 			<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
 				<div class="card border-burgundy mb-3">
 					<div class="card-header text-bg-burgundy mb-3">
@@ -21,7 +22,6 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" th:src="@{/static/customizes/menukanri.js}"></script>
+	<script type="text/javascript" src="../static/customizes/menukanri.js"></script>
 </body>
-
 </html>

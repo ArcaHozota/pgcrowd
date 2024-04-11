@@ -4,19 +4,19 @@
 <html lang="ja-JP">
 <%@include file="/WEB-INF/include-header.jsp"%>
 <body>
-	<style>
-#adminKanriMainmenu:hover h2 {
-	color: #7f0020;
-}
-
-#roleKanriMainmenu:hover h2 {
-	color: #002fa7;
-}
-
-#categoryKanriMainmenu:hover h2 {
-	color: #006400;
-}
-</style>
+	<style type="text/css">
+		#adminKanriMainmenu:hover h2 {
+			color: #7f0020;
+		}
+		
+		#roleKanriMainmenu:hover h2 {
+			color: #002fa7;
+		}
+		
+		#categoryKanriMainmenu:hover h2 {
+			color: #006400;
+		}
+	</style>
 	<%@include file="/WEB-INF/include-navibar.jsp"%>
 	<div class="container-fluid">
 		<div class="row">

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <head>
 <title>PGアプリケーション</title>
@@ -16,7 +16,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 <link rel="shortcut icon" type="image/x-icon"
 	href="../static/favicon.ico">
-<style>
+<style type="text/css">
 .tree li {
 	list-style-type: none;
 	cursor: pointer;
