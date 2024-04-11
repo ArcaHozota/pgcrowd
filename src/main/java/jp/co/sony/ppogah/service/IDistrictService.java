@@ -10,7 +10,7 @@ import jp.co.sony.ppogah.utils.ResultDto;
  * 地域サービスインターフェス
  *
  * @author ArkamaHozota
- * @since 7.81
+ * @since 1.00beta
  */
 public interface IDistrictService {
 

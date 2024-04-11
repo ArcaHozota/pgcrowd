@@ -2,6 +2,7 @@ package jp.co.sony.ppogah.service.impl;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -23,6 +24,7 @@ import jp.co.sony.ppogah.utils.Pagination;
 import jp.co.sony.ppogah.utils.ResultDto;
 import jp.co.sony.ppogah.utils.SecondBeanUtils;
 import jp.co.sony.ppogah.utils.SnowflakeUtils;
+import jp.co.sony.ppogah.utils.StringUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -30,7 +32,7 @@ import lombok.RequiredArgsConstructor;
  * 都市サービス実装クラス
  *
  * @author ArkamaHozota
- * @since 7.89
+ * @since 1.00beta
  */
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -51,7 +53,7 @@ public final class CityServiceImpl implements ICityService {
 		final District district = this.districtRepository.findById(districtId).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
-		final List<String> list = district.getCities().stream().map(City::getName).toList();
+		final List<String> list = district.getCities().stream().map(City::getName).collect(Collectors.toList());
 		if (list.contains(name)) {
 			return ResultDto.failed(PgCrowdConstants.MESSAGE_CITY_NAME_DUPLICATED);
 		}
@@ -67,11 +69,11 @@ public final class CityServiceImpl implements ICityService {
 		final Specification<City> specification = Specification.where(where1);
 		if (StringUtils.isEmpty(keyword)) {
 			final Page<City> pages = this.cityRepository.findAll(specification, pageRequest);
-			final List<CityDto> cityDtos = pages.stream()
-					.map(item -> new CityDto(item.getId(), item.getName(), item.getDistrictId(),
-							item.getPronunciation(), item.getDistrict().getName(), item.getPopulation(),
-							item.getCityFlag()))
-					.toList();
+			final List<CityDto> cityDtos = pages.stream().map(item -> {
+				final CityDto cityDto = new CityDto();
+				SecondBeanUtils.copyNullableProperties(item, cityDto);
+				return cityDto;
+			}).collect(Collectors.toList());
 			return Pagination.of(cityDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 		}
 		final String searchStr = StringUtils.getDetailKeyword(keyword);
@@ -81,7 +83,7 @@ public final class CityServiceImpl implements ICityService {
 				searchStr);
 		final Specification<District> specification2 = Specification.where(where2).and(where3);
 		final List<Long> districtIds = this.districtRepository.findAll(specification2).stream().map(District::getId)
-				.toList();
+				.collect(Collectors.toList());
 		final Specification<City> where4 = (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("name"),
 				searchStr);
 		final Specification<City> where5 = (root, query, criteriaBuilder) -> criteriaBuilder
@@ -89,12 +91,13 @@ public final class CityServiceImpl implements ICityService {
 		final Specification<City> where6 = (root, query, criteriaBuilder) -> criteriaBuilder
 				.and(root.get("districtId").in(districtIds));
 		final Specification<City> specification3 = Specification.where(where1)
-				.and(Specification.anyOf(where4, where5, where6));
+				.and(Specification.where(where4).or(where5).or(where6));
 		final Page<City> pages = this.cityRepository.findAll(specification3, pageRequest);
-		final List<CityDto> cityDtos = pages.stream()
-				.map(item -> new CityDto(item.getId(), item.getName(), item.getDistrictId(), item.getPronunciation(),
-						item.getDistrict().getName(), item.getPopulation(), item.getCityFlag()))
-				.toList();
+		final List<CityDto> cityDtos = pages.stream().map(item -> {
+			final CityDto cityDto = new CityDto();
+			SecondBeanUtils.copyNullableProperties(item, cityDto);
+			return cityDto;
+		}).collect(Collectors.toList());
 		return Pagination.of(cityDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 	}
 
@@ -122,7 +125,7 @@ public final class CityServiceImpl implements ICityService {
 
 	@Override
 	public ResultDto<String> update(final CityDto cityDto) {
-		final City city = this.cityRepository.findById(cityDto.id()).orElseThrow(() -> {
+		final City city = this.cityRepository.findById(cityDto.getId()).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
 		final City originalEntity = new City();

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -24,6 +25,7 @@ import jp.co.sony.ppogah.service.IDistrictService;
 import jp.co.sony.ppogah.utils.Pagination;
 import jp.co.sony.ppogah.utils.ResultDto;
 import jp.co.sony.ppogah.utils.SecondBeanUtils;
+import jp.co.sony.ppogah.utils.StringUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -31,7 +33,7 @@ import lombok.RequiredArgsConstructor;
  * 地域サービス実装クラス
  *
  * @author ArkamaHozota
- * @since 7.81
+ * @since 1.00beta
  */
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -53,8 +55,8 @@ public final class DistrictServiceImpl implements IDistrictService {
 		final List<District> districts = this.districtRepository.findAll();
 		final List<DistrictDto> districtDtos1 = districts.stream()
 				.map(item -> new DistrictDto(item.getId(), item.getName(), item.getShutoId(),
-						item.getCities().stream().filter(a -> Objects.equals(a.getId(), item.getShutoId())).toList()
-								.get(0).getName(),
+						item.getCities().stream().filter(a -> Objects.equals(a.getId(), item.getShutoId()))
+								.collect(Collectors.toList()).get(0).getName(),
 						item.getChiho(),
 						item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get(),
 						item.getDistrictFlag()))
