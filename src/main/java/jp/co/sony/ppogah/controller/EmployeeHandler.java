@@ -1,0 +1,62 @@
+package jp.co.sony.ppogah.controller;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
+import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.Results;
+import org.apache.struts2.interceptor.ServletRequestAware;
+import org.springframework.stereotype.Controller;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+import jp.co.sony.ppogah.dto.EmployeeDto;
+import jp.co.sony.ppogah.utils.ResultDto;
+import lombok.Getter;
+import lombok.Setter;
+
+/**
+ * 社員情報処理ハンドラ
+ *
+ * @author ArkamaHozota
+ * @since 1.10
+ */
+@Getter
+@Setter
+@Namespace("/pgcrowd/employee")
+@Results({ @Result(name = "error", location = "/WEB-INF/system-error.jsp"),
+		@Result(name = "none", type = "json", params = { "root", "responsedJsondata" }),
+		@Result(name = "login", location = "/WEB-INF/admin-login.jsp") })
+@ParentPackage("json-default")
+@Controller
+public class EmployeeHandler extends ActionSupport implements ServletRequestAware {
+
+	private static final long serialVersionUID = -6017782752547971104L;
+
+	/**
+	 * リクエスト
+	 */
+	private transient HttpServletRequest request;
+
+	/**
+	 * JSONリスポンス
+	 */
+	private transient ResultDto<EmployeeDto> responsedJsondata;
+
+	/**
+	 * ログイン画面初期表示する
+	 *
+	 * @return String
+	 */
+	@Action("login")
+	public String initial() {
+		return LOGIN;
+	}
+
+	@Override
+	public void setServletRequest(final HttpServletRequest request) {
+		this.request = request;
+	}
+}
