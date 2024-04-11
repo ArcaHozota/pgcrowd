@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://svgfaces.org/tags-svg" prefix="s"%>
 <!DOCTYPE html>
 <html lang="ja-JP">
 <%@include file="/WEB-INF/include-header.jsp"%>
@@ -26,18 +25,18 @@
 				<h1 class="page-header" style="color: #7F0020;">メインメニュー</h1>
 				<div class="row">
 					<div class="col" id="adminKanriMainmenu" role="button">
-						<s:svg src="/static/image/icons/castilia.svg"
-							style="height: 80%; width: 100%;" class="rounded" alt="img01"></s:svg>
+						<img src="<%@include file="../static/image/icons/castilia.svg"%>"
+							alt="img01">
 						<h2 class="text-center">社員管理</h2>
 					</div>
 					<div class="col" id="roleKanriMainmenu" role="button">
-						<s:svg src="/static/image/icons/burgundy.svg"
-							style="height: 80%; width: 100%;" class="rounded" alt="img02"></s:svg>
+						<img src="<%@include file="../static/image/icons/burgundy.svg"%>"
+							alt="img02">
 						<h2 class="text-center">役割管理</h2>
 					</div>
 					<div class="col" id="categoryKanriMainmenu" role="button">
-						<s:svg src="/static/image/icons/bourbon.svg"
-							style="height: 80%; width: 100%;" class="rounded" alt="img03"></s:svg>
+						<img src="<%@include file="../static/image/icons/bourbon.svg"%>"
+							alt="img03">
 						<h2 class="text-center">分類管理</h2>
 					</div>
 				</div>
