@@ -25,18 +25,15 @@
 				<h1 class="page-header" style="color: #7F0020;">メインメニュー</h1>
 				<div class="row">
 					<div class="col" id="adminKanriMainmenu" role="button">
-						<img src="<%@include file="../static/image/icons/castilia.svg"%>"
-							alt="img01">
+						<%@include file="../static/image/icons/castilia.svg"%>
 						<h2 class="text-center">社員管理</h2>
 					</div>
 					<div class="col" id="roleKanriMainmenu" role="button">
-						<img src="<%@include file="../static/image/icons/burgundy.svg"%>"
-							alt="img02">
+						<%@include file="../static/image/icons/burgundy.svg"%>
 						<h2 class="text-center">役割管理</h2>
 					</div>
 					<div class="col" id="categoryKanriMainmenu" role="button">
-						<img src="<%@include file="../static/image/icons/bourbon.svg"%>"
-							alt="img03">
+						<%@include file="../static/image/icons/bourbon.svg"%>
 						<h2 class="text-center">分類管理</h2>
 					</div>
 				</div>
