@@ -30,7 +30,7 @@
 					</div>
 					<div class="col" id="roleKanriMainmenu" role="button">
 						<%@include file="../static/image/icons/burgundy.svg"%>
-						<h2 class="text-center">役割管理</h2>
+						<h2 class="text-center">役割管理</h2>
 					</div>
 					<div class="col" id="categoryKanriMainmenu" role="button">
 						<%@include file="../static/image/icons/bourbon.svg"%>

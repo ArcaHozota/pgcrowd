@@ -1,8 +1,14 @@
 $(document).ready(function() {
 	$("#toMainmenu").css('color', '#7F0020');
-	$("#adminKanriMainmenu").find('svg').css({ 'height': '80%', 'width': '100%' });
-	$("#roleKanriMainmenu").find('svg').css({ 'height': '80%', 'width': '100%' });
-	$("#categoryKanriMainmenu").find('svg').css({ 'height': '80%', 'width': '100%' });
+	let height1 = $("#adminKanriMainmenu").find('svg').height();
+	let height01 = height1 * 0.8;
+	$("#adminKanriMainmenu").find('svg').attr('height', height01);
+	let height2 = $("#roleKanriMainmenu").find('svg').height();
+	let height02 = height2 * 0.8;
+	$("#roleKanriMainmenu").find('svg').attr('height', height02);
+	let height3 = $("#categoryKanriMainmenu").find('svg').height();
+	let height03 = height3 * 0.8;
+	$("#categoryKanriMainmenu").find('svg').attr('height', height03);
 });
 $("#categoryKanriMainmenu").on('click', function() {
 	let url = '/pgcrowd/category/initial';
