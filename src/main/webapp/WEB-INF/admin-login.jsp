@@ -8,12 +8,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <%-- <meta name="_csrf_header" content="${_csrf.headerName}">
 <meta name="_csrf_token" content="${_csrf.token}"> --%>
-<link rel="stylesheet" href="../static/css/style.css">
+<link rel="stylesheet" href="/static/css/style.css">
 <link rel="shortcut icon" type="image/x-icon"
-	href="../static/favicon.ico">
+	href="/static/favicon.ico">
 <script type="text/javascript"
-	src="../static/jquery/jquery-3.7.1.min.js"></script>
-<script type="text/javascript" src="../static/layer/layer.js"></script>
+	src="/static/jquery/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="/static/layer/layer.js"></script>
 </head>
 <body>
 	<style type="text/css">
@@ -80,6 +80,6 @@
 			src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 	</div>
 	<script type="text/javascript"
-		src="../static/customizes/logintoroku.js"></script>
+		src="/static/customizes/logintoroku.js"></script>
 </body>
 </html>
