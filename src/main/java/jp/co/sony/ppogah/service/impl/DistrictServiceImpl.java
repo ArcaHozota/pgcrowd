@@ -53,17 +53,18 @@ public final class DistrictServiceImpl implements IDistrictService {
 	public List<DistrictDto> getDistrictsByCityId(final String cityId) {
 		final List<DistrictDto> districtDtos = new ArrayList<>();
 		final List<District> districts = this.districtRepository.findAll();
-		final List<DistrictDto> districtDtos1 = districts.stream()
-				.map(item -> new DistrictDto(item.getId(), item.getName(), item.getShutoId(),
-						item.getCities().stream().filter(a -> Objects.equals(a.getId(), item.getShutoId()))
-								.collect(Collectors.toList()).get(0).getName(),
-						item.getChiho(),
-						item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get(),
-						item.getDistrictFlag()))
-				.sorted(Comparator.comparingLong(DistrictDto::id)).toList();
+		final List<DistrictDto> districtDtos1 = districts.stream().map(item -> {
+			final DistrictDto districtDto = new DistrictDto();
+			SecondBeanUtils.copyNullableProperties(item, districtDto);
+			districtDto.setShutoName(item.getCities().stream().filter(a -> Objects.equals(a.getId(), item.getShutoId()))
+					.collect(Collectors.toList()).get(0).getName());
+			districtDto.setPopulation(item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get());
+			return districtDto;
+		}).sorted(Comparator.comparingLong(DistrictDto::getId)).collect(Collectors.toList());
 		if (StringUtils.isEmpty(cityId) || !StringUtils.isDigital(cityId)) {
-			final DistrictDto districtDto = new DistrictDto(0L, PgCrowdConstants.DEFAULT_ROLE_NAME, 0L,
-					StringUtils.EMPTY_STRING, StringUtils.EMPTY_STRING, null, StringUtils.EMPTY_STRING);
+			final DistrictDto districtDto = new DistrictDto();
+			districtDto.setId(0L);
+			districtDto.setName(PgCrowdConstants.DEFAULT_ROLE_NAME);
 			districtDtos.add(districtDto);
 			districtDtos.addAll(districtDtos1);
 			return districtDtos;
@@ -73,15 +74,16 @@ public final class DistrictServiceImpl implements IDistrictService {
 		});
 		final List<DistrictDto> districtDtos2 = new ArrayList<>();
 		final District district = districts.stream().filter(a -> Objects.equals(a.getId(), city.getDistrictId()))
-				.toList().get(0);
-		districtDtos2.add(new DistrictDto(district.getId(), district.getName(), district.getShutoId(),
-				district.getCities().stream().filter(a -> Objects.equals(a.getId(), district.getShutoId())).toList()
-						.get(0).getName(),
-				district.getChiho(),
-				district.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get(),
-				district.getDistrictFlag()));
+				.collect(Collectors.toList()).get(0);
+		final DistrictDto districtDto = new DistrictDto();
+		SecondBeanUtils.copyNullableProperties(district, districtDto);
+		districtDto.setShutoName(
+				district.getCities().stream().filter(a -> Objects.equals(a.getId(), district.getShutoId()))
+						.collect(Collectors.toList()).get(0).getName());
+		districtDto.setPopulation(district.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get());
+		districtDtos2.add(districtDto);
 		districtDtos2.addAll(districtDtos1);
-		return districtDtos2.stream().distinct().toList();
+		return districtDtos2.stream().distinct().collect(Collectors.toList());
 	}
 
 	@Override
@@ -93,32 +95,34 @@ public final class DistrictServiceImpl implements IDistrictService {
 		final Specification<District> specification = Specification.where(where1);
 		if (StringUtils.isEmpty(keyword)) {
 			final Page<District> pages = this.districtRepository.findAll(specification, pageRequest);
-			final List<DistrictDto> districtDtos = pages.stream()
-					.map(item -> new DistrictDto(item.getId(), item.getName(), item.getShutoId(),
-							item.getCities().stream().filter(a -> Objects.equals(a.getId(), item.getShutoId())).toList()
-									.get(0).getName(),
-							item.getChiho(),
-							item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get(),
-							item.getDistrictFlag()))
-					.toList();
+			final List<DistrictDto> districtDtos = pages.stream().map(item -> {
+				final DistrictDto districtDto = new DistrictDto();
+				SecondBeanUtils.copyNullableProperties(item, districtDto);
+				districtDto.setShutoName(
+						item.getCities().stream().filter(a -> Objects.equals(a.getId(), item.getShutoId()))
+								.collect(Collectors.toList()).get(0).getName());
+				districtDto.setPopulation(
+						item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get());
+				return districtDto;
+			}).collect(Collectors.toList());
 			return Pagination.of(districtDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 		}
 		final String searchStr = StringUtils.getDetailKeyword(keyword);
 		final Page<District> pages = this.districtRepository.findByShutoLike(searchStr, pageRequest);
-		final List<DistrictDto> districtDtos = pages.stream()
-				.map(item -> new DistrictDto(item.getId(), item.getName(), item.getShutoId(),
-						item.getCities().stream().filter(a -> Objects.equals(a.getId(), item.getShutoId())).toList()
-								.get(0).getName(),
-						item.getChiho(),
-						item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get(),
-						item.getDistrictFlag()))
-				.toList();
+		final List<DistrictDto> districtDtos = pages.stream().map(item -> {
+			final DistrictDto districtDto = new DistrictDto();
+			SecondBeanUtils.copyNullableProperties(item, districtDto);
+			districtDto.setShutoName(item.getCities().stream().filter(a -> Objects.equals(a.getId(), item.getShutoId()))
+					.collect(Collectors.toList()).get(0).getName());
+			districtDto.setPopulation(item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get());
+			return districtDto;
+		}).collect(Collectors.toList());
 		return Pagination.of(districtDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 	}
 
 	@Override
 	public ResultDto<String> update(final DistrictDto districtDto) {
-		final District district = this.districtRepository.findById(districtDto.id()).orElseThrow(() -> {
+		final District district = this.districtRepository.findById(districtDto.getId()).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
 		final District originalEntity = new District();

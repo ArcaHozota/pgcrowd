@@ -24,8 +24,8 @@ import jp.co.sony.ppogah.entity.EmployeeRole;
 import jp.co.sony.ppogah.entity.Role;
 import jp.co.sony.ppogah.entity.RoleAuth;
 import jp.co.sony.ppogah.exception.PgCrowdException;
-import jp.co.sony.ppogah.repository.EmployeeRoleRepository;
 import jp.co.sony.ppogah.repository.AuthorityRepository;
+import jp.co.sony.ppogah.repository.EmployeeRoleRepository;
 import jp.co.sony.ppogah.repository.RoleAuthRepository;
 import jp.co.sony.ppogah.repository.RoleRepository;
 import jp.co.sony.ppogah.service.IRoleService;
@@ -41,7 +41,7 @@ import lombok.RequiredArgsConstructor;
  * 役割サービス実装クラス
  *
  * @author ArkamaHozota
- * @since 4.46
+ * @since 1.00beta
  */
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
