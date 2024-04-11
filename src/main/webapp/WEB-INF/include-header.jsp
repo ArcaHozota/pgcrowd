@@ -31,8 +31,6 @@ a {
 <script type="text/javascript" src="/static/jquery/docs.min.js"></script>
 <script type="text/javascript"
 	src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript"
-	src="/static/bootstrap/js/bootbox.all.min.js"></script>
 <script type="text/javascript" src="/static/layer/layer.js"></script>
 <script type="text/javascript" src="/static/ztree/jquery.ztree.all.js"></script>
 <script type="text/javascript" src="/static/treeview/js/bstreeview.js"></script>
