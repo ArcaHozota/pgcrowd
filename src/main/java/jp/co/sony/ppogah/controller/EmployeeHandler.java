@@ -141,8 +141,8 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 */
 	@Action(value = "toAddition", results = { @Result(name = "success", location = "/WEB-INF/admin-addinfo.jsp") })
 	public String toAddition() {
-		final List<RoleDto> employeeRoles = this.iRoleService.getRolesByEmployeeId(null);
-		ActionContext.getContext().put("employeeRoles", employeeRoles);
+		final List<RoleDto> roleDtos = this.iRoleService.getRolesByEmployeeId(null);
+		ActionContext.getContext().put("employeeRoles", roleDtos);
 		return SUCCESS;
 	}
 
