@@ -13,7 +13,9 @@ import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import jp.co.sony.ppogah.dto.EmployeeDto;
 import jp.co.sony.ppogah.service.IEmployeeService;
+import jp.co.sony.ppogah.utils.Pagination;
 import jp.co.sony.ppogah.utils.ResultDto;
 import lombok.Getter;
 import lombok.Setter;
@@ -99,8 +101,10 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	public String pagination() {
 		final String pageNum = this.request.getParameter("pageNum");
 		final String keyword = this.request.getParameter("keyword");
-		this.iEmployeeService.getEmployeesByKeyword(Integer.parseInt(pageNum), keyword);
-		return SUCCESS;
+		final Pagination<EmployeeDto> employees = this.iEmployeeService.getEmployeesByKeyword(Integer.parseInt(pageNum),
+				keyword);
+		this.setResponsedJsondata(ResultDto.successWithData(employees));
+		return NONE;
 	}
 
 	@Override

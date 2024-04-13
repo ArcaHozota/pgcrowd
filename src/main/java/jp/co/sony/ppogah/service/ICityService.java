@@ -19,7 +19,7 @@ public interface ICityService {
 	 * @param districtId 地域ID
 	 * @return ResultDto<String>
 	 */
-	ResultDto<String> check(String name, Long districtId);
+	ResultDto<String> checkDuplicated(String name, Long districtId);
 
 	/**
 	 * キーワードによって都市情報を検索する
@@ -36,7 +36,7 @@ public interface ICityService {
 	 * @param id 都市ID
 	 * @return ResultDto<String>
 	 */
-	ResultDto<String> removeById(Long id);
+	ResultDto<String> remove(Long id);
 
 	/**
 	 * 都市情報追加

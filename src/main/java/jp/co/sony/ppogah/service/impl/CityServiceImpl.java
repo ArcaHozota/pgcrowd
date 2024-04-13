@@ -49,7 +49,7 @@ public final class CityServiceImpl implements ICityService {
 	private final DistrictRepository districtRepository;
 
 	@Override
-	public ResultDto<String> check(final String name, final Long districtId) {
+	public ResultDto<String> checkDuplicated(final String name, final Long districtId) {
 		final District district = this.districtRepository.findById(districtId).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
@@ -102,7 +102,7 @@ public final class CityServiceImpl implements ICityService {
 	}
 
 	@Override
-	public ResultDto<String> removeById(final Long id) {
+	public ResultDto<String> remove(final Long id) {
 		final City city = this.cityRepository.findById(id).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
