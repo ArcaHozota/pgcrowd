@@ -13,8 +13,7 @@ function toSelectedPg(pageNum, keyword) {
 		url: '/pgcrowd/employee/pagination',
 		data: {
 			'pageNum': pageNum,
-			'keyword': keyword,
-			'userId': $("#toPersonal").find("p").text()
+			'keyword': keyword
 		},
 		type: 'GET',
 		dataType: 'json',
@@ -105,7 +104,7 @@ $("#addInfoBtn").on('click', function(e) {
 });
 $("#tableBody").on('click', '.delete-btn', function() {
 	let ajaxResult = $.ajax({
-		url: '/pgcrowd/employee/delete/0L',
+		url: '/pgcrowd/employee/checkDelete',
 		type: 'GET',
 		async: false
 	});
@@ -156,7 +155,7 @@ $("#emailEdit").change(function() {
 });
 $("#roleEdit").change(function() {
 	let ajaxResult = $.ajax({
-		url: '/pgcrowd/employee/delete/0L',
+		url: '/pgcrowd/employee/checkDelete',
 		type: 'GET',
 		async: false
 	});
