@@ -98,7 +98,7 @@ $("#saveInfoBtn").on('click', function() {
 });
 $("#addInfoBtn").on('click', function(e) {
 	e.preventDefault();
-	let url = '/pgcrowd/employee/to/addition';
+	let url = '/pgcrowd/employee/toAddition';
 	checkPermissionAndTransfer(url);
 });
 $("#tableBody").on('click', '.delete-btn', function() {

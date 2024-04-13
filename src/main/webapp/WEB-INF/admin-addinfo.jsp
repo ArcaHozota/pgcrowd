@@ -99,6 +99,6 @@
 		</div>
 	</div>
 	<script type="text/javascript"
-		src="../static/customizes/employee-pages.js"></script>
+		src="/static/customizes/employee-pages.js"></script>
 </body>
 </html>

@@ -56,6 +56,17 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	private transient ResultDto<Object> responsedJsondata;
 
 	/**
+	 * ログアウトする
+	 *
+	 * @return String
+	 */
+	@Action("checkDelete")
+	public String checkDelete() {
+		this.setResponsedJsondata(ResultDto.successWithoutData());
+		return NONE;
+	}
+
+	/**
 	 * ログイン画面初期表示する
 	 *
 	 * @return String
@@ -110,6 +121,16 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	@Override
 	public void setServletRequest(final HttpServletRequest request) {
 		this.request = request;
+	}
+
+	/**
+	 * 情報追加画面へ移動する
+	 *
+	 * @return String
+	 */
+	@Action(value = "toAddition", results = { @Result(name = "success", location = "/WEB-INF/admin-addinfo.jsp") })
+	public String toAddition() {
+		return SUCCESS;
 	}
 
 	/**
