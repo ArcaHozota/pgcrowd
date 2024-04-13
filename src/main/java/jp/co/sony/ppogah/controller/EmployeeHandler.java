@@ -94,8 +94,8 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 */
 	@Action(value = "doLogin", results = { @Result(name = "success", location = "/WEB-INF/mainmenu.jsp") })
 	public String login() {
-		final String loginAccount = this.request.getParameter("loginAcct");
-		final String password = this.request.getParameter("userPswd");
+		final String loginAccount = this.getRequest().getParameter("loginAcct");
+		final String password = this.getRequest().getParameter("userPswd");
 		final Boolean loginBoolean = this.iEmployeeService.login(loginAccount, password);
 		if (Boolean.FALSE.equals(loginBoolean)) {
 			return LOGIN;
@@ -121,8 +121,8 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 */
 	@Action("pagination")
 	public String pagination() {
-		final String pageNum = this.request.getParameter("pageNum");
-		final String keyword = this.request.getParameter("keyword");
+		final String pageNum = this.getRequest().getParameter("pageNum");
+		final String keyword = this.getRequest().getParameter("keyword");
 		final Pagination<EmployeeDto> employees = this.iEmployeeService.getEmployeesByKeyword(Integer.parseInt(pageNum),
 				keyword);
 		this.setResponsedJsondata(ResultDto.successWithData(employees));
@@ -142,6 +142,22 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	@Action(value = "toAddition", results = { @Result(name = "success", location = "/WEB-INF/admin-addinfo.jsp") })
 	public String toAddition() {
 		final List<RoleDto> roleDtos = this.iRoleService.getRolesByEmployeeId(null);
+		ActionContext.getContext().put("employeeRoles", roleDtos);
+		return SUCCESS;
+	}
+
+	/**
+	 * 情報更新画面へ移動する
+	 *
+	 * @return String
+	 */
+	@Action(value = "toEdition", results = { @Result(name = "success", location = "/WEB-INF/admin-editinfo.jsp") })
+	public String toEdition() {
+		final String editId = this.getRequest().getParameter("editId");
+		final Long editedId = Long.parseLong(editId);
+		final EmployeeDto employeeDto = this.iEmployeeService.getEmployeeById(editedId);
+		final List<RoleDto> roleDtos = this.iRoleService.getRolesByEmployeeId(editedId);
+		ActionContext.getContext().put("employeeInfo", employeeDto);
 		ActionContext.getContext().put("employeeRoles", roleDtos);
 		return SUCCESS;
 	}

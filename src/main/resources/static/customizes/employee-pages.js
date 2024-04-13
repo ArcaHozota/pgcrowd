@@ -130,7 +130,7 @@ $("#tableBody").on('click', '.delete-btn', function() {
 });
 $("#tableBody").on('click', '.edit-btn', function() {
 	let editId = $(this).attr("editId");
-	let url = '/pgcrowd/employee/to/edition?editId=' + editId;
+	let url = '/pgcrowd/employee/toEdition?editId=' + editId;
 	checkPermissionAndTransfer(url);
 });
 $("#passwordEdit").change(function() {
