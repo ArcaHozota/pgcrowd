@@ -61,7 +61,7 @@ $(document).ready(function() {
 		checkPermissionAndTransfer(url);
 	});
 	$("#employeeQueryTree").on('click', function() {
-		let url = '/pgcrowd/employee/to/pages?pageNum=1';
+		let url = '/pgcrowd/employee/toPages?pageNum=1';
 		checkPermissionAndTransfer(url);
 	});
 	$("#roleQueryTree").on('click', function() {

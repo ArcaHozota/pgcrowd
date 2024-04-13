@@ -17,15 +17,7 @@ public interface IEmployeeService {
 	 *
 	 * @param loginAccount ログインアカウント
 	 */
-	ResultDto<String> check(String loginAccount);
-
-	/**
-	 * ユーザ編集権限チェック
-	 *
-	 * @param id 社員ID
-	 * @return Boolean
-	 */
-	Boolean checkEdition(Long id);
+	ResultDto<String> checkDuplicated(String loginAccount);
 
 	/**
 	 * IDによって社員情報を取得する
@@ -42,8 +34,15 @@ public interface IEmployeeService {
 	 * @param keyword キーワード
 	 * @return Pagination<Employee>
 	 */
-	Pagination<EmployeeDto> getEmployeesByKeyword(Integer pageNum, String keyword, Long userId);
+	Pagination<EmployeeDto> getEmployeesByKeyword(Integer pageNum, String keyword);
 
+	/**
+	 * ログインする
+	 *
+	 * @param account  アカウント
+	 * @param password パスワード
+	 * @return Boolean
+	 */
 	Boolean login(String account, String password);
 
 	/**
@@ -59,7 +58,7 @@ public interface IEmployeeService {
 	 *
 	 * @param userId 社員ID
 	 */
-	void removeById(Long userId);
+	void remove(Long userId);
 
 	/**
 	 * 社員情報追加

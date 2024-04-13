@@ -16,7 +16,6 @@ function toSelectedPg(pageNum, keyword) {
 			'keyword': keyword
 		},
 		type: 'GET',
-		dataType: 'json',
 		success: function(result) {
 			buildTableBody(result);
 			buildPageInfos(result);
@@ -131,8 +130,7 @@ $("#tableBody").on('click', '.delete-btn', function() {
 });
 $("#tableBody").on('click', '.edit-btn', function() {
 	let editId = $(this).attr("editId");
-	let userId = $("#toPersonal").find("p").text();
-	let url = '/pgcrowd/employee/to/edition?editId=' + editId + '&userId=' + userId;
+	let url = '/pgcrowd/employee/to/edition?editId=' + editId;
 	checkPermissionAndTransfer(url);
 });
 $("#passwordEdit").change(function() {
@@ -210,7 +208,7 @@ $("#restoreBtn").on('click', function() {
 	let editId = $("#editId").text();
 	formReset($("#editForm"));
 	$.ajax({
-		url: '/pgcrowd/employee/inforestore',
+		url: '/pgcrowd/employee/infoRestore',
 		data: 'editId=' + editId,
 		type: 'GET',
 		dataType: 'json',

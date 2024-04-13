@@ -99,12 +99,12 @@ $(function() {
 	$("#toPersonal").on('click', function(e) {
 		e.preventDefault();
 		let userId = $(this).find("p").text();
-		let url = '/pgcrowd/employee/to/edition?editId=' + userId + '&userId=' + userId;
+		let url = '/pgcrowd/employee/to/edition?editId=' + userId;
 		checkPermissionAndTransfer(url);
 	});
 	$("#toAdmin").on('click', function(e) {
 		e.preventDefault();
-		let url = '/pgcrowd/employee/to/pages?pageNum=1';
+		let url = '/pgcrowd/employee/toPages?pageNum=1';
 		checkPermissionAndTransfer(url);
 	});
 	$("#toRole").on('click', function(e) {
@@ -118,7 +118,7 @@ $(function() {
 	});
 	$("#toPages").on('click', function(e) {
 		e.preventDefault();
-		let url = '/pgcrowd/employee/to/pages?pageNum=1';
+		let url = '/pgcrowd/employee/toPages?pageNum=1';
 		checkPermissionAndTransfer(url);
 	});
 	$("#toCategory").on('click', function(e) {

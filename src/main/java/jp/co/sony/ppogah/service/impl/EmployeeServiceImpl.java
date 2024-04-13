@@ -3,7 +3,6 @@ package jp.co.sony.ppogah.service.impl;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -21,17 +20,11 @@ import org.springframework.stereotype.Service;
 
 import jp.co.sony.ppogah.common.PgCrowdConstants;
 import jp.co.sony.ppogah.dto.EmployeeDto;
-import jp.co.sony.ppogah.entity.Authority;
 import jp.co.sony.ppogah.entity.Employee;
 import jp.co.sony.ppogah.entity.EmployeeRole;
-import jp.co.sony.ppogah.entity.Role;
-import jp.co.sony.ppogah.entity.RoleAuth;
 import jp.co.sony.ppogah.exception.PgCrowdException;
-import jp.co.sony.ppogah.repository.AuthorityRepository;
 import jp.co.sony.ppogah.repository.EmployeeRepository;
 import jp.co.sony.ppogah.repository.EmployeeRoleRepository;
-import jp.co.sony.ppogah.repository.RoleAuthRepository;
-import jp.co.sony.ppogah.repository.RoleRepository;
 import jp.co.sony.ppogah.service.IEmployeeService;
 import jp.co.sony.ppogah.utils.Pagination;
 import jp.co.sony.ppogah.utils.ResultDto;
@@ -67,52 +60,18 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	private final EmployeeRoleRepository employeeExRepository;
 
 	/**
-	 * 役割管理リポジトリ
-	 */
-	private final RoleRepository roleRepository;
-
-	/**
-	 * 役割権限連携リポジトリ
-	 */
-	private final RoleAuthRepository roleExRepository;
-
-	/**
-	 * 権限管理リポジトリ
-	 */
-	private final AuthorityRepository pgAuthRepository;
-
-	/**
 	 * 日時フォマーター
 	 */
 	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 	@Override
-	public ResultDto<String> check(final String loginAccount) {
+	public ResultDto<String> checkDuplicated(final String loginAccount) {
 		final Employee employee = new Employee();
 		employee.setLoginAccount(loginAccount);
 		final Example<Employee> example = Example.of(employee, ExampleMatcher.matching());
 		return this.employeeRepository.findOne(example).isPresent()
 				? ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_DUPLICATED)
 				: ResultDto.successWithoutData();
-	}
-
-	@Override
-	public Boolean checkEdition(final Long id) {
-		final EmployeeRole employeeRole = this.employeeExRepository.findById(id).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
-		});
-		final Role role = this.roleRepository.findById(employeeRole.getRoleId()).orElseGet(Role::new);
-		final Specification<RoleAuth> where = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("roleId"), role.getId());
-		final Specification<RoleAuth> specification = Specification.where(where);
-		final List<Long> authIds = this.roleExRepository.findAll(specification).stream().map(RoleAuth::getAuthId)
-				.collect(Collectors.toList());
-		final List<String> authList = this.pgAuthRepository.findAllById(authIds).stream().map(Authority::getName)
-				.collect(Collectors.toList());
-		if (!authList.contains("employee%edition") && !authList.contains("employee%delete")) {
-			return Boolean.FALSE;
-		}
-		return Boolean.TRUE;
 	}
 
 	@Override
@@ -130,19 +89,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
-	public Pagination<EmployeeDto> getEmployeesByKeyword(final Integer pageNum, final String keyword,
-			final Long userId) {
-		if (Boolean.FALSE.equals(this.checkEdition(userId))) {
-			final List<EmployeeDto> employeeDtos = new ArrayList<>();
-			final Employee employee = this.employeeRepository.findById(userId).orElseThrow(() -> {
-				throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
-			});
-			final EmployeeDto employeeDto = new EmployeeDto();
-			SecondBeanUtils.copyNullableProperties(employee, employeeDto);
-			employeeDto.setDateOfBirth(this.formatter.format(employee.getDateOfBirth()));
-			employeeDtos.add(employeeDto);
-			return Pagination.of(employeeDtos, employeeDtos.size(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
-		}
+	public Pagination<EmployeeDto> getEmployeesByKeyword(final Integer pageNum, final String keyword) {
 		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowdConstants.DEFAULT_PAGE_SIZE,
 				Sort.by(Direction.ASC, "id"));
 		final Specification<Employee> status = (root, query, criteriaBuilder) -> criteriaBuilder
@@ -227,7 +174,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
-	public void removeById(final Long userId) {
+	public void remove(final Long userId) {
 		final Employee employee = this.employeeRepository.findById(userId).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
 		});
@@ -244,7 +191,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		employee.setCreatedTime(LocalDateTime.now());
 		employee.setDateOfBirth(LocalDate.parse(employeeDto.getDateOfBirth(), this.formatter));
 		this.employeeRepository.saveAndFlush(employee);
-		if ((employeeDto.getRoleId() != null) && !Objects.equals(Long.valueOf(0L), employeeDto.getRoleId())) {
+		if (employeeDto.getRoleId() != null && !Objects.equals(Long.valueOf(0L), employeeDto.getRoleId())) {
 			final EmployeeRole employeeEx = new EmployeeRole();
 			employeeEx.setEmployeeId(employee.getId());
 			employeeEx.setRoleId(employeeDto.getRoleId());

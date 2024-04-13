@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import jp.co.sony.ppogah.dto.EmployeeDto;
 import jp.co.sony.ppogah.service.IEmployeeService;
 import jp.co.sony.ppogah.utils.ResultDto;
 import lombok.Getter;
@@ -28,7 +27,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Namespace("/pgcrowd/employee")
-@Results({ @Result(name = "error", location = "/WEB-INF/system-error.jsp"),
+@Results({ @Result(name = "success", location = "/WEB-INF/admin-pages.jsp"),
+		@Result(name = "error", location = "/WEB-INF/system-error.jsp"),
 		@Result(name = "none", type = "json", params = { "root", "responsedJsondata" }),
 		@Result(name = "login", location = "/WEB-INF/admin-login.jsp") })
 @ParentPackage("json-default")
@@ -51,7 +51,7 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	/**
 	 * JSONリスポンス
 	 */
-	private transient ResultDto<EmployeeDto> responsedJsondata;
+	private transient ResultDto<Object> responsedJsondata;
 
 	/**
 	 * ログイン画面初期表示する
@@ -80,7 +80,7 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	}
 
 	/**
-	 * ログインする
+	 * ログアウトする
 	 *
 	 * @return String
 	 */
@@ -90,8 +90,31 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 		return LOGIN;
 	}
 
+	/**
+	 * 情報一覧画面初期表示する
+	 *
+	 * @return String
+	 */
+	@Action("pagination")
+	public String pagination() {
+		final String pageNum = this.request.getParameter("pageNum");
+		final String keyword = this.request.getParameter("keyword");
+		this.iEmployeeService.getEmployeesByKeyword(Integer.parseInt(pageNum), keyword);
+		return SUCCESS;
+	}
+
 	@Override
 	public void setServletRequest(final HttpServletRequest request) {
 		this.request = request;
+	}
+
+	/**
+	 * 情報一覧画面へ移動する
+	 *
+	 * @return String
+	 */
+	@Action("toPages")
+	public String toPages() {
+		return SUCCESS;
 	}
 }

@@ -83,7 +83,7 @@ public final class RoleServiceImpl implements IRoleService {
 	private final RoleAuthRepository roleExRepository;
 
 	@Override
-	public ResultDto<String> check(final String name) {
+	public ResultDto<String> checkDuplicated(final String name) {
 		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(DELETE_FLG),
 				PgCrowdConstants.LOGIC_DELETE_INITIAL);
 		final Specification<Role> where2 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(ROLE_NAME),
@@ -219,7 +219,7 @@ public final class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
-	public ResultDto<String> removeById(final Long id) {
+	public ResultDto<String> remove(final Long id) {
 		final Specification<EmployeeRole> where = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get(ROLE_ID), id);
 		final Specification<EmployeeRole> specification = Specification.where(where);
