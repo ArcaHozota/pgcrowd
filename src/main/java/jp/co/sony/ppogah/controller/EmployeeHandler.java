@@ -1,5 +1,7 @@
 package jp.co.sony.ppogah.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,10 +13,13 @@ import org.apache.struts2.convention.annotation.Results;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.springframework.stereotype.Controller;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import jp.co.sony.ppogah.dto.EmployeeDto;
+import jp.co.sony.ppogah.dto.RoleDto;
 import jp.co.sony.ppogah.service.IEmployeeService;
+import jp.co.sony.ppogah.service.IRoleService;
 import jp.co.sony.ppogah.utils.Pagination;
 import jp.co.sony.ppogah.utils.ResultDto;
 import lombok.Getter;
@@ -44,6 +49,12 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 */
 	@Resource
 	private IEmployeeService iEmployeeService;
+
+	/**
+	 * 社員サービスインターフェス
+	 */
+	@Resource
+	private IRoleService iRoleService;
 
 	/**
 	 * リクエスト
@@ -130,6 +141,8 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 */
 	@Action(value = "toAddition", results = { @Result(name = "success", location = "/WEB-INF/admin-addinfo.jsp") })
 	public String toAddition() {
+		final List<RoleDto> employeeRoles = this.iRoleService.getRolesByEmployeeId(null);
+		ActionContext.getContext().put("employeeRoles", employeeRoles);
 		return SUCCESS;
 	}
 
