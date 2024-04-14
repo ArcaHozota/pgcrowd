@@ -11,7 +11,7 @@
 			<%@include file="/WEB-INF/include-sidebar.jsp"%>
 			<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
 				<nav
-					style="-bs-breadcrumb-divider: url(&amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #34; data: image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&amp;amp;"
+					style="-bs-breadcrumb-divider: url(&amp; #34; data: image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&amp;#34;);"
 					aria-label="breadcrumb">
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item"><a href="#"
@@ -35,8 +35,7 @@
 								<label for="loginAccountEdit"
 									class="col-sm-3 col-form-label text-end">ログインアカウント</label>
 								<div class="col-sm-7" style="height: 60px;">
-									<p class="form-control" id="loginAccountEdit"
-										text="${arawaseta.loginAccount}" />
+									<p class="form-control" id="loginAccountEdit">${arawaseta.loginAccount}</p>
 								</div>
 							</div>
 							<div class="form-group row">

@@ -101,6 +101,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 			final List<EmployeeDto> employeeDtos = pages.stream().map(item -> {
 				final EmployeeDto employeeDto = new EmployeeDto();
 				SecondBeanUtils.copyNullableProperties(item, employeeDto);
+				employeeDto.setId(item.getId().toString());
 				employeeDto.setDateOfBirth(this.formatter.format(item.getDateOfBirth()));
 				return employeeDto;
 			}).collect(Collectors.toList());
@@ -119,6 +120,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		final List<EmployeeDto> employeeDtos = pages.stream().map(item -> {
 			final EmployeeDto employeeDto = new EmployeeDto();
 			SecondBeanUtils.copyNullableProperties(item, employeeDto);
+			employeeDto.setId(item.getId().toString());
 			employeeDto.setDateOfBirth(this.formatter.format(item.getDateOfBirth()));
 			return employeeDto;
 		}).collect(Collectors.toList());
