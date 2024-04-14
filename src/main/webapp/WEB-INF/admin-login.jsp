@@ -1,5 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="ja-JP">
 <head>
@@ -9,43 +10,42 @@
 <meta name="_csrf_header" content="${_csrf.headerName}">
 <meta name="_csrf_token" content="${_csrf.token}">
 <link rel="stylesheet" href="/static/css/style.css">
-<link rel="shortcut icon" type="image/x-icon"
-	href="/static/favicon.ico">
-<script type="text/javascript"
-	src="/static/jquery/jquery-3.7.1.min.js"></script>
+<link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico">
+<script type="text/javascript" src="/static/jquery/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="/static/layer/layer.js"></script>
 </head>
 <body>
 	<style type="text/css">
-		input[type=password]::-ms-reveal {
-			display: none;
-		}
-		
-		input[type=password]::-ms-clear {
-			display: none;
-		}
-		
-		input[type=password]::-o-clear {
-			display: none;
-		}
-		
-		.input-box #eyeIcons {
-			position: absolute;
-			cursor: pointer;
-			right: 30px;
-			color: #fff;
-			font-size: 1.2em;
-			top: 20px;
-		}
-	</style>
+input[type=password]::-ms-reveal {
+	display: none;
+}
+
+input[type=password]::-ms-clear {
+	display: none;
+}
+
+input[type=password]::-o-clear {
+	display: none;
+}
+
+.input-box #eyeIcons {
+	position: absolute;
+	cursor: pointer;
+	right: 30px;
+	color: #fff;
+	font-size: 1.2em;
+	top: 20px;
+}
+</style>
 	<div class="container">
 		<%-- <p
 			th:text="${session['SPRING_SECURITY_LAST_EXCEPTION']} eq null ? '' : ${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"
 			id="errorMsg" hidden />
 		<p th:text="${registeredEmail eq null ? '' : registeredEmail}"
-			id="emailAddress" hidden />
-		<p th:text="${torokuMsg eq null ? '' : torokuMsg}" id="torokuMsg"
-			hidden /> --%>
+			id="emailAddress" hidden /> --%>
+		<c:if test="${torokuMsg} != null">
+			<p id="torokuMsg" style="display: none;">${torokuMsg}</p>
+		</c:if>
 		<div class="login-box">
 			<%--Login Form--%>
 			<form action="/pgcrowd/employee/doLogin" method="post"
@@ -79,7 +79,6 @@
 		<script nomodule
 			src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 	</div>
-	<script type="text/javascript"
-		src="/static/customizes/logintoroku.js"></script>
+	<script type="text/javascript" src="/static/customizes/logintoroku.js"></script>
 </body>
 </html>

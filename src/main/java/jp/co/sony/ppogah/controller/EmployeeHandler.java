@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import jp.co.sony.ppogah.common.PgCrowdConstants;
 import jp.co.sony.ppogah.dto.EmployeeDto;
 import jp.co.sony.ppogah.dto.RoleDto;
 import jp.co.sony.ppogah.service.IEmployeeService;
@@ -181,6 +182,29 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 */
 	@Action("toPages")
 	public String toPages() {
+		return SUCCESS;
+	}
+
+	/**
+	 * 登録する
+	 *
+	 * @return String
+	 */
+	@Action(value = "toroku", results = { @Result(name = "success", location = "/WEB-INF/admin-login.jsp") })
+	public String toroku() {
+		final String email = this.getRequest().getParameter("email");
+		final String password = this.getRequest().getParameter("password");
+		final String dateOfBirth = this.getRequest().getParameter("dateOfBirth");
+		final EmployeeDto employeeDto = new EmployeeDto();
+		employeeDto.setEmail(email);
+		employeeDto.setPassword(password);
+		employeeDto.setDateOfBirth(dateOfBirth);
+		final Boolean toroku = this.iEmployeeService.register(employeeDto);
+		if (Boolean.FALSE.equals(toroku)) {
+			ActionContext.getContext().put("torokuMsg", PgCrowdConstants.MESSAGE_TOROKU_FAILURE);
+		} else {
+			ActionContext.getContext().put("torokuMsg", PgCrowdConstants.MESSAGE_TOROKU_SUCCESS);
+		}
 		return SUCCESS;
 	}
 
