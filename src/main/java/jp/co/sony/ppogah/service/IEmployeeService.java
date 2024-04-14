@@ -25,7 +25,7 @@ public interface IEmployeeService {
 	 * @param id 社員ID
 	 * @return Employee
 	 */
-	EmployeeDto getEmployeeById(Long id);
+	EmployeeDto getEmployeeById(String id);
 
 	/**
 	 * キーワードによって社員情報を取得する

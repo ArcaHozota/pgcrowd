@@ -75,11 +75,12 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
-	public EmployeeDto getEmployeeById(final Long id) {
-		final Employee employee = this.employeeRepository.findById(id).orElseThrow(() -> {
+	public EmployeeDto getEmployeeById(final String id) {
+		final Employee employee = this.employeeRepository.findById(Long.parseLong(id)).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
-		final EmployeeRole employeeRole = this.employeeExRepository.findById(id).orElseGet(EmployeeRole::new);
+		final EmployeeRole employeeRole = this.employeeExRepository.findById(Long.parseLong(id))
+				.orElseGet(EmployeeRole::new);
 		final EmployeeDto employeeDto = new EmployeeDto();
 		SecondBeanUtils.copyNullableProperties(employee, employeeDto);
 		employeeDto.setPassword(PgCrowdConstants.DEFAULT_ROLE_NAME);

@@ -149,7 +149,7 @@ public final class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
-	public List<RoleDto> getRolesByEmployeeId(final Long employeeId) {
+	public List<RoleDto> getRolesByEmployeeId(final String employeeId) {
 		final List<RoleDto> secondRoles = new ArrayList<>();
 		final RoleDto secondRole = new RoleDto();
 		secondRole.setId("0");
@@ -167,7 +167,7 @@ public final class RoleServiceImpl implements IRoleService {
 		if (employeeId == null) {
 			return secondRoles;
 		}
-		final Optional<EmployeeRole> roledOptional = this.employeeExRepository.findById(employeeId);
+		final Optional<EmployeeRole> roledOptional = this.employeeExRepository.findById(Long.parseLong(employeeId));
 		if (roledOptional.isEmpty()) {
 			return secondRoles;
 		}

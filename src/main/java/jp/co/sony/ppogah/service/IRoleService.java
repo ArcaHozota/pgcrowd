@@ -61,7 +61,7 @@ public interface IRoleService {
 	 * @param employeeId 社員ID
 	 * @return List<String>
 	 */
-	List<RoleDto> getRolesByEmployeeId(Long employeeId);
+	List<RoleDto> getRolesByEmployeeId(String employeeId);
 
 	/**
 	 * キーワードによって役割情報を取得する

@@ -154,9 +154,8 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	@Action(value = "toEdition", results = { @Result(name = "success", location = "/WEB-INF/admin-editinfo.jsp") })
 	public String toEdition() {
 		final String editId = this.getRequest().getParameter("editId");
-		final Long editedId = Long.parseLong(editId);
-		final EmployeeDto employeeDto = this.iEmployeeService.getEmployeeById(editedId);
-		final List<RoleDto> roleDtos = this.iRoleService.getRolesByEmployeeId(editedId);
+		final EmployeeDto employeeDto = this.iEmployeeService.getEmployeeById(editId);
+		final List<RoleDto> roleDtos = this.iRoleService.getRolesByEmployeeId(editId);
 		ActionContext.getContext().put("employeeInfo", employeeDto);
 		ActionContext.getContext().put("employeeRoles", roleDtos);
 		return SUCCESS;
