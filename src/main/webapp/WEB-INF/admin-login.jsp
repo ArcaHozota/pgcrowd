@@ -40,11 +40,12 @@ input[type=password]::-o-clear {
 	<div class="container">
 		<%-- <p
 			th:text="${session['SPRING_SECURITY_LAST_EXCEPTION']} eq null ? '' : ${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"
-			id="errorMsg" hidden />
-		<p th:text="${registeredEmail eq null ? '' : registeredEmail}"
-			id="emailAddress" hidden /> --%>
+			id="errorMsg" hidden /> --%>
+		<c:if test="${registeredEmail} != null">
+			<input value="${registeredEmail}" id="emailAddress" hidden>
+		</c:if>
 		<c:if test="${torokuMsg} != null">
-			<p id="torokuMsg" style="display: none;">${torokuMsg}</p>
+			<input value="${torokuMsg}" id="torokuMsg" hidden>
 		</c:if>
 		<div class="login-box">
 			<%--Login Form--%>

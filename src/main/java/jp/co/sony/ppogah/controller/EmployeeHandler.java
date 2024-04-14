@@ -205,6 +205,7 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 		} else {
 			ActionContext.getContext().put("torokuMsg", PgCrowdConstants.MESSAGE_TOROKU_SUCCESS);
 		}
+		ActionContext.getContext().put("registeredEmail", email);
 		return SUCCESS;
 	}
 

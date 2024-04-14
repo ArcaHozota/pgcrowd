@@ -28,12 +28,12 @@ $(document).ready(function() {
 	if (message1 !== '') {
 		layer.msg(message1);
 	}
-	let message2 = $("#torokuMsg").text();
-	if (message2 !== '') {
+	let message2 = $("#torokuMsg").val();
+	if (message2 !== '' || message2 !== undefined) {
 		layer.msg(message2);
 	}
-	let email = $("#emailAddress").text();
-	if (email !== '') {
+	let email = $("#emailAddress").val();
+	if (email !== '' || email !== undefined) {
 		$("#accountIpt").val(email);
 	}
 });
