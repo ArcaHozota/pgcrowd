@@ -28,7 +28,7 @@
 					<div class="card-body">
 						<form role="form" id="editForm">
 							<c:set var="arawaseta" value="${employeeInfo}" />
-							<input value="${arawaseta.id}" id="editId" hidden>
+							<input type="hidden" name="${arawaseta.id}" id="editId">
 							<div class="form-group row">
 								<label for="loginAccountEdit"
 									class="col-sm-3 col-form-label text-end">ログインアカウント</label>
@@ -97,6 +97,6 @@
 		</div>
 	</div>
 	<script type="text/javascript"
-		src="../static/customizes/employee-pages.js"></script>
+		src="/static/customizes/employee-pages.js"></script>
 </body>
 </html>

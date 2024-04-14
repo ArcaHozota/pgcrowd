@@ -24,18 +24,6 @@ $(document).ready(function() {
 			flag = 0;
 		}
 	});
-	let message1 = $("#errorMsg").text();
-	if (message1 !== '') {
-		layer.msg(message1);
-	}
-	let message2 = $("#torokuMsg").val();
-	if (message2 !== '' || message2 !== undefined) {
-		layer.msg(message2);
-	}
-	let email = $("#emailAddress").val();
-	if (email !== '' || email !== undefined) {
-		$("#accountIpt").val(email);
-	}
 });
 $("#loginBtn").on('click', function() {
 	let account = $("#accountIpt").val().trim();

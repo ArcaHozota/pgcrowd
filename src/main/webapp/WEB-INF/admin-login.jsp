@@ -41,21 +41,18 @@ input[type=password]::-o-clear {
 		<%-- <p
 			th:text="${session['SPRING_SECURITY_LAST_EXCEPTION']} eq null ? '' : ${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"
 			id="errorMsg" hidden /> --%>
-		<c:if test="${registeredEmail} != null">
-			<input value="${registeredEmail}" id="emailAddress" hidden>
-		</c:if>
-		<c:if test="${torokuMsg} != null">
-			<input value="${torokuMsg}" id="torokuMsg" hidden>
-		</c:if>
 		<div class="login-box">
 			<%--Login Form--%>
+			<c:if test="${registeredEmail} != null">
+				<c:set value="${registeredEmail}" var="emailAddr"></c:set>
+			</c:if>
 			<form action="/pgcrowd/employee/doLogin" method="post"
 				class="form-signin" role="form" id="loginForm">
 				<h2>ログイン</h2>
 				<div class="input-box">
 					<ion-icon name="mail-outline"></ion-icon>
-					<input type="text" name="loginAcct" id="accountIpt"
-						placeholder="アカウント" required>
+					<input type="text" value="${emailAddr}" name="loginAcct"
+						id="accountIpt" placeholder="アカウント" required>
 				</div>
 				<div class="input-box">
 					<ion-icon name="lock-closed-outline"></ion-icon>
