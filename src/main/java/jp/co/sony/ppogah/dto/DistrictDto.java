@@ -18,7 +18,7 @@ public final class DistrictDto implements Serializable {
 	/**
 	 * ID
 	 */
-	private Long id;
+	private String id;
 
 	/**
 	 * 名称

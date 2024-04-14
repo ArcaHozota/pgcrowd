@@ -72,6 +72,7 @@ public final class CityServiceImpl implements ICityService {
 			final List<CityDto> cityDtos = pages.stream().map(item -> {
 				final CityDto cityDto = new CityDto();
 				SecondBeanUtils.copyNullableProperties(item, cityDto);
+				cityDto.setId(item.getId().toString());
 				return cityDto;
 			}).collect(Collectors.toList());
 			return Pagination.of(cityDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
@@ -96,6 +97,7 @@ public final class CityServiceImpl implements ICityService {
 		final List<CityDto> cityDtos = pages.stream().map(item -> {
 			final CityDto cityDto = new CityDto();
 			SecondBeanUtils.copyNullableProperties(item, cityDto);
+			cityDto.setId(item.getId().toString());
 			return cityDto;
 		}).collect(Collectors.toList());
 		return Pagination.of(cityDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
@@ -125,7 +127,7 @@ public final class CityServiceImpl implements ICityService {
 
 	@Override
 	public ResultDto<String> update(final CityDto cityDto) {
-		final City city = this.cityRepository.findById(cityDto.getId()).orElseThrow(() -> {
+		final City city = this.cityRepository.findById(Long.parseLong(cityDto.getId())).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
 		final City originalEntity = new City();

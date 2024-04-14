@@ -56,14 +56,15 @@ public final class DistrictServiceImpl implements IDistrictService {
 		final List<DistrictDto> districtDtos1 = districts.stream().map(item -> {
 			final DistrictDto districtDto = new DistrictDto();
 			SecondBeanUtils.copyNullableProperties(item, districtDto);
+			districtDto.setId(item.getId().toString());
 			districtDto.setShutoName(item.getCities().stream().filter(a -> Objects.equals(a.getId(), item.getShutoId()))
 					.collect(Collectors.toList()).get(0).getName());
 			districtDto.setPopulation(item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get());
 			return districtDto;
-		}).sorted(Comparator.comparingLong(DistrictDto::getId)).collect(Collectors.toList());
+		}).sorted(Comparator.comparingLong(a -> Long.parseLong(a.getId()))).collect(Collectors.toList());
 		if (StringUtils.isEmpty(cityId) || !StringUtils.isDigital(cityId)) {
 			final DistrictDto districtDto = new DistrictDto();
-			districtDto.setId(0L);
+			districtDto.setId("0");
 			districtDto.setName(PgCrowdConstants.DEFAULT_ROLE_NAME);
 			districtDtos.add(districtDto);
 			districtDtos.addAll(districtDtos1);
@@ -77,6 +78,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 				.collect(Collectors.toList()).get(0);
 		final DistrictDto districtDto = new DistrictDto();
 		SecondBeanUtils.copyNullableProperties(district, districtDto);
+		districtDto.setId(district.getId().toString());
 		districtDto.setShutoName(
 				district.getCities().stream().filter(a -> Objects.equals(a.getId(), district.getShutoId()))
 						.collect(Collectors.toList()).get(0).getName());
@@ -98,6 +100,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 			final List<DistrictDto> districtDtos = pages.stream().map(item -> {
 				final DistrictDto districtDto = new DistrictDto();
 				SecondBeanUtils.copyNullableProperties(item, districtDto);
+				districtDto.setId(item.getId().toString());
 				districtDto.setShutoName(
 						item.getCities().stream().filter(a -> Objects.equals(a.getId(), item.getShutoId()))
 								.collect(Collectors.toList()).get(0).getName());
@@ -112,6 +115,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 		final List<DistrictDto> districtDtos = pages.stream().map(item -> {
 			final DistrictDto districtDto = new DistrictDto();
 			SecondBeanUtils.copyNullableProperties(item, districtDto);
+			districtDto.setId(item.getId().toString());
 			districtDto.setShutoName(item.getCities().stream().filter(a -> Objects.equals(a.getId(), item.getShutoId()))
 					.collect(Collectors.toList()).get(0).getName());
 			districtDto.setPopulation(item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get());
@@ -122,9 +126,10 @@ public final class DistrictServiceImpl implements IDistrictService {
 
 	@Override
 	public ResultDto<String> update(final DistrictDto districtDto) {
-		final District district = this.districtRepository.findById(districtDto.getId()).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
-		});
+		final District district = this.districtRepository.findById(Long.parseLong(districtDto.getId()))
+				.orElseThrow(() -> {
+					throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
+				});
 		final District originalEntity = new District();
 		SecondBeanUtils.copyNullableProperties(district, originalEntity);
 		SecondBeanUtils.copyNullableProperties(districtDto, district);

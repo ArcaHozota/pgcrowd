@@ -18,7 +18,7 @@ public final class RoleDto implements Serializable {
 	/**
 	 * ID
 	 */
-	private Long id;
+	private String id;
 
 	/**
 	 * 名称

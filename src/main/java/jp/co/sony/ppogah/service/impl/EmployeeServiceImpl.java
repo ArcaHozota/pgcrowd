@@ -191,7 +191,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		employee.setCreatedTime(LocalDateTime.now());
 		employee.setDateOfBirth(LocalDate.parse(employeeDto.getDateOfBirth(), this.formatter));
 		this.employeeRepository.saveAndFlush(employee);
-		if (employeeDto.getRoleId() != null && !Objects.equals(Long.valueOf(0L), employeeDto.getRoleId())) {
+		if ((employeeDto.getRoleId() != null) && !Objects.equals(Long.valueOf(0L), employeeDto.getRoleId())) {
 			final EmployeeRole employeeEx = new EmployeeRole();
 			employeeEx.setEmployeeId(employee.getId());
 			employeeEx.setRoleId(employeeDto.getRoleId());
@@ -201,12 +201,13 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
 	public ResultDto<String> update(final EmployeeDto employeeDto) {
-		final Employee employee = this.employeeRepository.findById(employeeDto.getId()).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
-		});
+		final Employee employee = this.employeeRepository.findById(Long.parseLong(employeeDto.getId()))
+				.orElseThrow(() -> {
+					throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
+				});
 		final Employee originalEntity = new Employee();
 		SecondBeanUtils.copyNullableProperties(employee, originalEntity);
-		final EmployeeRole employeeRole = this.employeeExRepository.findById(employeeDto.getId())
+		final EmployeeRole employeeRole = this.employeeExRepository.findById(Long.parseLong(employeeDto.getId()))
 				.orElseGet(EmployeeRole::new);
 		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
 		employee.setDateOfBirth(LocalDate.parse(employeeDto.getDateOfBirth(), this.formatter));

@@ -152,7 +152,7 @@ public final class RoleServiceImpl implements IRoleService {
 	public List<RoleDto> getRolesByEmployeeId(final Long employeeId) {
 		final List<RoleDto> secondRoles = new ArrayList<>();
 		final RoleDto secondRole = new RoleDto();
-		secondRole.setId(0L);
+		secondRole.setId("0");
 		secondRole.setName(PgCrowdConstants.DEFAULT_ROLE_NAME);
 		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(DELETE_FLG),
 				PgCrowdConstants.LOGIC_DELETE_INITIAL);
@@ -246,7 +246,7 @@ public final class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public ResultDto<String> update(final RoleDto roleDto) {
-		final Role role = this.roleRepository.findById(roleDto.getId()).orElseThrow(() -> {
+		final Role role = this.roleRepository.findById(Long.parseLong(roleDto.getId())).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
 		final Role originalEntity = new Role();

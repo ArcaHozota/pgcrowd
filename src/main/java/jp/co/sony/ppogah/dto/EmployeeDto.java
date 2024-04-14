@@ -18,7 +18,7 @@ public final class EmployeeDto implements Serializable {
 	/**
 	 * ID
 	 */
-	private Long id;
+	private String id;
 
 	/**
 	 * アカウント
