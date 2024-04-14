@@ -162,6 +162,16 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	}
 
 	/**
+	 * メインメニューへ移動する
+	 *
+	 * @return String
+	 */
+	@Action(value = "toMainmenu", results = { @Result(name = "success", location = "/WEB-INF/mainmenu.jsp") })
+	public String toMainmenu() {
+		return SUCCESS;
+	}
+
+	/**
 	 * 情報一覧画面へ移動する
 	 *
 	 * @return String

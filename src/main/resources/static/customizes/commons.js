@@ -90,11 +90,11 @@ $(function() {
 	});
 	$("#toMainmenu").on('click', function(e) {
 		e.preventDefault();
-		window.location.replace('/pgcrowd/to/mainmenu');
+		window.location.replace('/pgcrowd/employee/toMainmenu');
 	});
 	$("#toMainmenu2").on('click', function(e) {
 		e.preventDefault();
-		window.location.replace('/pgcrowd/to/mainmenu');
+		window.location.replace('/pgcrowd/employee/toMainmenu');
 	});
 	$("#toPersonal").on('click', function(e) {
 		e.preventDefault();

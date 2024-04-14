@@ -4,7 +4,7 @@
 	data-bs-theme="dark">
 	<div class="container-fluid">
 		<a class="navbar-brand" style="font-size: 24px;"
-			href="/pgcrowd/to/mainmenu">PGアプリケーション</a>
+			href="/pgcrowd/employee/toMainmenu">PGアプリケーション</a>
 		<div class="collapse navbar-collapse">
 			<div class="input-group d-flex justify-content-end">
 				<input type="text" class="form-control" id="searchInput"
