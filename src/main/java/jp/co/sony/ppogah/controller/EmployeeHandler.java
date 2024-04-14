@@ -129,6 +129,9 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 		return NONE;
 	}
 
+	/**
+	 * @see org.apache.struts2.interceptor.ServletRequestAware.setServletRequest();
+	 */
 	@Override
 	public void setServletRequest(final HttpServletRequest request) {
 		this.request = request;
@@ -178,6 +181,16 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 */
 	@Action("toPages")
 	public String toPages() {
+		return SUCCESS;
+	}
+
+	/**
+	 * 登録画面へ移動する
+	 *
+	 * @return String
+	 */
+	@Action(value = "toSignUp", results = { @Result(name = "success", location = "/WEB-INF/admin-toroku.jsp") })
+	public String toSignUp() {
 		return SUCCESS;
 	}
 }

@@ -41,7 +41,7 @@
 									<th scope="col" class="text-center" style="width: 70px;">名称</th>
 									<th scope="col" class="text-center" style="width: 100px;">メール</th>
 									<th scope="col" class="text-center" style="width: 70px;">生年月日</th>
-									<th scope="col" class="text-center" style="width: 100px;">操作</th>
+									<th scope="col" class="text-center" style="width: 100px;">操作</th>
 								</tr>
 							</thead>
 							<tbody id="tableBody" class="table-group-divider"></tbody>

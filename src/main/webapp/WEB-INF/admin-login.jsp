@@ -69,7 +69,7 @@
 				<button type="button" id="loginBtn">ログイン</button>
 				<div class="register-link">
 					<p>
-						アカウント無し？<a href="/pgcrowd/employee/to/signup">登録しましょう！</a>
+						アカウント無し？<a href="/pgcrowd/employee/toSignUp">登録しましょう！</a>
 					</p>
 				</div>
 			</form>
