@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -65,16 +66,98 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	/**
 	 * JSONリスポンス
 	 */
-	private transient ResultDto<Object> responsedJsondata;
+	private transient ResultDto<? extends Object> responsedJsondata;
 
 	/**
-	 * ログアウトする
+	 * 情報転送クラス
+	 */
+	private final EmployeeDto employeeDto = new EmployeeDto();
+
+	/**
+	 * ID
+	 */
+	private String id;
+
+	/**
+	 * アカウント
+	 */
+	private String loginAccount;
+
+	/**
+	 * ユーザ名称
+	 */
+	private String username;
+
+	/**
+	 * パスワード
+	 */
+	private String password;
+
+	/**
+	 * メール
+	 */
+	private String email;
+
+	/**
+	 * 生年月日
+	 */
+	private String dateOfBirth;
+
+	/**
+	 * 役割ID
+	 */
+	private String roleId;
+
+	/**
+	 * getter for employeeDto
+	 *
+	 * @return EmployeeDto
+	 */
+	public EmployeeDto getEmployeeDto() {
+		this.employeeDto.setId(this.getId());
+		this.employeeDto.setLoginAccount(this.getLoginAccount());
+		this.employeeDto.setUsername(this.getUsername());
+		this.employeeDto.setPassword(this.getPassword());
+		this.employeeDto.setEmail(this.getEmail());
+		this.employeeDto.setDateOfBirth(this.getDateOfBirth());
+		this.employeeDto.setRoleId(this.getRoleId());
+		return this.employeeDto;
+	}
+
+	/**
+	 * 社員情報を削除する
 	 *
 	 * @return String
 	 */
-	@Action("checkDelete")
-	public String checkDelete() {
+	@Action("infoDelete")
+	public String infoDelete() {
+		final String userId = this.getRequest().getParameter("userId");
+		this.iEmployeeService.remove(Long.parseLong(userId));
 		this.setResponsedJsondata(ResultDto.successWithoutData());
+		return NONE;
+	}
+
+	/**
+	 * 社員情報を保存する
+	 *
+	 * @return String
+	 */
+	@Action(value = "infoSave", interceptorRefs = { @InterceptorRef(value = "json") })
+	public String infoSave() {
+		this.iEmployeeService.save(this.getEmployeeDto());
+		this.setResponsedJsondata(ResultDto.successWithoutData());
+		return NONE;
+	}
+
+	/**
+	 * 社員情報を更新する
+	 *
+	 * @return String
+	 */
+	@Action(value = "infoUpdate", interceptorRefs = { @InterceptorRef(value = "json") })
+	public String infoUpdate() {
+		final ResultDto<String> updateInfo = this.iEmployeeService.update(this.getEmployeeDto());
+		this.setResponsedJsondata(updateInfo);
 		return NONE;
 	}
 
@@ -158,9 +241,9 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	@Action(value = "toEdition", results = { @Result(name = "success", location = "/WEB-INF/admin-editinfo.jsp") })
 	public String toEdition() {
 		final String editId = this.getRequest().getParameter("editId");
-		final EmployeeDto employeeDto = this.iEmployeeService.getEmployeeById(editId);
+		final EmployeeDto employeeDto2 = this.iEmployeeService.getEmployeeById(editId);
 		final List<RoleDto> roleDtos = this.iRoleService.getRolesByEmployeeId(editId);
-		ActionContext.getContext().put("employeeInfo", employeeDto);
+		ActionContext.getContext().put("employeeInfo", employeeDto2);
 		ActionContext.getContext().put("employeeRoles", roleDtos);
 		return SUCCESS;
 	}
@@ -195,11 +278,11 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 		final String email = this.getRequest().getParameter("email");
 		final String password = this.getRequest().getParameter("password");
 		final String dateOfBirth = this.getRequest().getParameter("dateOfBirth");
-		final EmployeeDto employeeDto = new EmployeeDto();
-		employeeDto.setEmail(email);
-		employeeDto.setPassword(password);
-		employeeDto.setDateOfBirth(dateOfBirth);
-		final Boolean toroku = this.iEmployeeService.register(employeeDto);
+		final EmployeeDto employeeDto2 = new EmployeeDto();
+		employeeDto2.setEmail(email);
+		employeeDto2.setPassword(password);
+		employeeDto2.setDateOfBirth(dateOfBirth);
+		final Boolean toroku = this.iEmployeeService.register(employeeDto2);
 		if (Boolean.FALSE.equals(toroku)) {
 			ActionContext.getContext().put("torokuMsg", PgCrowdConstants.MESSAGE_TOROKU_FAILURE);
 		} else {

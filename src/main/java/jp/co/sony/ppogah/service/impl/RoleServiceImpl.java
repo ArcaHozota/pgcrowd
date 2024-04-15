@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -160,6 +159,7 @@ public final class RoleServiceImpl implements IRoleService {
 		final List<RoleDto> roleDtos = this.roleRepository.findAll(specification1).stream().map(item -> {
 			final RoleDto roleDto = new RoleDto();
 			SecondBeanUtils.copyNullableProperties(item, roleDto);
+			roleDto.setId(item.getId().toString());
 			return roleDto;
 		}).collect(Collectors.toList());
 		secondRoles.add(secondRole);
@@ -173,8 +173,8 @@ public final class RoleServiceImpl implements IRoleService {
 		}
 		secondRoles.clear();
 		final Long roleId = roledOptional.get().getRoleId();
-		final List<RoleDto> selectedRole = roleDtos.stream().filter(a -> Objects.equals(a.getId(), roleId))
-				.collect(Collectors.toList());
+		final List<RoleDto> selectedRole = roleDtos.stream()
+				.filter(a -> StringUtils.isEqual(roleId.toString(), a.getId())).collect(Collectors.toList());
 		secondRoles.addAll(selectedRole);
 		secondRoles.addAll(roleDtos);
 		return secondRoles.stream().distinct().collect(Collectors.toList());

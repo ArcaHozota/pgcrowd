@@ -85,7 +85,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		SecondBeanUtils.copyNullableProperties(employee, employeeDto);
 		employeeDto.setPassword(PgCrowdConstants.DEFAULT_ROLE_NAME);
 		employeeDto.setDateOfBirth(this.formatter.format(employee.getDateOfBirth()));
-		employeeDto.setRoleId(employeeRole.getRoleId());
+		employeeDto.setRoleId(employeeRole.getRoleId().toString());
 		return employeeDto;
 	}
 
@@ -183,6 +183,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		});
 		employee.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_FLG);
 		this.employeeRepository.saveAndFlush(employee);
+		this.employeeExRepository.deleteById(userId);
 	}
 
 	@Override
@@ -194,10 +195,11 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		employee.setCreatedTime(LocalDateTime.now());
 		employee.setDateOfBirth(LocalDate.parse(employeeDto.getDateOfBirth(), this.formatter));
 		this.employeeRepository.saveAndFlush(employee);
-		if ((employeeDto.getRoleId() != null) && !Objects.equals(Long.valueOf(0L), employeeDto.getRoleId())) {
+		if (StringUtils.isNotEmpty(employeeDto.getRoleId())
+				&& !Objects.equals(Long.valueOf(0L), Long.parseLong(employeeDto.getRoleId()))) {
 			final EmployeeRole employeeEx = new EmployeeRole();
 			employeeEx.setEmployeeId(employee.getId());
-			employeeEx.setRoleId(employeeDto.getRoleId());
+			employeeEx.setRoleId(Long.parseLong(employeeDto.getRoleId()));
 			this.employeeExRepository.saveAndFlush(employeeEx);
 		}
 	}
@@ -214,7 +216,8 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 				.orElseGet(EmployeeRole::new);
 		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
 		employee.setDateOfBirth(LocalDate.parse(employeeDto.getDateOfBirth(), this.formatter));
-		if (originalEntity.equals(employee) && Objects.equals(employeeRole.getRoleId(), employeeDto.getRoleId())) {
+		if (originalEntity.equals(employee)
+				&& Objects.equals(employeeRole.getRoleId(), Long.parseLong(employeeDto.getRoleId()))) {
 			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_NOCHANGE);
 		}
 		this.employeeRepository.saveAndFlush(employee);

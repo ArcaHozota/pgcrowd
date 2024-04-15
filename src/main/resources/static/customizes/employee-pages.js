@@ -93,7 +93,7 @@ $("#saveInfoBtn").on('click', function() {
 			'dateOfBirth': $("#dateInput").val(),
 			'roleId': $("#roleInput").val()
 		});
-		pgcrowdAjaxModify('/pgcrowd/employee/infosave', 'POST', postData, postSuccessFunction);
+		pgcrowdAjaxModify('/pgcrowd/employee/infoSave', 'POST', postData, postSuccessFunction);
 	}
 });
 $("#addInfoBtn").on('click', function(e) {
@@ -102,15 +102,6 @@ $("#addInfoBtn").on('click', function(e) {
 	checkPermissionAndTransfer(url);
 });
 $("#tableBody").on('click', '.delete-btn', function() {
-	let ajaxResult = $.ajax({
-		url: '/pgcrowd/employee/checkDelete',
-		type: 'GET',
-		async: false
-	});
-	if (ajaxResult.status !== 200) {
-		layer.msg(ajaxResult.responseJSON.message);
-		return;
-	}
 	let userName = $(this).parents("tr").find("td:eq(0)").text().trim();
 	let userId = $(this).attr("deleteId");
 	swal.fire({
@@ -122,7 +113,7 @@ $("#tableBody").on('click', '.delete-btn', function() {
 		confirmButtonColor: '#7F0020'
 	}).then((result) => {
 		if (result.isConfirmed) {
-			pgcrowdAjaxModify('/pgcrowd/employee/delete/' + userId, 'DELETE', null, normalDeleteSuccessFunction);
+			pgcrowdAjaxModify('/pgcrowd/employee/infoDelete?userId=' + userId, 'DELETE', null, normalDeleteSuccessFunction);
 		} else {
 			$(this).close();
 		}
@@ -151,18 +142,6 @@ $("#emailEdit").change(function() {
 		showValidationMsg(this, "success", "√");
 	}
 });
-$("#roleEdit").change(function() {
-	let ajaxResult = $.ajax({
-		url: '/pgcrowd/employee/checkDelete',
-		type: 'GET',
-		async: false
-	});
-	if (ajaxResult.status !== 200) {
-		showValidationMsg(this, "error", ajaxResult.responseJSON.message);
-	} else {
-		showValidationMsg(this, "success", "√");
-	}
-});
 $("#editInfoBtn").on('click', function() {
 	let inputArrays = ["#usernameEdit", "#passwordEdit", "#emailEdit"];
 	let listArray = pgcrowdInputContextGet(inputArrays);
@@ -180,7 +159,7 @@ $("#editInfoBtn").on('click', function() {
 			roleId = $("#roleEdit option:selected").val();
 		}
 		let putData = JSON.stringify({
-			'id': $("#editId").attr('name'),
+			'id': $("#editId").val(),
 			'loginAccount': $("#loginAccountEdit").text(),
 			'username': $("#usernameEdit").val().trim(),
 			'password': rawPassword,
@@ -188,15 +167,15 @@ $("#editInfoBtn").on('click', function() {
 			'dateOfBirth': $("#dateEdit").val(),
 			'roleId': roleId
 		});
-		pgcrowdAjaxModify('/pgcrowd/employee/infoupd', 'PUT', putData, putSuccessFunction);
+		pgcrowdAjaxModify('/pgcrowd/employee/infoUpdate', 'PUT', putData, putSuccessFunction);
 	}
 });
 function postSuccessFunction() {
-	window.location.replace('/pgcrowd/employee/to/pages?pageNum=' + totalRecords);
+	window.location.replace('/pgcrowd/employee/toPages?pageNum=' + totalRecords);
 }
 function putSuccessFunction(result) {
 	if (result.status === 'SUCCESS') {
-		window.location.replace('/pgcrowd/employee/to/pages?pageNum=' + pageNum);
+		window.location.replace('/pgcrowd/employee/toPages?pageNum=' + pageNum);
 	} else {
 		layer.msg(result.message);
 	}
@@ -211,7 +190,6 @@ $("#restoreBtn").on('click', function() {
 		url: '/pgcrowd/employee/infoRestore',
 		data: 'editId=' + editId,
 		type: 'GET',
-		dataType: 'json',
 		success: function(result) {
 			let restoredInfo = result.data;
 			$("#usernameEdit").val(restoredInfo.username);

@@ -48,5 +48,5 @@ public final class EmployeeDto implements Serializable {
 	/**
 	 * 役割ID
 	 */
-	private Long roleId;
+	private String roleId;
 }
