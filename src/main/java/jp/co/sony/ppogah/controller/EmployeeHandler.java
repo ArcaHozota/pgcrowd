@@ -183,9 +183,9 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 */
 	@Action(value = "doLogin", results = { @Result(name = "success", location = "/WEB-INF/mainmenu.jsp") })
 	public String login() {
-		final String loginAccount = this.getRequest().getParameter("loginAcct");
-		final String password = this.getRequest().getParameter("userPswd");
-		final Boolean loginBoolean = this.iEmployeeService.login(loginAccount, password);
+		final String loginAcct = this.getRequest().getParameter("loginAcct");
+		final String userPswd = this.getRequest().getParameter("userPswd");
+		final Boolean loginBoolean = this.iEmployeeService.login(loginAcct, userPswd);
 		if (Boolean.FALSE.equals(loginBoolean)) {
 			return LOGIN;
 		}
@@ -280,20 +280,20 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 */
 	@Action(value = "toroku", results = { @Result(name = "success", location = "/WEB-INF/admin-login.jsp") })
 	public String toroku() {
-		final String email = this.getRequest().getParameter("email");
-		final String password = this.getRequest().getParameter("password");
-		final String dateOfBirth = this.getRequest().getParameter("dateOfBirth");
+		final String inputEmail = this.getRequest().getParameter("email");
+		final String inputPassword = this.getRequest().getParameter("password");
+		final String inputDate = this.getRequest().getParameter("dateOfBirth");
 		final EmployeeDto employeeDto2 = new EmployeeDto();
-		employeeDto2.setEmail(email);
-		employeeDto2.setPassword(password);
-		employeeDto2.setDateOfBirth(dateOfBirth);
+		employeeDto2.setEmail(inputEmail);
+		employeeDto2.setPassword(inputPassword);
+		employeeDto2.setDateOfBirth(inputDate);
 		final Boolean toroku = this.iEmployeeService.register(employeeDto2);
 		if (Boolean.FALSE.equals(toroku)) {
 			ActionContext.getContext().put("torokuMsg", PgCrowdConstants.MESSAGE_TOROKU_FAILURE);
 		} else {
 			ActionContext.getContext().put("torokuMsg", PgCrowdConstants.MESSAGE_TOROKU_SUCCESS);
 		}
-		ActionContext.getContext().put("registeredEmail", email);
+		ActionContext.getContext().put("registeredEmail", this.email);
 		return SUCCESS;
 	}
 

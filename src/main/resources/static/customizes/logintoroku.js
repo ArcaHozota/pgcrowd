@@ -24,6 +24,10 @@ $(document).ready(function() {
 			flag = 0;
 		}
 	});
+	let message2 = $("#torokuMsg").text();
+	if (message2 !== '' || message2 !== undefined) {
+		layer.msg(message2);
+	}
 });
 $("#loginBtn").on('click', function() {
 	let account = $("#accountIpt").val().trim();

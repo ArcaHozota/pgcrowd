@@ -33,6 +33,9 @@
 		}
 	</style>
 	<div class="container">
+		<#if torokuMsg?exists>
+			<input type="hidden" value="${torokuMsg}" id="torokuMsg">
+		</#if>
 		<div class="login-box">
 			<!--Login Form-->
 			<form action="/pgcrowd/employee/doLogin" method="post"
