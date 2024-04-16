@@ -25,11 +25,11 @@ $(document).ready(function() {
 		}
 	});
 	let message1 = $("#errorMsgContainer").val();
-	if (message1 !== '' && message1 !== undefined) {
+	if (message1 !== '' && message1 !== null && message1 !== undefined) {
 		layer.msg(message1);
 	}
 	let message2 = $("#torokuMsgContainer").val();
-	if (message2 !== '' && message2 !== undefined) {
+	if (message2 !== '' && message2 !== null && message2 !== undefined) {
 		layer.msg(message2);
 	}
 });
