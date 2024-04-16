@@ -21,3 +21,14 @@ spring:
   output:
     ansi:
       enabled: ALWAYS
+  freemarker:
+    cache: false
+    allow-request-override: true
+    expose-request-attributes: false
+    allow-session-override: true
+    expose-session-attributes: false
+    expose-spring-macro-helpers: true
+    template-loader-path: classpath:/WEB-INF/
+    suffix: .ftl
+    settings:
+      {datetimeFormat: yyyy-MM-dd HH:mm:ss, templateUpdateDelay: 0s}

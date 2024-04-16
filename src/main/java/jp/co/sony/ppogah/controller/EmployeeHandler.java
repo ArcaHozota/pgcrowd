@@ -1,5 +1,10 @@
 package jp.co.sony.ppogah.controller;
 
+import static com.opensymphony.xwork2.Action.ERROR;
+import static com.opensymphony.xwork2.Action.LOGIN;
+import static com.opensymphony.xwork2.Action.NONE;
+import static com.opensymphony.xwork2.Action.SUCCESS;
+
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -36,10 +41,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @Namespace("/pgcrowd/employee")
-@Results({ @Result(name = "success", location = "/WEB-INF/admin-pages.jsp"),
-		@Result(name = "error", location = "/WEB-INF/system-error.jsp"),
-		@Result(name = "none", type = "json", params = { "root", "responsedJsondata" }),
-		@Result(name = "login", location = "/WEB-INF/admin-login.jsp") })
+@Results({ @Result(name = SUCCESS, location = "/WEB-INF/admin-pages.jsp"),
+		@Result(name = ERROR, location = "/WEB-INF/system-error.jsp"),
+		@Result(name = NONE, type = "json", params = { "root", "responsedJsondata" }),
+		@Result(name = LOGIN, location = "/WEB-INF/admin-login.ftl") })
 @ParentPackage("json-default")
 @Controller
 public class EmployeeHandler extends ActionSupport implements ServletRequestAware {
