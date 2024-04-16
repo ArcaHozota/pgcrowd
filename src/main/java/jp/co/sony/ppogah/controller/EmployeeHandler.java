@@ -278,7 +278,7 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action(value = "toroku", results = { @Result(name = "success", location = "/WEB-INF/admin-login.jsp") })
+	@Action("toroku")
 	public String toroku() {
 		final String inputEmail = this.getRequest().getParameter("email");
 		final String inputPassword = this.getRequest().getParameter("password");
@@ -294,7 +294,7 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 			ActionContext.getContext().put("torokuMsg", PgCrowdConstants.MESSAGE_TOROKU_SUCCESS);
 		}
 		ActionContext.getContext().put("registeredEmail", this.email);
-		return SUCCESS;
+		return LOGIN;
 	}
 
 	/**

@@ -24,8 +24,8 @@ $(document).ready(function() {
 			flag = 0;
 		}
 	});
-	let message2 = $("#torokuMsg").text();
-	if (message2 !== '' || message2 !== undefined) {
+	let message2 = $("#torokuMsgContainer").val();
+	if (message2 !== '' && message2 !== undefined) {
 		layer.msg(message2);
 	}
 });

@@ -33,8 +33,8 @@
 		}
 	</style>
 	<div class="container">
-		<#if torokuMsg?exists>
-			<input type="hidden" value="${torokuMsg}" id="torokuMsg">
+		<#if torokuMsg?exists!''>
+			<input type="hidden" value="${torokuMsg}" id="torokuMsgContainer">
 		</#if>
 		<div class="login-box">
 			<!--Login Form-->
@@ -46,8 +46,9 @@
 					<#if registeredEmail?exists>
 						<input type="text" value="${registeredEmail}" name="loginAcct"
 							id="accountIpt" placeholder="アカウント" required>
+						<#else>
+						<input type="text" name="loginAcct" id="accountIpt" placeholder="アカウント" required>
 					</#if>
-					<input type="text" name="loginAcct" id="accountIpt" placeholder="アカウント" required>
 				</div>
 				<div class="input-box">
 					<ion-icon name="lock-closed-outline"></ion-icon>
