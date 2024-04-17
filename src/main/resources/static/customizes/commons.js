@@ -109,7 +109,7 @@ $(function() {
 	});
 	$("#toRole").on('click', function(e) {
 		e.preventDefault();
-		let url = '/pgcrowd/role/to/pages?pageNum=1';
+		let url = '/pgcrowd/role/toPages?pageNum=1';
 		checkPermissionAndTransfer(url);
 	});
 	$("#toMenu").on('click', function(e) {

@@ -8,6 +8,7 @@ import static com.opensymphony.xwork2.Action.SUCCESS;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -20,6 +21,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import jp.co.sony.ppogah.common.PgCrowd2URLConstants;
 import jp.co.sony.ppogah.dto.RoleDto;
 import jp.co.sony.ppogah.service.IRoleService;
+import jp.co.sony.ppogah.utils.Pagination;
 import jp.co.sony.ppogah.utils.ResultDto;
 import lombok.Getter;
 import lombok.Setter;
@@ -86,10 +88,34 @@ public class RoleHandler extends ActionSupport implements ServletRequestAware {
 	}
 
 	/**
+	 * 情報一覧画面初期表示する
+	 *
+	 * @return String
+	 */
+	@Action(PgCrowd2URLConstants.URL_PAGINATION)
+	public String pagination() {
+		final String pageNum = this.getRequest().getParameter("pageNum");
+		final String keyword = this.getRequest().getParameter("keyword");
+		final Pagination<RoleDto> roleDtos = this.iRoleService.getRolesByKeyword(Integer.parseInt(pageNum), keyword);
+		this.setResponsedJsondata(ResultDto.successWithData(roleDtos));
+		return NONE;
+	}
+
+	/**
 	 * @see org.apache.struts2.interceptor.ServletRequestAware.setServletRequest();
 	 */
 	@Override
 	public void setServletRequest(final HttpServletRequest request) {
 		this.request = request;
+	}
+
+	/**
+	 * 情報一覧画面へ移動する
+	 *
+	 * @return String
+	 */
+	@Action(PgCrowd2URLConstants.URL_TO_PAGES)
+	public String toPages() {
+		return SUCCESS;
 	}
 }

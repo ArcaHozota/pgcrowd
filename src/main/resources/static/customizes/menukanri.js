@@ -65,7 +65,7 @@ $(document).ready(function() {
 		checkPermissionAndTransfer(url);
 	});
 	$("#roleQueryTree").on('click', function() {
-		let url = '/pgcrowd/role/to/pages?pageNum=1';
+		let url = '/pgcrowd/role/toPages?pageNum=1';
 		checkPermissionAndTransfer(url);
 	});
 	$("#districtQueryTree").on('click', function() {
