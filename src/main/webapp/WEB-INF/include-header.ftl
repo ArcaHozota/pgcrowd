@@ -17,14 +17,14 @@
 <link rel="shortcut icon" type="image/x-icon"
 	href="/static/favicon.ico">
 <style type="text/css">
-.tree li {
-	list-style-type: none;
-	cursor: pointer;
-}
-
-a {
-	text-decoration: none;
-}
+	.tree li {
+		list-style-type: none;
+		cursor: pointer;
+	}
+	
+	a {
+		text-decoration: none;
+	}
 </style>
 <script type="text/javascript"
 	src="/static/jquery/jquery-3.7.1.min.js"></script>

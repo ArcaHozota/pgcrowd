@@ -37,7 +37,7 @@
 			<input type="hidden" value="${torokuMsg}" id="torokuMsgContainer">
 		</#if>
 		<div class="login-box">
-			<!--Login Form-->
+			<#--Login Form-->
 			<form action="/pgcrowd/employee/doLogin" method="post"
 				class="form-signin" role="form" id="loginForm">
 				<h2>ログイン</h2>

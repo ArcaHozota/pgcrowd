@@ -38,7 +38,7 @@
 	</style>
 	<div class="container">
 		<div class="login-box">
-			<%--Login Form--%>
+			<#--Login Form-->
 			<form action="/pgcrowd/employee/toroku" method="post"
 				class="form-signin" role="form" id="torokuForm">
 				<h2>登録</h2>
