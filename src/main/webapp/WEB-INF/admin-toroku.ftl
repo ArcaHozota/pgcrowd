@@ -1,18 +1,12 @@
-<%@page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ja-JP">
 <head>
 <title>PGアプリケーション</title>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="_csrf_header" content="${_csrf.headerName}">
-<meta name="_csrf_token" content="${_csrf.token}">
 <link rel="stylesheet" href="/static/css/style.css">
-<link rel="shortcut icon" type="image/x-icon"
-	href="/static/favicon.ico">
-<script type="text/javascript"
-	src="/static/jquery/jquery-3.7.1.min.js"></script>
+<link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico">
+<script type="text/javascript" src="/static/jquery/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="/static/layer/layer.js"></script>
 </head>
 <body>
