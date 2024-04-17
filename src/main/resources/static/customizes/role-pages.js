@@ -47,15 +47,6 @@ function buildTableBody(result) {
 	});
 }
 $("#addRoleBtn").on('click', function() {
-	let ajaxResult = $.ajax({
-		url: '/pgcrowd/role/checkEdition',
-		type: 'GET',
-		async: false
-	});
-	if (ajaxResult.status !== 200) {
-		layer.msg(ajaxResult.responseJSON.message);
-		return;
-	}
 	formReset("#roleAddModal form");
 	let addModal = new bootstrap.Modal($("#roleAddModal"), {
 		backdrop: 'static'
@@ -92,15 +83,6 @@ $("#roleInfoSaveBtn").on('click', function() {
 	}
 });
 $("#tableBody").on('click', '.edit-btn', function() {
-	let ajaxResult = $.ajax({
-		url: '/pgcrowd/role/checkEdition',
-		type: 'GET',
-		async: false
-	});
-	if (ajaxResult.status !== 200) {
-		layer.msg(ajaxResult.responseJSON.message);
-		return;
-	}
 	formReset("#roleEditModal form");
 	let editId = $(this).attr("editId");
 	$("#roleInfoChangeBtn").val(editId);
@@ -128,15 +110,6 @@ $("#roleInfoChangeBtn").on('click', function() {
 	}
 });
 $("#tableBody").on('click', '.delete-btn', function() {
-	let ajaxResult = $.ajax({
-		url: '/pgcrowd/role/delete/0L',
-		type: 'GET',
-		async: false
-	});
-	if (ajaxResult.status !== 200) {
-		layer.msg(ajaxResult.responseJSON.message);
-		return;
-	}
 	let roleName = $(this).parents("tr").find("td:eq(0)").text().trim();
 	let roleId = $(this).attr("deleteId");
 	swal.fire({
@@ -148,7 +121,7 @@ $("#tableBody").on('click', '.delete-btn', function() {
 		confirmButtonColor: '#7F0020'
 	}).then((result) => {
 		if (result.isConfirmed) {
-			pgcrowdAjaxModify('/pgcrowd/role/delete/' + roleId, 'DELETE', null, normalDeleteSuccessFunction);
+			pgcrowdAjaxModify('/pgcrowd/role/infoDelete?roleId=' + roleId, 'DELETE', null, normalDeleteSuccessFunction);
 		} else {
 			$(this).close();
 		}
