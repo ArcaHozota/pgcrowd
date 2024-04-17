@@ -1,14 +1,11 @@
-<%@page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="ja-JP">
-<%@include file="/WEB-INF/include-header.jsp"%>
+<#include "include-header.ftl">
 <body>
-	<%@include file="/WEB-INF/include-navibar.jsp"%>
+	<#include "include-navibar.ftl">
 	<div class="container-fluid">
 		<div class="row">
-			<%@include file="/WEB-INF/include-sidebar.jsp"%>
+			<#include "include-sidebar.ftl">
 			<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
 				<nav style="-bs-breadcrumb-divider: '&gt;';" aria-label="breadcrumb">
 					<ol class="breadcrumb">
@@ -73,9 +70,9 @@
 								<label for="roleInput" class="col-sm-3 col-form-label text-end">役割</label>
 								<div class="col-sm-7" style="height: 45px;">
 									<select id="roleInput" class="form-select">
-										<c:forEach items="${employeeRoles}" var="employeeRole">
+										<#list employeeRoles as employeeRole>
 											<option value="${employeeRole.id}">${employeeRole.name}</option>
-										</c:forEach>
+										</#list>
 									</select> <span class="form-text" style="font-size: 12px;"></span>
 								</div>
 							</div>
