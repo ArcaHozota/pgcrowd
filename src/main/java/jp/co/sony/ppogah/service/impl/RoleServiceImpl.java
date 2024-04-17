@@ -144,6 +144,7 @@ public final class RoleServiceImpl implements IRoleService {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_NOT_EXISTS);
 		});
 		SecondBeanUtils.copyNullableProperties(role, roleDto);
+		roleDto.setId(role.getId().toString());
 		return roleDto;
 	}
 
@@ -192,6 +193,7 @@ public final class RoleServiceImpl implements IRoleService {
 			final List<RoleDto> roleDtos = pages.stream().map(item -> {
 				final RoleDto roleDto = new RoleDto();
 				SecondBeanUtils.copyNullableProperties(item, roleDto);
+				roleDto.setId(item.getId().toString());
 				return roleDto;
 			}).collect(Collectors.toList());
 			return Pagination.of(roleDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
@@ -202,6 +204,7 @@ public final class RoleServiceImpl implements IRoleService {
 			final List<RoleDto> roleDtos = byIdLike.stream().map(item -> {
 				final RoleDto roleDto = new RoleDto();
 				SecondBeanUtils.copyNullableProperties(item, roleDto);
+				roleDto.setId(item.getId().toString());
 				return roleDto;
 			}).collect(Collectors.toList());
 			return Pagination.of(roleDtos, byIdLike.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
@@ -213,6 +216,7 @@ public final class RoleServiceImpl implements IRoleService {
 		final List<RoleDto> roleDtos = pages.stream().map(item -> {
 			final RoleDto roleDto = new RoleDto();
 			SecondBeanUtils.copyNullableProperties(item, roleDto);
+			roleDto.setId(item.getId().toString());
 			return roleDto;
 		}).collect(Collectors.toList());
 		return Pagination.of(roleDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
