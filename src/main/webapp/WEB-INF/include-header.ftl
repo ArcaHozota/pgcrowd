@@ -1,12 +1,10 @@
-<%@page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="ja-JP">
 <head>
 <title>PGアプリケーション</title>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="_csrf_header" content="${_csrf.headerName}">
-<meta name="_csrf_token" content="${_csrf.token}">
 <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="/static/css/main.css">
 <link rel="stylesheet" href="/static/ztree/metroStyle.css">
@@ -39,3 +37,4 @@ a {
 	src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript" src="/static/customizes/commons.js"></script>
 </head>
+</html>

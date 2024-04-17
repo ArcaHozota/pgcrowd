@@ -302,7 +302,7 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action(value = "toSignUp", results = { @Result(name = "success", location = "/WEB-INF/admin-toroku.jsp") })
+	@Action(value = "toSignUp", results = { @Result(name = "success", location = "/WEB-INF/admin-toroku.ftl") })
 	public String toSignUp() {
 		return SUCCESS;
 	}
