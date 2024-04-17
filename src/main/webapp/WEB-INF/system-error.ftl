@@ -1,8 +1,6 @@
-<%@page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ja-JP">
-<%@include file="/WEB-INF/include-header.jsp"%>
+<#include "include-header.ftl">
 <body>
 	<div>
 		<nav class="navbar navbar-dark bg-dark fixed-top" role="navigation">

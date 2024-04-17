@@ -41,8 +41,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Namespace("/pgcrowd/employee")
-@Results({ @Result(name = SUCCESS, location = "/WEB-INF/admin-pages.jsp"),
-		@Result(name = ERROR, location = "/WEB-INF/system-error.jsp"),
+@Results({ @Result(name = SUCCESS, location = "/WEB-INF/admin-pages.ftl"),
+		@Result(name = ERROR, location = "/WEB-INF/system-error.ftl"),
 		@Result(name = NONE, type = "json", params = { "root", "responsedJsondata" }),
 		@Result(name = LOGIN, location = "/WEB-INF/admin-login.ftl") })
 @ParentPackage("json-default")
@@ -231,7 +231,7 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action(value = "toAddition", results = { @Result(name = "success", location = "/WEB-INF/admin-addinfo.jsp") })
+	@Action(value = "toAddition", results = { @Result(name = "success", location = "/WEB-INF/admin-addinfo.ftl") })
 	public String toAddition() {
 		final List<RoleDto> roleDtos = this.iRoleService.getRolesByEmployeeId(null);
 		ActionContext.getContext().put("employeeRoles", roleDtos);
@@ -243,7 +243,7 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action(value = "toEdition", results = { @Result(name = "success", location = "/WEB-INF/admin-editinfo.jsp") })
+	@Action(value = "toEdition", results = { @Result(name = "success", location = "/WEB-INF/admin-editinfo.ftl") })
 	public String toEdition() {
 		final String editId = this.getRequest().getParameter("editId");
 		final EmployeeDto employeeDto2 = this.iEmployeeService.getEmployeeById(editId);
