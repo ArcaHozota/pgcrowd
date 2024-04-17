@@ -128,12 +128,12 @@ $(function() {
 	});
 	$("#toDistrict").on('click', function(e) {
 		e.preventDefault();
-		let url = '/pgcrowd/category/to/districtPages';
+		let url = '/pgcrowd/category/toDistricts';
 		checkPermissionAndTransfer(url);
 	});
 	$("#toCity").on('click', function(e) {
 		e.preventDefault();
-		let url = '/pgcrowd/category/to/cityPages';
+		let url = '/pgcrowd/category/toCities';
 		checkPermissionAndTransfer(url);
 	});
 });

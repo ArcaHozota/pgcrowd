@@ -28,11 +28,11 @@ $(document).ready(function() {
 		openNodeLinkOnNewTab: true
 	});
 	$("#districtQueryTree").on('click', function() {
-		let url = '/pgcrowd/category/to/districtPages';
+		let url = '/pgcrowd/category/toDistrictPages';
 		checkPermissionAndTransfer(url);
 	});
 	$("#cityQueryTree").on('click', function() {
-		let url = '/pgcrowd/category/to/cityPages';
+		let url = '/pgcrowd/category/toCityPages';
 		checkPermissionAndTransfer(url);
 	});
 });

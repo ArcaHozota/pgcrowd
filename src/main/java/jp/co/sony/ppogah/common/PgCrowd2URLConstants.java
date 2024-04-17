@@ -12,9 +12,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PgCrowd2URLConstants {
 
+	public static final String URL_CATEGORY_NAMESPACE = "/pgcrowd/category";
+
 	public static final String URL_EMPLOYEE_NAMESPACE = "/pgcrowd/employee";
 
 	public static final String URL_ROLE_NAMESPACE = "/pgcrowd/role";
+
+	public static final String URL_INIT_TEMPLATE = "initial";
 
 	public static final String URL_CHECK_NAME = "check";
 
@@ -53,4 +57,8 @@ public final class PgCrowd2URLConstants {
 	public static final String URL_DO_ASSIGNMENT = "authAssignment";
 
 	public static final String URL_MENU_INITIAL = "toMenuKanri";
+
+	public static final String URL_TO_DISTRICTS = "toDistricts";
+
+	public static final String URL_TO_CITIES = "toCities";
 }
