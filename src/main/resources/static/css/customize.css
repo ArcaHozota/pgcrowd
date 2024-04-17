@@ -1,9 +1,10 @@
 /* Google Font */
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Japanese:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400&display=swap");
 
 /* General CSS */
 body {
-	font-family: "Noto+Sans+Japanese", sans-serif;
+	font-family: "Noto Sans JP", sans-serif;
+	font-style: normal;
 }
 
 .text-bg-klein {
