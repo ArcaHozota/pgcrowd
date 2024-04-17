@@ -83,6 +83,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 				.orElseGet(EmployeeRole::new);
 		final EmployeeDto employeeDto = new EmployeeDto();
 		SecondBeanUtils.copyNullableProperties(employee, employeeDto);
+		employeeDto.setId(employee.getId().toString());
 		employeeDto.setPassword(PgCrowdConstants.DEFAULT_ROLE_NAME);
 		employeeDto.setDateOfBirth(this.formatter.format(employee.getDateOfBirth()));
 		employeeDto.setRoleId(employeeRole.getRoleId().toString());
