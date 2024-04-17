@@ -1,13 +1,11 @@
-<%@page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ja-JP">
-<%@include file="/WEB-INF/include-header.jsp"%>
+<#include "include-header.ftl">
 <body>
-	<%@include file="/WEB-INF/include-navibar.jsp"%>
+	<#include "include-navibar.ftl">
 	<div class="container-fluid">
 		<div class="row">
-			<%@include file="/WEB-INF/include-sidebar.jsp"%>
+			<#include "include-sidebar.ftl">
 			<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
 				<div class="card border-naples mb-3">
 					<div class="card-header text-bg-naples mb-3">
@@ -21,8 +19,7 @@
 								<div class="input-group col-md-5">
 									<input id="keywordInput" class="form-control" type="text"
 										placeholder="検索条件を入力してください">
-									<button id="searchBtn2" class="btn btn-danger my-2 my-sm-0"
-										type="button">
+									<button id="searchBtn2" class="btn btn-danger my-2 my-sm-0" type="button">
 										<i class="fa-solid fa-magnifying-glass"></i> 検索
 									</button>
 								</div>
@@ -53,8 +50,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="roleAddModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel">
+	<div class="modal fade" id="roleAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -65,16 +61,14 @@
 						<div class="form-group row">
 							<label for="nameInput" class="col-sm-3 col-form-label text-end">役割名</label>
 							<div class="col-sm-9" style="height: 60px;">
-								<input type="text" class="form-control" id="nameInput"
-									placeholder="役割の名称"> <span class="form-text"
-									style="font-size: 12px;"></span>
+								<input type="text" class="form-control" id="nameInput" placeholder="役割の名称"> 
+								<span class="form-text" style="font-size: 12px;"></span>
 							</div>
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
 						<i class="fa-solid fa-xmark"></i> 閉じる
 					</button>
 					<button type="button" class="btn btn-primary" id="roleInfoSaveBtn">
@@ -84,8 +78,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="roleEditModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel">
+	<div class="modal fade" id="roleEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -96,28 +89,24 @@
 						<div class="form-group row">
 							<label for="nameEdit" class="col-sm-3 col-form-label text-end">役割名</label>
 							<div class="col-sm-9" style="height: 60px;">
-								<input type="text" class="form-control" id="nameEdit"
-									placeholder="役割の名称"> <span class="form-text"
-									style="font-size: 12px;"></span>
+								<input type="text" class="form-control" id="nameEdit" placeholder="役割の名称"> 
+								<span class="form-text" style="font-size: 12px;"></span>
 							</div>
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
 						<i class="fa-solid fa-xmark"></i> 閉じる
 					</button>
-					<button type="button" class="btn btn-success"
-						id="roleInfoChangeBtn">
+					<button type="button" class="btn btn-success" id="roleInfoChangeBtn">
 						<i class="fa-solid fa-leaf"></i> 更新
 					</button>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="authEditModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel">
+	<div class="modal fade" id="authEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -127,8 +116,7 @@
 					<ul id="authTree" class="ztree"></ul>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
 						<i class="fa-solid fa-xmark"></i> 閉じる
 					</button>
 					<button type="button" class="btn btn-success" id="authChangeBtn">
@@ -138,6 +126,6 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src="../static/customizes/role-pages.js"></script>
+	<script type="text/javascript" src="/static/customizes/role-pages.js"></script>
 </body>
 </html>
