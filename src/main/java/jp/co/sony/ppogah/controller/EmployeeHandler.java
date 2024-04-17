@@ -181,7 +181,7 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action(value = "doLogin", results = { @Result(name = "success", location = "/WEB-INF/mainmenu.jsp") })
+	@Action(value = "doLogin", results = { @Result(name = "success", location = "/WEB-INF/mainmenu.ftl") })
 	public String login() {
 		final String loginAcct = this.getRequest().getParameter("loginAcct");
 		final String userPswd = this.getRequest().getParameter("userPswd");
@@ -258,7 +258,7 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action(value = "toMainmenu", results = { @Result(name = "success", location = "/WEB-INF/mainmenu.jsp") })
+	@Action(value = "toMainmenu", results = { @Result(name = "success", location = "/WEB-INF/mainmenu.ftl") })
 	public String toMainmenu() {
 		return SUCCESS;
 	}
