@@ -1,13 +1,11 @@
-<%@page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ja-JP">
-<%@include file="/WEB-INF/include-header.jsp"%>
+<#include "include-header.ftl">
 <body>
-	<%@include file="/WEB-INF/include-navibar.jsp"%>
+	<#include "include-navibar.ftl">
 	<div class="container-fluid">
 		<div class="row">
-			<%@include file="/WEB-INF/include-sidebar.jsp"%>
+			<#include "include-sidebar.ftl">
 			<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
 				<div class="card border-periwinkle mb-3">
 					<div class="card-header text-bg-periwinkle mb-3">
@@ -22,7 +20,6 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript"
-		src="../static/customizes/categorykanri.js"></script>
+	<script type="text/javascript" src="/static/customizes/categorykanri.js"></script>
 </body>
 </html>
