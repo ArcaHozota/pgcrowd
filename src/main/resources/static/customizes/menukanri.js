@@ -57,7 +57,7 @@ $(document).ready(function() {
 		openNodeLinkOnNewTab: true
 	});
 	$("#employeeAddTree").on('click', function() {
-		let url = '/pgcrowd/employee/to/addition';
+		let url = '/pgcrowd/employee/toAddition';
 		checkPermissionAndTransfer(url);
 	});
 	$("#employeeQueryTree").on('click', function() {
@@ -69,11 +69,11 @@ $(document).ready(function() {
 		checkPermissionAndTransfer(url);
 	});
 	$("#districtQueryTree").on('click', function() {
-		let url = '/pgcrowd/category/to/districtPages';
+		let url = '/pgcrowd/category/toDistrictPages';
 		checkPermissionAndTransfer(url);
 	});
 	$("#cityQueryTree").on('click', function() {
-		let url = '/pgcrowd/category/to/cityPages';
+		let url = '/pgcrowd/category/toCityPages';
 		checkPermissionAndTransfer(url);
 	});
 });

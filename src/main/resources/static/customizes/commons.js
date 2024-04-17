@@ -114,7 +114,7 @@ $(function() {
 	});
 	$("#toMenu").on('click', function(e) {
 		e.preventDefault();
-		window.location.replace('/pgcrowd/menu/initial');
+		window.location.replace('/pgcrowd/employee/toMenuKanri');
 	});
 	$("#toPages").on('click', function(e) {
 		e.preventDefault();

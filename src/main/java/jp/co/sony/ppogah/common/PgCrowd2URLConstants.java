@@ -51,4 +51,6 @@ public final class PgCrowd2URLConstants {
 	public static final String URL_AUTH_ASSIGNED = "getAssignedAuth";
 
 	public static final String URL_DO_ASSIGNMENT = "authAssignment";
+
+	public static final String URL_MENU_INITIAL = "toMenuKanri";
 }
