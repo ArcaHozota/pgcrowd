@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import jp.co.sony.ppogah.common.PgCrowd2URLConstants;
 import jp.co.sony.ppogah.common.PgCrowdConstants;
 import jp.co.sony.ppogah.dto.EmployeeDto;
 import jp.co.sony.ppogah.dto.RoleDto;
@@ -40,7 +41,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@Namespace("/pgcrowd/employee")
+@Namespace(PgCrowd2URLConstants.URL_EMPLOYEE_NAMESPACE)
 @Results({ @Result(name = SUCCESS, location = "/WEB-INF/admin-pages.ftl"),
 		@Result(name = ERROR, location = "/WEB-INF/system-error.ftl"),
 		@Result(name = NONE, type = "json", params = { "root", "responsedJsondata" }),
@@ -134,7 +135,7 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action("infoDelete")
+	@Action(PgCrowd2URLConstants.URL_INFO_DELETE)
 	public String infoDelete() {
 		final String userId = this.getRequest().getParameter("userId");
 		this.iEmployeeService.remove(Long.parseLong(userId));
@@ -147,7 +148,7 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action("infoRestore")
+	@Action(PgCrowd2URLConstants.URL_INFO_RESTORE)
 	public String infoRestore() {
 		final String editId = this.getRequest().getParameter("editId");
 		final EmployeeDto employeeDto2 = this.iEmployeeService.getEmployeeById(editId);
@@ -160,7 +161,7 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action(value = "infoSave", interceptorRefs = { @InterceptorRef(value = "json") })
+	@Action(value = PgCrowd2URLConstants.URL_INFO_INSERT, interceptorRefs = { @InterceptorRef(value = "json") })
 	public String infoSave() {
 		this.iEmployeeService.save(this.getEmployeeDto());
 		this.setResponsedJsondata(ResultDto.successWithoutData());
@@ -172,7 +173,7 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action(value = "infoUpdate", interceptorRefs = { @InterceptorRef(value = "json") })
+	@Action(value = PgCrowd2URLConstants.URL_INFO_UPDATE, interceptorRefs = { @InterceptorRef(value = "json") })
 	public String infoUpdate() {
 		final ResultDto<String> updateInfo = this.iEmployeeService.update(this.getEmployeeDto());
 		this.setResponsedJsondata(updateInfo);
@@ -184,7 +185,7 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action("login")
+	@Action(PgCrowd2URLConstants.URL_TO_LOGIN)
 	public String initial() {
 		return LOGIN;
 	}
@@ -194,7 +195,8 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action(value = "doLogin", results = { @Result(name = "success", location = "/WEB-INF/mainmenu.ftl") })
+	@Action(value = PgCrowd2URLConstants.URL_LOGIN, results = {
+			@Result(name = SUCCESS, location = "/WEB-INF/mainmenu.ftl") })
 	public String login() {
 		final String loginAcct = this.getRequest().getParameter("loginAcct");
 		final String userPswd = this.getRequest().getParameter("userPswd");
@@ -210,7 +212,7 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action("logout")
+	@Action(PgCrowd2URLConstants.URL_LOG_OUT)
 	public String logout() {
 		this.request.getSession().invalidate();
 		return LOGIN;
@@ -221,7 +223,7 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action("pagination")
+	@Action(PgCrowd2URLConstants.URL_PAGINATION)
 	public String pagination() {
 		final String pageNum = this.getRequest().getParameter("pageNum");
 		final String keyword = this.getRequest().getParameter("keyword");
@@ -244,7 +246,8 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action(value = "toAddition", results = { @Result(name = "success", location = "/WEB-INF/admin-addinfo.ftl") })
+	@Action(value = PgCrowd2URLConstants.URL_TO_ADDITION, results = {
+			@Result(name = SUCCESS, location = "/WEB-INF/admin-addinfo.ftl") })
 	public String toAddition() {
 		final List<RoleDto> roleDtos = this.iRoleService.getRolesByEmployeeId(null);
 		ActionContext.getContext().put("employeeRoles", roleDtos);
@@ -256,7 +259,8 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action(value = "toEdition", results = { @Result(name = "success", location = "/WEB-INF/admin-editinfo.ftl") })
+	@Action(value = PgCrowd2URLConstants.URL_TO_EDITION, results = {
+			@Result(name = SUCCESS, location = "/WEB-INF/admin-editinfo.ftl") })
 	public String toEdition() {
 		final String editId = this.getRequest().getParameter("editId");
 		final EmployeeDto employeeDto2 = this.iEmployeeService.getEmployeeById(editId);
@@ -271,7 +275,8 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action(value = "toMainmenu", results = { @Result(name = "success", location = "/WEB-INF/mainmenu.ftl") })
+	@Action(value = PgCrowd2URLConstants.URL_TO_MAINMENU, results = {
+			@Result(name = SUCCESS, location = "/WEB-INF/mainmenu.ftl") })
 	public String toMainmenu() {
 		return SUCCESS;
 	}
@@ -281,7 +286,7 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action("toPages")
+	@Action(PgCrowd2URLConstants.URL_TO_PAGES)
 	public String toPages() {
 		return SUCCESS;
 	}
@@ -291,7 +296,7 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action("toroku")
+	@Action(PgCrowd2URLConstants.URL_REGISTER)
 	public String toroku() {
 		final String inputEmail = this.getRequest().getParameter("email");
 		final String inputPassword = this.getRequest().getParameter("password");
@@ -306,7 +311,7 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 		} else {
 			ActionContext.getContext().put("torokuMsg", PgCrowdConstants.MESSAGE_TOROKU_SUCCESS);
 		}
-		ActionContext.getContext().put("registeredEmail", this.email);
+		ActionContext.getContext().put("registeredEmail", inputEmail);
 		return LOGIN;
 	}
 
@@ -315,7 +320,8 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action(value = "toSignUp", results = { @Result(name = "success", location = "/WEB-INF/admin-toroku.ftl") })
+	@Action(value = PgCrowd2URLConstants.URL_TO_REGISTER, results = {
+			@Result(name = SUCCESS, location = "/WEB-INF/admin-toroku.ftl") })
 	public String toSignUp() {
 		return SUCCESS;
 	}
