@@ -159,7 +159,7 @@ $("#editInfoBtn").on('click', function() {
 			roleId = $("#roleEdit option:selected").val();
 		}
 		let putData = JSON.stringify({
-			'id': $("#editId").val(),
+			'id': $("#editIdContainer").val(),
 			'loginAccount': $("#loginAccountEdit").text(),
 			'username': $("#usernameEdit").val().trim(),
 			'password': rawPassword,

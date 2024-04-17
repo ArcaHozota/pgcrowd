@@ -24,7 +24,7 @@
 					</div>
 					<div class="card-body">
 						<form role="form" id="editForm">
-							<input type="hidden" value="${employeeInfo.id}" id="editId">
+							<input type="hidden" value="${employeeInfo.id}" id="editIdContainer">
 							<div class="form-group row">
 								<label for="loginAccountEdit"
 									class="col-sm-3 col-form-label text-end">ログインアカウント</label>
