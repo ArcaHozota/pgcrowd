@@ -96,13 +96,13 @@ public final class RoleServiceImpl implements IRoleService {
 	@Override
 	public ResultDto<String> doAssignment(final Map<String, List<Long>> paramMap) {
 		final Long[] idArray = { 1L, 5L, 9L, 12L };
-		final Long roleId = paramMap.get(ROLE_ID).get(0);
+		final Long roleId = paramMap.get("roleIds").get(0);
 		final Specification<RoleAuth> where = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(ROLE_ID),
 				roleId);
 		final Specification<RoleAuth> specification = Specification.where(where);
 		final List<RoleAuth> list1 = this.roleExRepository.findAll(specification);
 		final List<Long> list2 = list1.stream().map(RoleAuth::getAuthId).sorted().collect(Collectors.toList());
-		final List<Long> authIds = paramMap.get("authIdArray").stream().filter(a -> !Arrays.asList(idArray).contains(a))
+		final List<Long> authIds = paramMap.get("authIds").stream().filter(a -> !Arrays.asList(idArray).contains(a))
 				.sorted().collect(Collectors.toList());
 		if (list2.equals(authIds)) {
 			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_NOCHANGE);

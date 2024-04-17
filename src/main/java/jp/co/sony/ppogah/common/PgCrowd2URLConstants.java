@@ -16,6 +16,8 @@ public final class PgCrowd2URLConstants {
 
 	public static final String URL_ROLE_NAMESPACE = "/pgcrowd/role";
 
+	public static final String URL_CHECK_NAME = "check";
+
 	public static final String URL_TO_LOGIN = "login";
 
 	public static final String URL_LOG_OUT = "logout";
@@ -43,4 +45,10 @@ public final class PgCrowd2URLConstants {
 	public static final String URL_INFO_INSERT = "infoSave";
 
 	public static final String URL_INFO_UPDATE = "infoUpdate";
+
+	public static final String URL_AUTH_LIST = "getAuthlist";
+
+	public static final String URL_AUTH_ASSIGNED = "getAssignedAuth";
+
+	public static final String URL_DO_ASSIGNMENT = "authAssignment";
 }

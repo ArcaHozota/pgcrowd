@@ -163,7 +163,8 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 */
 	@Action(value = PgCrowd2URLConstants.URL_INFO_INSERT, interceptorRefs = { @InterceptorRef(value = "json") })
 	public String infoSave() {
-		this.iEmployeeService.save(this.getEmployeeDto());
+		final EmployeeDto employeeDto2 = this.getEmployeeDto();
+		this.iEmployeeService.save(employeeDto2);
 		this.setResponsedJsondata(ResultDto.successWithoutData());
 		return NONE;
 	}
@@ -175,7 +176,8 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 */
 	@Action(value = PgCrowd2URLConstants.URL_INFO_UPDATE, interceptorRefs = { @InterceptorRef(value = "json") })
 	public String infoUpdate() {
-		final ResultDto<String> updateInfo = this.iEmployeeService.update(this.getEmployeeDto());
+		final EmployeeDto employeeDto2 = this.getEmployeeDto();
+		final ResultDto<String> updateInfo = this.iEmployeeService.update(employeeDto2);
 		this.setResponsedJsondata(updateInfo);
 		return NONE;
 	}

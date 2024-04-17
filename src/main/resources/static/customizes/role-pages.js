@@ -16,7 +16,6 @@ function toSelectedPg(pageNum, keyword) {
 			'keyword': keyword
 		},
 		type: 'GET',
-		dataType: 'json',
 		success: function(result) {
 			buildTableBody(result);
 			buildPageInfos(result);
@@ -56,7 +55,7 @@ $("#addRoleBtn").on('click', function() {
 $("#nameInput").on('change', function() {
 	$.ajax({
 		url: '/pgcrowd/role/check',
-		data: 'name=' + this.value,
+		data: 'roleName=' + this.value,
 		type: 'GET',
 		dataType: 'json',
 		success: function(result) {
@@ -79,7 +78,7 @@ $("#roleInfoSaveBtn").on('click', function() {
 		let postData = JSON.stringify({
 			'name': $("#nameInput").val().trim()
 		});
-		pgcrowdAjaxModify('pgcrowd/role/infosave', 'POST', postData, normalPostSuccessFunction("#roleAddModal"));
+		pgcrowdAjaxModify('pgcrowd/role/infoSave', 'POST', postData, normalPostSuccessFunction("#roleAddModal"));
 	}
 });
 $("#tableBody").on('click', '.edit-btn', function() {
@@ -106,7 +105,7 @@ $("#roleInfoChangeBtn").on('click', function() {
 			'id': this.value,
 			'name': $("#nameEdit").val().trim()
 		});
-		pgcrowdAjaxModify('/pgcrowd/role/infoupd', 'PUT', putData, putSuccessFunction);
+		pgcrowdAjaxModify('/pgcrowd/role/infoUpdate', 'PUT', putData, putSuccessFunction);
 	}
 });
 $("#tableBody").on('click', '.delete-btn', function() {
@@ -136,9 +135,8 @@ $("#tableBody").on('click', '.fuyo-btn', function() {
 		backdrop: 'static'
 	});
 	let ajaxReturn = $.ajax({
-		url: '/pgcrowd/role/authlists',
+		url: '/pgcrowd/role/getAuthlist',
 		type: 'GET',
-		dataType: 'json',
 		async: false
 	});
 	if (ajaxReturn.status !== 200) {
@@ -172,10 +170,9 @@ $("#tableBody").on('click', '.fuyo-btn', function() {
 	let zTreeObj = $.fn.zTree.getZTreeObj("authTree");
 	zTreeObj.expandAll(true);
 	ajaxReturn = $.ajax({
-		url: '/pgcrowd/role/getAssigned',
+		url: '/pgcrowd/role/getAssignedAuth',
 		data: 'fuyoId=' + fuyoId,
 		type: 'GET',
-		dataType: 'json',
 		async: false
 	});
 	let authIdList = ajaxReturn.responseJSON.data;
@@ -196,10 +193,10 @@ $("#authChangeBtn").on('click', function() {
 		authIdArray.push(authId);
 	}
 	let putData = JSON.stringify({
-		'authIdArray': authIdArray,
-		'roleId': [fuyoId]
+		'authIds': authIdArray,
+		'roleIds': [fuyoId]
 	});
-	pgcrowdAjaxModify('/pgcrowd/role/do/assignment', 'PUT', putData, authPutSuccessFunction);
+	pgcrowdAjaxModify('/pgcrowd/role/authAssignment', 'PUT', putData, authPutSuccessFunction);
 });
 function putSuccessFunction(result) {
 	if (result.status === 'SUCCESS') {
