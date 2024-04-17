@@ -69,11 +69,11 @@ $(document).ready(function() {
 		checkPermissionAndTransfer(url);
 	});
 	$("#districtQueryTree").on('click', function() {
-		let url = '/pgcrowd/category/toDistrictPages';
+		let url = '/pgcrowd/category/toDistricts';
 		checkPermissionAndTransfer(url);
 	});
 	$("#cityQueryTree").on('click', function() {
-		let url = '/pgcrowd/category/toCityPages';
+		let url = '/pgcrowd/category/toCities';
 		checkPermissionAndTransfer(url);
 	});
 });
