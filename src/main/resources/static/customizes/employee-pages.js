@@ -184,7 +184,7 @@ $("#resetBtn").on('click', function() {
 	formReset($("#inputForm"));
 });
 $("#restoreBtn").on('click', function() {
-	let editId = $("#editId").text();
+	let editId = $("#editIdContainer").val();
 	formReset($("#editForm"));
 	$.ajax({
 		url: '/pgcrowd/employee/infoRestore',

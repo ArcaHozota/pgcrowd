@@ -143,6 +143,19 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	}
 
 	/**
+	 * 情報をリセットする
+	 *
+	 * @return String
+	 */
+	@Action("infoRestore")
+	public String infoRestore() {
+		final String editId = this.getRequest().getParameter("editId");
+		final EmployeeDto employeeDto2 = this.iEmployeeService.getEmployeeById(editId);
+		this.setResponsedJsondata(ResultDto.successWithData(employeeDto2));
+		return NONE;
+	}
+
+	/**
 	 * 社員情報を保存する
 	 *
 	 * @return String
