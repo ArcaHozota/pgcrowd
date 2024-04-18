@@ -16,7 +16,6 @@ function toSelectedPg(pageNum, keyword) {
 			'keyword': keyword
 		},
 		type: 'GET',
-		dataType: 'json',
 		success: function(result) {
 			buildTableBody(result);
 			buildPageInfos(result);

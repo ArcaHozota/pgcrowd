@@ -10,7 +10,7 @@
 				<div class="card border-klein mb-3">
 					<div class="card-header text-bg-klein mb-3">
 						<h5 class="card-title" style="padding-top: 8px;">
-							<i class="fa-solid fa-bars-staggered"></i> 都市情報一覧
+							<i class="fa-solid fa-bars-staggered"></i> 都市情報メンテナンス
 						</h5>
 					</div>
 					<div class="card-body">

@@ -10,7 +10,7 @@
 				<div class="card border-success mb-3">
 					<div class="card-header text-bg-success mb-3">
 						<h5 class="card-title" style="padding-top: 8px;">
-							<i class="fa-solid fa-bars-staggered"></i> 地域情報一覧
+							<i class="fa-solid fa-bars-staggered"></i> 地域情報メンテナンス
 						</h5>
 					</div>
 					<div class="card-body">
