@@ -5,7 +5,7 @@ import jp.co.sony.ppogah.utils.Pagination;
 import jp.co.sony.ppogah.utils.ResultDto;
 
 /**
- * 地域サービスインターフェス
+ * 都市サービスインターフェス
  *
  * @author ArkamaHozota
  * @since 1.00beta

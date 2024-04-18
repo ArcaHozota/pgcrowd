@@ -52,7 +52,7 @@ public class RoleHandler extends ActionSupport implements ServletRequestAware {
 	private static final long serialVersionUID = 7483637181412284924L;
 
 	/**
-	 * 社員サービスインターフェス
+	 * 役割サービスインターフェス
 	 */
 	@Resource
 	private IRoleService iRoleService;

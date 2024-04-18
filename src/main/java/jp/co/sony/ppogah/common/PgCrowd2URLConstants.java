@@ -63,4 +63,6 @@ public final class PgCrowd2URLConstants {
 	public static final String URL_TO_DISTRICTS = "toDistricts";
 
 	public static final String URL_TO_CITIES = "toCities";
+
+	public static final String URL_DISTRICT_LIST = "getDistrictlist";
 }

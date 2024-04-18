@@ -49,15 +49,6 @@ function buildTableBody(result) {
 	});
 }
 $("#addCityBtn").on('click', function() {
-	let ajaxResult = $.ajax({
-		url: '/pgcrowd/city/checkEdition',
-		type: 'GET',
-		async: false
-	});
-	if (ajaxResult.status !== 200) {
-		layer.msg(ajaxResult.responseJSON.message);
-		return;
-	}
 	formReset("#cityAddModal form");
 	getDistricts("#districtInput", null);
 	let addModal = new bootstrap.Modal($("#cityAddModal"), {
@@ -198,7 +189,6 @@ function checkCityName(cityName, district) {
 				'districtId': districtVal
 			},
 			type: 'GET',
-			dataType: 'json',
 			success: function(result) {
 				if (result.status === 'SUCCESS') {
 					showValidationMsg(cityName, "success", "√");
@@ -212,10 +202,9 @@ function checkCityName(cityName, district) {
 function getDistricts(element, cityId) {
 	$(element).empty();
 	$.ajax({
-		url: '/pgcrowd/city/districtlist',
+		url: '/pgcrowd/city/getDistrictlist',
 		data: 'cityId=' + cityId,
 		type: 'GET',
-		dataType: 'json',
 		success: function(result) {
 			$.each(result.data, (index, item) => {
 				let optionElement = $("<option></option>").attr('value', item.id)

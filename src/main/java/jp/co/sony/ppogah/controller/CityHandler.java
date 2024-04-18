@@ -5,6 +5,8 @@ import static com.opensymphony.xwork2.Action.LOGIN;
 import static com.opensymphony.xwork2.Action.NONE;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,7 +22,9 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import jp.co.sony.ppogah.common.PgCrowd2URLConstants;
 import jp.co.sony.ppogah.dto.CityDto;
+import jp.co.sony.ppogah.dto.DistrictDto;
 import jp.co.sony.ppogah.service.ICityService;
+import jp.co.sony.ppogah.service.IDistrictService;
 import jp.co.sony.ppogah.utils.Pagination;
 import jp.co.sony.ppogah.utils.ResultDto;
 import lombok.Getter;
@@ -46,10 +50,16 @@ public class CityHandler extends ActionSupport implements ServletRequestAware {
 	private static final long serialVersionUID = -6017782752547971104L;
 
 	/**
-	 * 都市情報サービス
+	 * 都市サービスインターフェス
 	 */
 	@Resource
 	private ICityService iCityService;
+
+	/**
+	 * 地域サービスインターフェス
+	 */
+	@Resource
+	private IDistrictService iDistrictService;
 
 	/**
 	 * リクエスト
@@ -102,6 +112,21 @@ public class CityHandler extends ActionSupport implements ServletRequestAware {
 	private String cityFlag;
 
 	/**
+	 * 名称重複チェック
+	 *
+	 * @return String
+	 */
+	@Action(PgCrowd2URLConstants.URL_CHECK_NAME)
+	public String checkDuplicated() {
+		final String nameVal = this.getRequest().getParameter("nameVal");
+		final String districtId2 = this.getRequest().getParameter("districtId");
+		final ResultDto<String> checkDuplicated = this.iCityService.checkDuplicated(nameVal,
+				Long.parseLong(districtId2));
+		this.setResponsedJsondata(checkDuplicated);
+		return NONE;
+	}
+
+	/**
 	 * getter for cityDto
 	 *
 	 * @return CityDto
@@ -115,6 +140,19 @@ public class CityHandler extends ActionSupport implements ServletRequestAware {
 		this.cityDto.setDistrictName(this.getDistrictName());
 		this.cityDto.setCityFlag(this.getCityFlag());
 		return this.cityDto;
+	}
+
+	/**
+	 * 地域一覧を取得する
+	 *
+	 * @return String
+	 */
+	@Action(PgCrowd2URLConstants.URL_DISTRICT_LIST)
+	public String getDistricts() {
+		final String cityId = this.getRequest().getParameter("cityId");
+		final List<DistrictDto> districtsByCityId = this.iDistrictService.getDistrictsByCityId(cityId);
+		this.setResponsedJsondata(ResultDto.successWithData(districtsByCityId));
+		return NONE;
 	}
 
 	/**
