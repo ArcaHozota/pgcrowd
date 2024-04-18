@@ -1,4 +1,4 @@
-package jp.co.sony.ppogah.utils;
+package jp.co.sony.ppogah.dto;
 
 import java.io.Serializable;
 

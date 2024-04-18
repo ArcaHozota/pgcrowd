@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
 
-import jp.co.sony.ppogah.utils.RoleAuthIds;
+import jp.co.sony.ppogah.dto.RoleAuthIds;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
