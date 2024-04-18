@@ -17,7 +17,7 @@
 						<div class="row">
 							<form class="form-inline col-md-5" role="form">
 								<div class="input-group col-md-5">
-									<input id="keywordInput" class="form-control" type="text" placeholder="検索条件を入力してください">
+									<input id="keywordInput" class="form-control" type="text" placeholder="検索条件を入力してください">
 									<button id="searchBtn2" class="btn btn-secondary my-2 my-sm-0" type="button">
 										<i class="fa-solid fa-magnifying-glass"></i> 検索
 									</button>

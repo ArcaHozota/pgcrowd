@@ -14,6 +14,8 @@ public final class PgCrowd2URLConstants {
 
 	public static final String URL_CATEGORY_NAMESPACE = "/pgcrowd/category";
 
+	public static final String URL_CITY_NAMESPACE = "/pgcrowd/city";
+
 	public static final String URL_EMPLOYEE_NAMESPACE = "/pgcrowd/employee";
 
 	public static final String URL_ROLE_NAMESPACE = "/pgcrowd/role";
