@@ -73,6 +73,7 @@ public final class CityServiceImpl implements ICityService {
 				final CityDto cityDto = new CityDto();
 				SecondBeanUtils.copyNullableProperties(item, cityDto);
 				cityDto.setId(item.getId().toString());
+				cityDto.setDistrictName(item.getDistrict().getName());
 				return cityDto;
 			}).collect(Collectors.toList());
 			return Pagination.of(cityDtos, pages.getTotalElements(), pageNum, PgCrowd2Constants.DEFAULT_PAGE_SIZE);
@@ -98,6 +99,7 @@ public final class CityServiceImpl implements ICityService {
 			final CityDto cityDto = new CityDto();
 			SecondBeanUtils.copyNullableProperties(item, cityDto);
 			cityDto.setId(item.getId().toString());
+			cityDto.setDistrictName(item.getDistrict().getName());
 			return cityDto;
 		}).collect(Collectors.toList());
 		return Pagination.of(cityDtos, pages.getTotalElements(), pageNum, PgCrowd2Constants.DEFAULT_PAGE_SIZE);
