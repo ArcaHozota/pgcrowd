@@ -1,13 +1,13 @@
 /* General Font */
 @font-face {
 	font-family: 'SourceHanSans';
-	src: local('../fonts/SourceHanSans-Regular.otf');
-	font-weight: normal;
-	font-style: normal;
+	src: local('../fonts/SourceHanSans-Regular.otf'), local('../fonts/SourceHanSans-Medium.otf');
 }
 
 /* General CSS */
 body {
+	font-style: normal;
+	font-weight: 500;
 	font-family: 'SourceHanSans', sans-serif;
 }
 

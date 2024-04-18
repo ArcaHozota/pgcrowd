@@ -5,9 +5,7 @@ Copyright: 2023 ©MdRasen */
 /* General Font */
 @font-face {
 	font-family: 'SourceHanSans';
-	src: local('../fonts/SourceHanSans-Regular.otf');
-	font-weight: normal;
-	font-style: normal;
+	src: local('../fonts/SourceHanSans-Regular.otf'), local('../fonts/SourceHanSans-Medium.otf');
 }
 
 /* General CSS */
@@ -15,6 +13,7 @@ Copyright: 2023 ©MdRasen */
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	font-style: normal;
 	font-family: 'SourceHanSans', sans-serif;
 }
 
