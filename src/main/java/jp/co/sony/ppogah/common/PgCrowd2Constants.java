@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
  * @since 1.00beta
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class PgCrowdConstants {
+public final class PgCrowd2Constants {
 
 	public static final Integer DEFAULT_PAGE_SIZE = 5;
 

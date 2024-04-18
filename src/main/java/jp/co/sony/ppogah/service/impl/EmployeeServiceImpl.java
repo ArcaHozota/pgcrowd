@@ -18,7 +18,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import jp.co.sony.ppogah.common.PgCrowdConstants;
+import jp.co.sony.ppogah.common.PgCrowd2Constants;
 import jp.co.sony.ppogah.dto.EmployeeDto;
 import jp.co.sony.ppogah.entity.Employee;
 import jp.co.sony.ppogah.entity.EmployeeRole;
@@ -70,21 +70,21 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		employee.setLoginAccount(loginAccount);
 		final Example<Employee> example = Example.of(employee, ExampleMatcher.matching());
 		return this.employeeRepository.findOne(example).isPresent()
-				? ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_DUPLICATED)
+				? ResultDto.failed(PgCrowd2Constants.MESSAGE_STRING_DUPLICATED)
 				: ResultDto.successWithoutData();
 	}
 
 	@Override
 	public EmployeeDto getEmployeeById(final String id) {
 		final Employee employee = this.employeeRepository.findById(Long.parseLong(id)).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
+			throw new PgCrowdException(PgCrowd2Constants.MESSAGE_STRING_FATAL_ERROR);
 		});
 		final EmployeeRole employeeRole = this.employeeExRepository.findById(Long.parseLong(id))
 				.orElseGet(EmployeeRole::new);
 		final EmployeeDto employeeDto = new EmployeeDto();
 		SecondBeanUtils.copyNullableProperties(employee, employeeDto);
 		employeeDto.setId(employee.getId().toString());
-		employeeDto.setPassword(PgCrowdConstants.DEFAULT_ROLE_NAME);
+		employeeDto.setPassword(PgCrowd2Constants.DEFAULT_ROLE_NAME);
 		employeeDto.setDateOfBirth(this.formatter.format(employee.getDateOfBirth()));
 		employeeDto.setRoleId(employeeRole.getRoleId().toString());
 		return employeeDto;
@@ -92,10 +92,10 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
 	public Pagination<EmployeeDto> getEmployeesByKeyword(final Integer pageNum, final String keyword) {
-		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowdConstants.DEFAULT_PAGE_SIZE,
+		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowd2Constants.DEFAULT_PAGE_SIZE,
 				Sort.by(Direction.ASC, "id"));
 		final Specification<Employee> status = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
+				.equal(root.get("deleteFlg"), PgCrowd2Constants.LOGIC_DELETE_INITIAL);
 		if (StringUtils.isEmpty(keyword)) {
 			final Specification<Employee> specification = Specification.where(status);
 			final Page<Employee> pages = this.employeeRepository.findAll(specification, pageRequest);
@@ -106,7 +106,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 				employeeDto.setDateOfBirth(this.formatter.format(item.getDateOfBirth()));
 				return employeeDto;
 			}).collect(Collectors.toList());
-			return Pagination.of(employeeDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
+			return Pagination.of(employeeDtos, pages.getTotalElements(), pageNum, PgCrowd2Constants.DEFAULT_PAGE_SIZE);
 		}
 		final String searchStr = StringUtils.getDetailKeyword(keyword);
 		final Specification<Employee> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
@@ -125,7 +125,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 			employeeDto.setDateOfBirth(this.formatter.format(item.getDateOfBirth()));
 			return employeeDto;
 		}).collect(Collectors.toList());
-		return Pagination.of(employeeDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
+		return Pagination.of(employeeDtos, pages.getTotalElements(), pageNum, PgCrowd2Constants.DEFAULT_PAGE_SIZE);
 	}
 
 	private String getRandomStr() {
@@ -170,7 +170,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
 		employee.setId(SnowflakeUtils.snowflakeId());
 		employee.setLoginAccount(this.getRandomStr());
-		employee.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
+		employee.setDeleteFlg(PgCrowd2Constants.LOGIC_DELETE_INITIAL);
 		employee.setCreatedTime(LocalDateTime.now());
 		employee.setDateOfBirth(LocalDate.parse(employeeDto.getDateOfBirth(), this.formatter));
 		this.employeeRepository.saveAndFlush(employee);
@@ -180,9 +180,9 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	@Override
 	public void remove(final Long userId) {
 		final Employee employee = this.employeeRepository.findById(userId).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
+			throw new PgCrowdException(PgCrowd2Constants.MESSAGE_STRING_PROHIBITED);
 		});
-		employee.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_FLG);
+		employee.setDeleteFlg(PgCrowd2Constants.LOGIC_DELETE_FLG);
 		this.employeeRepository.saveAndFlush(employee);
 		this.employeeExRepository.deleteById(userId);
 	}
@@ -192,7 +192,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		final Employee employee = new Employee();
 		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
 		employee.setId(SnowflakeUtils.snowflakeId());
-		employee.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
+		employee.setDeleteFlg(PgCrowd2Constants.LOGIC_DELETE_INITIAL);
 		employee.setCreatedTime(LocalDateTime.now());
 		employee.setDateOfBirth(LocalDate.parse(employeeDto.getDateOfBirth(), this.formatter));
 		this.employeeRepository.saveAndFlush(employee);
@@ -209,7 +209,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	public ResultDto<String> update(final EmployeeDto employeeDto) {
 		final Employee employee = this.employeeRepository.findById(Long.parseLong(employeeDto.getId()))
 				.orElseThrow(() -> {
-					throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
+					throw new PgCrowdException(PgCrowd2Constants.MESSAGE_STRING_FATAL_ERROR);
 				});
 		final Employee originalEntity = new Employee();
 		SecondBeanUtils.copyNullableProperties(employee, originalEntity);
@@ -219,7 +219,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		employee.setDateOfBirth(LocalDate.parse(employeeDto.getDateOfBirth(), this.formatter));
 		if (originalEntity.equals(employee)
 				&& Objects.equals(employeeRole.getRoleId(), Long.parseLong(employeeDto.getRoleId()))) {
-			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_NOCHANGE);
+			return ResultDto.failed(PgCrowd2Constants.MESSAGE_STRING_NOCHANGE);
 		}
 		this.employeeRepository.saveAndFlush(employee);
 		return ResultDto.successWithoutData();

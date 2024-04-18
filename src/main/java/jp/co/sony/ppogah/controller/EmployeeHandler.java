@@ -23,7 +23,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import jp.co.sony.ppogah.common.PgCrowd2URLConstants;
-import jp.co.sony.ppogah.common.PgCrowdConstants;
+import jp.co.sony.ppogah.common.PgCrowd2Constants;
 import jp.co.sony.ppogah.dto.EmployeeDto;
 import jp.co.sony.ppogah.dto.RoleDto;
 import jp.co.sony.ppogah.service.IEmployeeService;
@@ -320,9 +320,9 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 		employeeDto2.setDateOfBirth(inputDate);
 		final Boolean toroku = this.iEmployeeService.register(employeeDto2);
 		if (Boolean.FALSE.equals(toroku)) {
-			ActionContext.getContext().put("torokuMsg", PgCrowdConstants.MESSAGE_TOROKU_FAILURE);
+			ActionContext.getContext().put("torokuMsg", PgCrowd2Constants.MESSAGE_TOROKU_FAILURE);
 		} else {
-			ActionContext.getContext().put("torokuMsg", PgCrowdConstants.MESSAGE_TOROKU_SUCCESS);
+			ActionContext.getContext().put("torokuMsg", PgCrowd2Constants.MESSAGE_TOROKU_SUCCESS);
 		}
 		ActionContext.getContext().put("registeredEmail", inputEmail);
 		return LOGIN;

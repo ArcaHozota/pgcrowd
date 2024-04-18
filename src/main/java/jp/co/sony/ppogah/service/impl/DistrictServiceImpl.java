@@ -14,7 +14,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import jp.co.sony.ppogah.common.PgCrowdConstants;
+import jp.co.sony.ppogah.common.PgCrowd2Constants;
 import jp.co.sony.ppogah.dto.DistrictDto;
 import jp.co.sony.ppogah.entity.City;
 import jp.co.sony.ppogah.entity.District;
@@ -65,13 +65,13 @@ public final class DistrictServiceImpl implements IDistrictService {
 		if (StringUtils.isEmpty(cityId) || !StringUtils.isDigital(cityId)) {
 			final DistrictDto districtDto = new DistrictDto();
 			districtDto.setId("0");
-			districtDto.setName(PgCrowdConstants.DEFAULT_ROLE_NAME);
+			districtDto.setName(PgCrowd2Constants.DEFAULT_ROLE_NAME);
 			districtDtos.add(districtDto);
 			districtDtos.addAll(districtDtos1);
 			return districtDtos;
 		}
 		final City city = this.cityRepository.findById(Long.parseLong(cityId)).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
+			throw new PgCrowdException(PgCrowd2Constants.MESSAGE_STRING_FATAL_ERROR);
 		});
 		final List<DistrictDto> districtDtos2 = new ArrayList<>();
 		final District district = districts.stream().filter(a -> Objects.equals(a.getId(), city.getDistrictId()))
@@ -90,10 +90,10 @@ public final class DistrictServiceImpl implements IDistrictService {
 
 	@Override
 	public Pagination<DistrictDto> getDistrictsByKeyword(final Integer pageNum, final String keyword) {
-		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowdConstants.DEFAULT_PAGE_SIZE,
+		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowd2Constants.DEFAULT_PAGE_SIZE,
 				Sort.by(Direction.ASC, "id"));
 		final Specification<District> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
+				.equal(root.get("deleteFlg"), PgCrowd2Constants.LOGIC_DELETE_INITIAL);
 		final Specification<District> specification = Specification.where(where1);
 		if (StringUtils.isEmpty(keyword)) {
 			final Page<District> pages = this.districtRepository.findAll(specification, pageRequest);
@@ -108,7 +108,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 						item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get());
 				return districtDto;
 			}).collect(Collectors.toList());
-			return Pagination.of(districtDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
+			return Pagination.of(districtDtos, pages.getTotalElements(), pageNum, PgCrowd2Constants.DEFAULT_PAGE_SIZE);
 		}
 		final String searchStr = StringUtils.getDetailKeyword(keyword);
 		final Page<District> pages = this.districtRepository.findByShutoLike(searchStr, pageRequest);
@@ -121,25 +121,25 @@ public final class DistrictServiceImpl implements IDistrictService {
 			districtDto.setPopulation(item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get());
 			return districtDto;
 		}).collect(Collectors.toList());
-		return Pagination.of(districtDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
+		return Pagination.of(districtDtos, pages.getTotalElements(), pageNum, PgCrowd2Constants.DEFAULT_PAGE_SIZE);
 	}
 
 	@Override
 	public ResultDto<String> update(final DistrictDto districtDto) {
 		final District district = this.districtRepository.findById(Long.parseLong(districtDto.getId()))
 				.orElseThrow(() -> {
-					throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
+					throw new PgCrowdException(PgCrowd2Constants.MESSAGE_STRING_FATAL_ERROR);
 				});
 		final District originalEntity = new District();
 		SecondBeanUtils.copyNullableProperties(district, originalEntity);
 		SecondBeanUtils.copyNullableProperties(districtDto, district);
 		if (originalEntity.equals(district)) {
-			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_NOCHANGE);
+			return ResultDto.failed(PgCrowd2Constants.MESSAGE_STRING_NOCHANGE);
 		}
 		try {
 			this.districtRepository.saveAndFlush(district);
 		} catch (final DataIntegrityViolationException e) {
-			return ResultDto.failed(PgCrowdConstants.MESSAGE_DISTRICT_NAME_DUPLICATED);
+			return ResultDto.failed(PgCrowd2Constants.MESSAGE_DISTRICT_NAME_DUPLICATED);
 		}
 		return ResultDto.successWithoutData();
 	}

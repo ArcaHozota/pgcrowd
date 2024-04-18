@@ -16,7 +16,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import jp.co.sony.ppogah.common.PgCrowdConstants;
+import jp.co.sony.ppogah.common.PgCrowd2Constants;
 import jp.co.sony.ppogah.dto.RoleDto;
 import jp.co.sony.ppogah.entity.Authority;
 import jp.co.sony.ppogah.entity.EmployeeRole;
@@ -84,12 +84,12 @@ public final class RoleServiceImpl implements IRoleService {
 	@Override
 	public ResultDto<String> checkDuplicated(final String name) {
 		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(DELETE_FLG),
-				PgCrowdConstants.LOGIC_DELETE_INITIAL);
+				PgCrowd2Constants.LOGIC_DELETE_INITIAL);
 		final Specification<Role> where2 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(ROLE_NAME),
 				name);
 		final Specification<Role> specification = Specification.where(where1).and(where2);
 		return this.roleRepository.findOne(specification).isPresent()
-				? ResultDto.failed(PgCrowdConstants.MESSAGE_ROLE_NAME_DUPLICATED)
+				? ResultDto.failed(PgCrowd2Constants.MESSAGE_ROLE_NAME_DUPLICATED)
 				: ResultDto.successWithoutData();
 	}
 
@@ -105,7 +105,7 @@ public final class RoleServiceImpl implements IRoleService {
 		final List<Long> authIds = paramMap.get("authIds").stream().filter(a -> !Arrays.asList(idArray).contains(a))
 				.sorted().collect(Collectors.toList());
 		if (list2.equals(authIds)) {
-			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_NOCHANGE);
+			return ResultDto.failed(PgCrowd2Constants.MESSAGE_STRING_NOCHANGE);
 		}
 		this.roleExRepository.deleteAll(list1);
 		final List<RoleAuth> list = authIds.stream().map(item -> {
@@ -117,7 +117,7 @@ public final class RoleServiceImpl implements IRoleService {
 		try {
 			this.roleExRepository.saveAll(list);
 		} catch (final Exception e) {
-			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_FORBIDDEN2);
+			return ResultDto.failed(PgCrowd2Constants.MESSAGE_STRING_FORBIDDEN2);
 		}
 		return ResultDto.successWithoutData();
 	}
@@ -141,7 +141,7 @@ public final class RoleServiceImpl implements IRoleService {
 	public RoleDto getRoleById(final Long id) {
 		final RoleDto roleDto = new RoleDto();
 		final Role role = this.roleRepository.findById(id).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_NOT_EXISTS);
+			throw new PgCrowdException(PgCrowd2Constants.MESSAGE_STRING_NOT_EXISTS);
 		});
 		SecondBeanUtils.copyNullableProperties(role, roleDto);
 		roleDto.setId(role.getId().toString());
@@ -153,9 +153,9 @@ public final class RoleServiceImpl implements IRoleService {
 		final List<RoleDto> secondRoles = new ArrayList<>();
 		final RoleDto secondRole = new RoleDto();
 		secondRole.setId("0");
-		secondRole.setName(PgCrowdConstants.DEFAULT_ROLE_NAME);
+		secondRole.setName(PgCrowd2Constants.DEFAULT_ROLE_NAME);
 		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(DELETE_FLG),
-				PgCrowdConstants.LOGIC_DELETE_INITIAL);
+				PgCrowd2Constants.LOGIC_DELETE_INITIAL);
 		final Specification<Role> specification1 = Specification.where(where1);
 		final List<RoleDto> roleDtos = this.roleRepository.findAll(specification1).stream().map(item -> {
 			final RoleDto roleDto = new RoleDto();
@@ -183,10 +183,10 @@ public final class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public Pagination<RoleDto> getRolesByKeyword(final Integer pageNum, final String keyword) {
-		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowdConstants.DEFAULT_PAGE_SIZE,
+		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowd2Constants.DEFAULT_PAGE_SIZE,
 				Sort.by(Direction.ASC, "id"));
 		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(DELETE_FLG),
-				PgCrowdConstants.LOGIC_DELETE_INITIAL);
+				PgCrowd2Constants.LOGIC_DELETE_INITIAL);
 		final Specification<Role> specification = Specification.where(where1);
 		if (StringUtils.isEmpty(keyword)) {
 			final Page<Role> pages = this.roleRepository.findAll(specification, pageRequest);
@@ -196,10 +196,10 @@ public final class RoleServiceImpl implements IRoleService {
 				roleDto.setId(item.getId().toString());
 				return roleDto;
 			}).collect(Collectors.toList());
-			return Pagination.of(roleDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
+			return Pagination.of(roleDtos, pages.getTotalElements(), pageNum, PgCrowd2Constants.DEFAULT_PAGE_SIZE);
 		}
 		if (StringUtils.isDigital(keyword)) {
-			final Page<Role> byIdLike = this.roleRepository.findByIdLike(keyword, PgCrowdConstants.LOGIC_DELETE_INITIAL,
+			final Page<Role> byIdLike = this.roleRepository.findByIdLike(keyword, PgCrowd2Constants.LOGIC_DELETE_INITIAL,
 					pageRequest);
 			final List<RoleDto> roleDtos = byIdLike.stream().map(item -> {
 				final RoleDto roleDto = new RoleDto();
@@ -207,7 +207,7 @@ public final class RoleServiceImpl implements IRoleService {
 				roleDto.setId(item.getId().toString());
 				return roleDto;
 			}).collect(Collectors.toList());
-			return Pagination.of(roleDtos, byIdLike.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
+			return Pagination.of(roleDtos, byIdLike.getTotalElements(), pageNum, PgCrowd2Constants.DEFAULT_PAGE_SIZE);
 		}
 		final String searchStr = StringUtils.getDetailKeyword(keyword);
 		final Specification<Role> where2 = (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get(ROLE_NAME),
@@ -219,7 +219,7 @@ public final class RoleServiceImpl implements IRoleService {
 			roleDto.setId(item.getId().toString());
 			return roleDto;
 		}).collect(Collectors.toList());
-		return Pagination.of(roleDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
+		return Pagination.of(roleDtos, pages.getTotalElements(), pageNum, PgCrowd2Constants.DEFAULT_PAGE_SIZE);
 	}
 
 	@Override
@@ -229,12 +229,12 @@ public final class RoleServiceImpl implements IRoleService {
 		final Specification<EmployeeRole> specification = Specification.where(where);
 		final List<EmployeeRole> list = this.employeeExRepository.findAll(specification);
 		if (!list.isEmpty()) {
-			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_FORBIDDEN);
+			return ResultDto.failed(PgCrowd2Constants.MESSAGE_STRING_FORBIDDEN);
 		}
 		final Role role = this.roleRepository.findById(id).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
+			throw new PgCrowdException(PgCrowd2Constants.MESSAGE_STRING_FATAL_ERROR);
 		});
-		role.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_FLG);
+		role.setDeleteFlg(PgCrowd2Constants.LOGIC_DELETE_FLG);
 		this.roleRepository.saveAndFlush(role);
 		return ResultDto.successWithoutData();
 	}
@@ -244,25 +244,25 @@ public final class RoleServiceImpl implements IRoleService {
 		final Role role = new Role();
 		SecondBeanUtils.copyNullableProperties(roleDto, role);
 		role.setId(SnowflakeUtils.snowflakeId());
-		role.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
+		role.setDeleteFlg(PgCrowd2Constants.LOGIC_DELETE_INITIAL);
 		this.roleRepository.saveAndFlush(role);
 	}
 
 	@Override
 	public ResultDto<String> update(final RoleDto roleDto) {
 		final Role role = this.roleRepository.findById(Long.parseLong(roleDto.getId())).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
+			throw new PgCrowdException(PgCrowd2Constants.MESSAGE_STRING_FATAL_ERROR);
 		});
 		final Role originalEntity = new Role();
 		SecondBeanUtils.copyNullableProperties(role, originalEntity);
 		SecondBeanUtils.copyNullableProperties(roleDto, role);
 		if (originalEntity.equals(role)) {
-			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_NOCHANGE);
+			return ResultDto.failed(PgCrowd2Constants.MESSAGE_STRING_NOCHANGE);
 		}
 		try {
 			this.roleRepository.saveAndFlush(role);
 		} catch (final DataIntegrityViolationException e) {
-			return ResultDto.failed(PgCrowdConstants.MESSAGE_ROLE_NAME_DUPLICATED);
+			return ResultDto.failed(PgCrowd2Constants.MESSAGE_ROLE_NAME_DUPLICATED);
 		}
 		return ResultDto.successWithoutData();
 	}
