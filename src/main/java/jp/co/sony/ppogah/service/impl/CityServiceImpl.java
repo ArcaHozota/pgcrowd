@@ -24,7 +24,7 @@ import jp.co.sony.ppogah.utils.Pagination;
 import jp.co.sony.ppogah.utils.ResultDto;
 import jp.co.sony.ppogah.utils.SecondBeanUtils;
 import jp.co.sony.ppogah.utils.SnowflakeUtils;
-import jp.co.sony.ppogah.utils.StringUtils;
+import jp.co.sony.ppogah.utils.CommonProjectUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -67,7 +67,7 @@ public final class CityServiceImpl implements ICityService {
 		final Specification<City> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("deleteFlg"), PgCrowd2Constants.LOGIC_DELETE_INITIAL);
 		final Specification<City> specification = Specification.where(where1);
-		if (StringUtils.isEmpty(keyword)) {
+		if (CommonProjectUtils.isEmpty(keyword)) {
 			final Page<City> pages = this.cityRepository.findAll(specification, pageRequest);
 			final List<CityDto> cityDtos = pages.stream().map(item -> {
 				final CityDto cityDto = new CityDto();
@@ -78,7 +78,7 @@ public final class CityServiceImpl implements ICityService {
 			}).collect(Collectors.toList());
 			return Pagination.of(cityDtos, pages.getTotalElements(), pageNum, PgCrowd2Constants.DEFAULT_PAGE_SIZE);
 		}
-		final String searchStr = StringUtils.getDetailKeyword(keyword);
+		final String searchStr = CommonProjectUtils.getDetailKeyword(keyword);
 		final Specification<District> where2 = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("deleteFlg"), PgCrowd2Constants.LOGIC_DELETE_INITIAL);
 		final Specification<District> where3 = (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("name"),

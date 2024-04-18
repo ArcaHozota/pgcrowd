@@ -32,7 +32,7 @@ import jp.co.sony.ppogah.utils.Pagination;
 import jp.co.sony.ppogah.utils.ResultDto;
 import jp.co.sony.ppogah.utils.SecondBeanUtils;
 import jp.co.sony.ppogah.utils.SnowflakeUtils;
-import jp.co.sony.ppogah.utils.StringUtils;
+import jp.co.sony.ppogah.utils.CommonProjectUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -175,7 +175,7 @@ public final class RoleServiceImpl implements IRoleService {
 		secondRoles.clear();
 		final Long roleId = roledOptional.get().getRoleId();
 		final List<RoleDto> selectedRole = roleDtos.stream()
-				.filter(a -> StringUtils.isEqual(roleId.toString(), a.getId())).collect(Collectors.toList());
+				.filter(a -> CommonProjectUtils.isEqual(roleId.toString(), a.getId())).collect(Collectors.toList());
 		secondRoles.addAll(selectedRole);
 		secondRoles.addAll(roleDtos);
 		return secondRoles.stream().distinct().collect(Collectors.toList());
@@ -188,7 +188,7 @@ public final class RoleServiceImpl implements IRoleService {
 		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(DELETE_FLG),
 				PgCrowd2Constants.LOGIC_DELETE_INITIAL);
 		final Specification<Role> specification = Specification.where(where1);
-		if (StringUtils.isEmpty(keyword)) {
+		if (CommonProjectUtils.isEmpty(keyword)) {
 			final Page<Role> pages = this.roleRepository.findAll(specification, pageRequest);
 			final List<RoleDto> roleDtos = pages.stream().map(item -> {
 				final RoleDto roleDto = new RoleDto();
@@ -198,7 +198,7 @@ public final class RoleServiceImpl implements IRoleService {
 			}).collect(Collectors.toList());
 			return Pagination.of(roleDtos, pages.getTotalElements(), pageNum, PgCrowd2Constants.DEFAULT_PAGE_SIZE);
 		}
-		if (StringUtils.isDigital(keyword)) {
+		if (CommonProjectUtils.isDigital(keyword)) {
 			final Page<Role> byIdLike = this.roleRepository.findByIdLike(keyword, PgCrowd2Constants.LOGIC_DELETE_INITIAL,
 					pageRequest);
 			final List<RoleDto> roleDtos = byIdLike.stream().map(item -> {
@@ -209,7 +209,7 @@ public final class RoleServiceImpl implements IRoleService {
 			}).collect(Collectors.toList());
 			return Pagination.of(roleDtos, byIdLike.getTotalElements(), pageNum, PgCrowd2Constants.DEFAULT_PAGE_SIZE);
 		}
-		final String searchStr = StringUtils.getDetailKeyword(keyword);
+		final String searchStr = CommonProjectUtils.getDetailKeyword(keyword);
 		final Specification<Role> where2 = (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get(ROLE_NAME),
 				searchStr);
 		final Page<Role> pages = this.roleRepository.findAll(specification.and(where2), pageRequest);

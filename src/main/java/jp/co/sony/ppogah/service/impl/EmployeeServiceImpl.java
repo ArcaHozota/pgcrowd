@@ -30,7 +30,7 @@ import jp.co.sony.ppogah.utils.Pagination;
 import jp.co.sony.ppogah.utils.ResultDto;
 import jp.co.sony.ppogah.utils.SecondBeanUtils;
 import jp.co.sony.ppogah.utils.SnowflakeUtils;
-import jp.co.sony.ppogah.utils.StringUtils;
+import jp.co.sony.ppogah.utils.CommonProjectUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -96,7 +96,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 				Sort.by(Direction.ASC, "id"));
 		final Specification<Employee> status = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("deleteFlg"), PgCrowd2Constants.LOGIC_DELETE_INITIAL);
-		if (StringUtils.isEmpty(keyword)) {
+		if (CommonProjectUtils.isEmpty(keyword)) {
 			final Specification<Employee> specification = Specification.where(status);
 			final Page<Employee> pages = this.employeeRepository.findAll(specification, pageRequest);
 			final List<EmployeeDto> employeeDtos = pages.stream().map(item -> {
@@ -108,7 +108,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 			}).collect(Collectors.toList());
 			return Pagination.of(employeeDtos, pages.getTotalElements(), pageNum, PgCrowd2Constants.DEFAULT_PAGE_SIZE);
 		}
-		final String searchStr = StringUtils.getDetailKeyword(keyword);
+		final String searchStr = CommonProjectUtils.getDetailKeyword(keyword);
 		final Specification<Employee> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
 				.like(root.get("loginAccount"), searchStr);
 		final Specification<Employee> where2 = (root, query, criteriaBuilder) -> criteriaBuilder
@@ -196,7 +196,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		employee.setCreatedTime(LocalDateTime.now());
 		employee.setDateOfBirth(LocalDate.parse(employeeDto.getDateOfBirth(), this.formatter));
 		this.employeeRepository.saveAndFlush(employee);
-		if (StringUtils.isNotEmpty(employeeDto.getRoleId())
+		if (CommonProjectUtils.isNotEmpty(employeeDto.getRoleId())
 				&& !Objects.equals(Long.valueOf(0L), Long.parseLong(employeeDto.getRoleId()))) {
 			final EmployeeRole employeeEx = new EmployeeRole();
 			employeeEx.setEmployeeId(employee.getId());

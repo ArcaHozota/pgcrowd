@@ -1,6 +1,6 @@
 package jp.co.sony.ppogah.exception;
 
-import jp.co.sony.ppogah.utils.StringUtils;
+import jp.co.sony.ppogah.utils.CommonProjectUtils;
 
 /**
  * プロジェクト業務ロジック例外
@@ -19,7 +19,7 @@ public class PgCrowdException extends RuntimeException {
 
 	public PgCrowdException() {
 		super();
-		this.message = StringUtils.EMPTY_STRING;
+		this.message = CommonProjectUtils.EMPTY_STRING;
 	}
 
 	public PgCrowdException(final String message) {

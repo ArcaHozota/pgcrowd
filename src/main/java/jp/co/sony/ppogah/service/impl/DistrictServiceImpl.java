@@ -25,7 +25,7 @@ import jp.co.sony.ppogah.service.IDistrictService;
 import jp.co.sony.ppogah.utils.Pagination;
 import jp.co.sony.ppogah.utils.ResultDto;
 import jp.co.sony.ppogah.utils.SecondBeanUtils;
-import jp.co.sony.ppogah.utils.StringUtils;
+import jp.co.sony.ppogah.utils.CommonProjectUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -62,7 +62,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 			districtDto.setPopulation(item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get());
 			return districtDto;
 		}).sorted(Comparator.comparingLong(a -> Long.parseLong(a.getId()))).collect(Collectors.toList());
-		if (StringUtils.isEmpty(cityId) || !StringUtils.isDigital(cityId)) {
+		if (CommonProjectUtils.isEmpty(cityId) || !CommonProjectUtils.isDigital(cityId)) {
 			final DistrictDto districtDto = new DistrictDto();
 			districtDto.setId("0");
 			districtDto.setName(PgCrowd2Constants.DEFAULT_ROLE_NAME);
@@ -95,7 +95,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 		final Specification<District> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("deleteFlg"), PgCrowd2Constants.LOGIC_DELETE_INITIAL);
 		final Specification<District> specification = Specification.where(where1);
-		if (StringUtils.isEmpty(keyword)) {
+		if (CommonProjectUtils.isEmpty(keyword)) {
 			final Page<District> pages = this.districtRepository.findAll(specification, pageRequest);
 			final List<DistrictDto> districtDtos = pages.stream().map(item -> {
 				final DistrictDto districtDto = new DistrictDto();
@@ -110,7 +110,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 			}).collect(Collectors.toList());
 			return Pagination.of(districtDtos, pages.getTotalElements(), pageNum, PgCrowd2Constants.DEFAULT_PAGE_SIZE);
 		}
-		final String searchStr = StringUtils.getDetailKeyword(keyword);
+		final String searchStr = CommonProjectUtils.getDetailKeyword(keyword);
 		final Page<District> pages = this.districtRepository.findByShutoLike(searchStr, pageRequest);
 		final List<DistrictDto> districtDtos = pages.stream().map(item -> {
 			final DistrictDto districtDto = new DistrictDto();
