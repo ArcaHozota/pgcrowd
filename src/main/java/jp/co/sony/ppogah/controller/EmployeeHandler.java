@@ -22,8 +22,8 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-import jp.co.sony.ppogah.common.PgCrowd2URLConstants;
 import jp.co.sony.ppogah.common.PgCrowd2Constants;
+import jp.co.sony.ppogah.common.PgCrowd2URLConstants;
 import jp.co.sony.ppogah.dto.EmployeeDto;
 import jp.co.sony.ppogah.dto.RoleDto;
 import jp.co.sony.ppogah.service.IEmployeeService;
@@ -301,6 +301,8 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 */
 	@Action(PgCrowd2URLConstants.URL_TO_PAGES)
 	public String toPages() {
+		final String pageNum = this.getRequest().getParameter("pageNum");
+		ActionContext.getContext().put(PgCrowd2Constants.ATTRNAME_PAGE_NUMBER, pageNum);
 		return SUCCESS;
 	}
 
