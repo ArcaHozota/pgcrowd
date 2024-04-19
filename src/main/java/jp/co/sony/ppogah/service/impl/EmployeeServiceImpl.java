@@ -26,11 +26,11 @@ import jp.co.sony.ppogah.exception.PgCrowdException;
 import jp.co.sony.ppogah.repository.EmployeeRepository;
 import jp.co.sony.ppogah.repository.EmployeeRoleRepository;
 import jp.co.sony.ppogah.service.IEmployeeService;
+import jp.co.sony.ppogah.utils.CommonProjectUtils;
 import jp.co.sony.ppogah.utils.Pagination;
 import jp.co.sony.ppogah.utils.ResultDto;
 import jp.co.sony.ppogah.utils.SecondBeanUtils;
 import jp.co.sony.ppogah.utils.SnowflakeUtils;
-import jp.co.sony.ppogah.utils.CommonProjectUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -221,6 +221,8 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 				&& Objects.equals(employeeRole.getRoleId(), Long.parseLong(employeeDto.getRoleId()))) {
 			return ResultDto.failed(PgCrowd2Constants.MESSAGE_STRING_NOCHANGE);
 		}
+		employeeRole.setRoleId(Long.parseLong(employeeDto.getRoleId()));
+		this.employeeExRepository.saveAndFlush(employeeRole);
 		this.employeeRepository.saveAndFlush(employee);
 		return ResultDto.successWithoutData();
 	}
