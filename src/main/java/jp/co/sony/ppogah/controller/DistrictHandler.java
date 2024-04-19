@@ -5,8 +5,6 @@ import static com.opensymphony.xwork2.Action.LOGIN;
 import static com.opensymphony.xwork2.Action.NONE;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,7 +20,6 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionSupport;
 
 import jp.co.sony.ppogah.common.PgCrowd2URLConstants;
-import jp.co.sony.ppogah.dto.CityDto;
 import jp.co.sony.ppogah.dto.DistrictDto;
 import jp.co.sony.ppogah.service.ICityService;
 import jp.co.sony.ppogah.service.IDistrictService;
@@ -32,23 +29,23 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 都市管理ハンドラ
+ * 地域管理ハンドラ
  *
  * @author ArkamaHozota
  * @since 1.10
  */
 @Getter
 @Setter
-@Namespace(PgCrowd2URLConstants.URL_CITY_NAMESPACE)
+@Namespace(PgCrowd2URLConstants.URL_DISTRICT_NAMESPACE)
 @Results({ @Result(name = SUCCESS, location = "/WEB-INF/city-pages.ftl"),
 		@Result(name = ERROR, location = "/WEB-INF/system-error.ftl"),
 		@Result(name = NONE, type = "json", params = { "root", "responsedJsondata" }),
 		@Result(name = LOGIN, location = "/WEB-INF/admin-login.ftl") })
 @ParentPackage("json-default")
 @Controller
-public class CityHandler extends ActionSupport implements ServletRequestAware {
+public class DistrictHandler extends ActionSupport implements ServletRequestAware {
 
-	private static final long serialVersionUID = -6017782752547971104L;
+	private static final long serialVersionUID = 646905610745129665L;
 
 	/**
 	 * 都市サービスインターフェス
@@ -75,7 +72,7 @@ public class CityHandler extends ActionSupport implements ServletRequestAware {
 	/**
 	 * 情報転送クラス
 	 */
-	private final CityDto cityDto = new CityDto();
+	private final DistrictDto districtDto = new DistrictDto();
 
 	/**
 	 * ID
@@ -88,19 +85,19 @@ public class CityHandler extends ActionSupport implements ServletRequestAware {
 	private String name;
 
 	/**
-	 * 都道府県ID
+	 * 州都ID
 	 */
-	private Long districtId;
+	private Long shutoId;
 
 	/**
-	 * 読み方
+	 * 州都名称
 	 */
-	private String pronunciation;
+	private String shutoName;
 
 	/**
-	 * 都道府県名称
+	 * 地方名称
 	 */
-	private String districtName;
+	private String chiho;
 
 	/**
 	 * 人口数量
@@ -108,89 +105,35 @@ public class CityHandler extends ActionSupport implements ServletRequestAware {
 	private Long population;
 
 	/**
-	 * 市町村旗
+	 * 都道府県旗
 	 */
-	private String cityFlag;
+	private String districtFlag;
 
 	/**
-	 * 名称重複チェック
+	 * getter for districtDto
 	 *
-	 * @return String
+	 * @return DistrictDto
 	 */
-	@Action(PgCrowd2URLConstants.URL_CHECK_NAME)
-	public String checkDuplicated() {
-		final String nameVal = this.getRequest().getParameter("nameVal");
-		final String districtId2 = this.getRequest().getParameter("districtId");
-		final ResultDto<String> checkDuplicated = this.iCityService.checkDuplicated(nameVal,
-				Long.parseLong(districtId2));
-		this.setResponsedJsondata(checkDuplicated);
-		return NONE;
+	private DistrictDto getDistrictDto() {
+		this.districtDto.setId(this.getId());
+		this.districtDto.setName(this.getName());
+		this.districtDto.setChiho(this.getChiho());
+		this.districtDto.setShutoId(this.getShutoId());
+		this.districtDto.setShutoName(this.getShutoName());
+		this.districtDto.setPopulation(this.getPopulation());
+		this.districtDto.setDistrictFlag(this.getDistrictFlag());
+		return this.districtDto;
 	}
 
 	/**
-	 * getter for cityDto
-	 *
-	 * @return CityDto
-	 */
-	private CityDto getCityDto() {
-		this.cityDto.setId(this.getId());
-		this.cityDto.setName(this.getName());
-		this.cityDto.setPopulation(this.getPopulation());
-		this.cityDto.setPronunciation(this.getPronunciation());
-		this.cityDto.setDistrictId(this.getDistrictId());
-		this.cityDto.setDistrictName(this.getDistrictName());
-		this.cityDto.setCityFlag(this.getCityFlag());
-		return this.cityDto;
-	}
-
-	/**
-	 * 地域一覧を取得する
-	 *
-	 * @return String
-	 */
-	@Action(PgCrowd2URLConstants.URL_DISTRICT_LIST)
-	public String getDistricts() {
-		final String cityId = this.getRequest().getParameter("cityId");
-		final List<DistrictDto> districtsByCityId = this.iDistrictService.getDistrictsByCityId(cityId);
-		this.setResponsedJsondata(ResultDto.successWithData(districtsByCityId));
-		return NONE;
-	}
-
-	/**
-	 * 都市情報を削除する
-	 *
-	 * @return String
-	 */
-	@Action(PgCrowd2URLConstants.URL_INFO_DELETE)
-	public String infoDelete() {
-		final String cityId = this.getRequest().getParameter("cityId");
-		final ResultDto<String> remove = this.iCityService.remove(Long.parseLong(cityId));
-		this.setResponsedJsondata(remove);
-		return NONE;
-	}
-
-	/**
-	 * 都市情報を保存する
-	 *
-	 * @return String
-	 */
-	@Action(value = PgCrowd2URLConstants.URL_INFO_INSERT, interceptorRefs = { @InterceptorRef("json") })
-	public String infoSave() {
-		final CityDto cityDto2 = this.getCityDto();
-		this.iCityService.save(cityDto2);
-		this.setResponsedJsondata(ResultDto.successWithoutData());
-		return NONE;
-	}
-
-	/**
-	 * 都市情報を更新する
+	 * 地域情報を更新する
 	 *
 	 * @return String
 	 */
 	@Action(value = PgCrowd2URLConstants.URL_INFO_UPDATE, interceptorRefs = { @InterceptorRef("json") })
 	public String infoUpdate() {
-		final CityDto cityDto2 = this.getCityDto();
-		final ResultDto<String> update = this.iCityService.update(cityDto2);
+		final DistrictDto districtDto2 = this.getDistrictDto();
+		final ResultDto<String> update = this.iDistrictService.update(districtDto2);
 		this.setResponsedJsondata(update);
 		return NONE;
 	}
@@ -204,8 +147,9 @@ public class CityHandler extends ActionSupport implements ServletRequestAware {
 	public String pagination() {
 		final String pageNum = this.getRequest().getParameter("pageNum");
 		final String keyword = this.getRequest().getParameter("keyword");
-		final Pagination<CityDto> cities = this.iCityService.getCitiesByKeyword(Integer.parseInt(pageNum), keyword);
-		this.setResponsedJsondata(ResultDto.successWithData(cities));
+		final Pagination<DistrictDto> districtsByKeyword = this.iDistrictService
+				.getDistrictsByKeyword(Integer.parseInt(pageNum), keyword);
+		this.setResponsedJsondata(ResultDto.successWithData(districtsByKeyword));
 		return NONE;
 	}
 

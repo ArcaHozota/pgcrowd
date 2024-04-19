@@ -120,7 +120,7 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return EmployeeDto
 	 */
-	public EmployeeDto getEmployeeDto() {
+	private EmployeeDto getEmployeeDto() {
 		this.employeeDto.setId(this.getId());
 		this.employeeDto.setLoginAccount(this.getLoginAccount());
 		this.employeeDto.setUsername(this.getUsername());
@@ -162,7 +162,7 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action(value = PgCrowd2URLConstants.URL_INFO_INSERT, interceptorRefs = { @InterceptorRef(value = "json") })
+	@Action(value = PgCrowd2URLConstants.URL_INFO_INSERT, interceptorRefs = { @InterceptorRef("json") })
 	public String infoSave() {
 		final EmployeeDto employeeDto2 = this.getEmployeeDto();
 		this.iEmployeeService.save(employeeDto2);
@@ -175,7 +175,7 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action(value = PgCrowd2URLConstants.URL_INFO_UPDATE, interceptorRefs = { @InterceptorRef(value = "json") })
+	@Action(value = PgCrowd2URLConstants.URL_INFO_UPDATE, interceptorRefs = { @InterceptorRef("json") })
 	public String infoUpdate() {
 		final EmployeeDto employeeDto2 = this.getEmployeeDto();
 		final ResultDto<String> updateInfo = this.iEmployeeService.update(employeeDto2);

@@ -46,15 +46,6 @@ function buildTableBody(result) {
 	});
 }
 $("#tableBody").on('click', '.edit-btn', function() {
-	let ajaxResult = $.ajax({
-		url: '/pgcrowd/district/checkEdition',
-		type: 'GET',
-		async: false
-	});
-	if (ajaxResult.status !== 200) {
-		layer.msg(ajaxResult.responseJSON.message);
-		return;
-	}
 	formReset("#districtEditModal form");
 	let editId = $(this).attr("editId");
 	$("#districtInfoChangeBtn").val(editId);
@@ -84,7 +75,7 @@ $("#districtInfoChangeBtn").on('click', function() {
 			'name': $("#nameEdit").val().trim(),
 			'chiho': $("#chihoEdit").val().trim()
 		});
-		pgcrowdAjaxModify('/pgcrowd/district/infoupd', 'PUT', putData, putSuccessFunction);
+		pgcrowdAjaxModify('/pgcrowd/district/infoUpdate', 'PUT', putData, putSuccessFunction);
 	}
 });
 function putSuccessFunction(result) {

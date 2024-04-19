@@ -152,7 +152,7 @@ public class RoleHandler extends ActionSupport implements ServletRequestAware {
 	 *
 	 * @return RoleDto
 	 */
-	public RoleDto getRoleDto() {
+	private RoleDto getRoleDto() {
 		this.roleDto.setId(this.getId());
 		this.roleDto.setName(this.getName());
 		return this.roleDto;
