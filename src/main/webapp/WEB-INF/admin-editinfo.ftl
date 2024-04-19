@@ -24,12 +24,13 @@
 					</div>
 					<div class="card-body">
 						<form role="form" id="editForm">
-							<input type="hidden" value="${employeeInfo.id}" id="editIdContainer">
+							<input type="hidden" value="${arawaseta.id}" id="editIdContainer">
+							<input type="hidden" value="${pageNum}" id="pageNumContainer">
 							<div class="form-group row">
 								<label for="loginAccountEdit"
 									class="col-sm-3 col-form-label text-end">ログインアカウント</label>
 								<div class="col-sm-7" style="height: 60px;">
-									<p class="form-control" id="loginAccountEdit">${employeeInfo.loginAccount}</p>
+									<p class="form-control" id="loginAccountEdit">${arawaseta.loginAccount}</p>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -37,7 +38,7 @@
 									class="col-sm-3 col-form-label text-end">ユーザ名</label>
 								<div class="col-sm-7" style="height: 60px;">
 									<input type="text" class="form-control" id="usernameEdit"
-										placeholder="ユーザ名を入力してください" value="${employeeInfo.username}">
+										placeholder="ユーザ名を入力してください" value="${arawaseta.username}">
 									<span class="form-text" style="font-size: 12px;"></span>
 								</div>
 							</div>
@@ -46,7 +47,7 @@
 									class="col-sm-3 col-form-label text-end">パスワード</label>
 								<div class="col-sm-7" style="height: 60px;">
 									<input type="password" class="form-control" id="passwordEdit"
-										placeholder="パスワードを入力してください" value="${employeeInfo.password}">
+										placeholder="パスワードを入力してください" value="${arawaseta.password}">
 									<span class="form-text" style="font-size: 12px;"></span>
 								</div>
 							</div>
@@ -54,7 +55,7 @@
 								<label for="emailEdit" class="col-sm-3 col-form-label text-end">メールアドレス</label>
 								<div class="col-sm-7" style="height: 60px;">
 									<input type="email" class="form-control" id="emailEdit"
-										placeholder="メールアドレスを入力してください" value="${employeeInfo.email}">
+										placeholder="メールアドレスを入力してください" value="${arawaseta.email}">
 									<span class="form-text" style="font-size: 12px;"></span>
 								</div>
 							</div>
@@ -62,7 +63,7 @@
 								<label for="dateEdit" class="col-sm-3 col-form-label text-end">生年月日</label>
 								<div class="col-sm-7" style="height: 60px;">
 									<input type="date" class="form-control" id="dateEdit"
-										value="${employeeInfo.dateOfBirth}"> <span
+										value="${arawaseta.dateOfBirth}"> <span
 										class="form-text" style="font-size: 12px;"></span>
 								</div>
 							</div>
@@ -92,7 +93,6 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript"
-		src="/static/customizes/employee-pages.js"></script>
+	<script type="text/javascript" src="/static/customizes/employee-addition.js"></script>
 </body>
 </html>

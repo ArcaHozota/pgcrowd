@@ -252,7 +252,7 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 			@Result(name = SUCCESS, location = "/WEB-INF/admin-addinfo.ftl") })
 	public String toAddition() {
 		final List<RoleDto> roleDtos = this.iRoleService.getRolesByEmployeeId(null);
-		ActionContext.getContext().put("employeeRoles", roleDtos);
+		ActionContext.getContext().put(PgCrowd2Constants.ATTRNAME_EMPLOYEE_ROLES, roleDtos);
 		return SUCCESS;
 	}
 
@@ -265,10 +265,12 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 			@Result(name = SUCCESS, location = "/WEB-INF/admin-editinfo.ftl") })
 	public String toEdition() {
 		final String editId = this.getRequest().getParameter("editId");
+		final String pageNum = this.getRequest().getParameter("pageNum");
 		final EmployeeDto employeeDto2 = this.iEmployeeService.getEmployeeById(editId);
 		final List<RoleDto> roleDtos = this.iRoleService.getRolesByEmployeeId(editId);
-		ActionContext.getContext().put("employeeInfo", employeeDto2);
-		ActionContext.getContext().put("employeeRoles", roleDtos);
+		ActionContext.getContext().put(PgCrowd2Constants.ATTRNAME_EDITED_INFO, employeeDto2);
+		ActionContext.getContext().put(PgCrowd2Constants.ATTRNAME_EMPLOYEE_ROLES, roleDtos);
+		ActionContext.getContext().put(PgCrowd2Constants.ATTRNAME_PAGE_NUMBER, pageNum);
 		return SUCCESS;
 	}
 

@@ -99,7 +99,7 @@ $(function() {
 	$("#toPersonal").on('click', function(e) {
 		e.preventDefault();
 		let userId = $(this).find("p").text();
-		let url = '/pgcrowd/employee/toEdition?editId=' + userId;
+		let url = '/pgcrowd/employee/toEdition?editId=' + userId + '&pageNum=1';
 		checkPermissionAndTransfer(url);
 	});
 	$("#toAdmin").on('click', function(e) {
@@ -118,7 +118,7 @@ $(function() {
 	});
 	$("#toPages").on('click', function(e) {
 		e.preventDefault();
-		let url = '/pgcrowd/employee/toPages?pageNum=1';
+		let url = '/pgcrowd/employee/toPages?pageNum=' + pageNum;
 		checkPermissionAndTransfer(url);
 	});
 	$("#toCategory").on('click', function(e) {
