@@ -28,6 +28,7 @@ import jp.co.sony.ppogah.dto.EmployeeDto;
 import jp.co.sony.ppogah.dto.RoleDto;
 import jp.co.sony.ppogah.service.IEmployeeService;
 import jp.co.sony.ppogah.service.IRoleService;
+import jp.co.sony.ppogah.utils.CommonProjectUtils;
 import jp.co.sony.ppogah.utils.Pagination;
 import jp.co.sony.ppogah.utils.ResultDto;
 import lombok.Getter;
@@ -303,7 +304,10 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 */
 	@Action(PgCrowd2URLConstants.URL_TO_PAGES)
 	public String toPages() {
-		final String pageNum = this.getRequest().getParameter("pageNum");
+		String pageNum = this.getRequest().getParameter("pageNum");
+		if (!CommonProjectUtils.isDigital(pageNum)) {
+			pageNum = String.valueOf(1L);
+		}
 		ActionContext.getContext().put(PgCrowd2Constants.ATTRNAME_PAGE_NUMBER, pageNum);
 		return SUCCESS;
 	}
