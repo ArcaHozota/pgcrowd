@@ -28,7 +28,7 @@ public final class PgCrowd2Constants {
 
 	public static final String ATTRNAME_EDITED_INFO = "arawaseta";
 
-	public static final String ATTRNAME_EMPLOYEEROLES = "employeeRoles";
+	public static final String ATTRNAME_EMPLOYEE_ROLES = "employeeRoles";
 
 	public static final String ATTRNAME_PAGE_INFO = "pageInfo";
 
