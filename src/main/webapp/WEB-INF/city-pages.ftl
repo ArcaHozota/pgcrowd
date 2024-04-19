@@ -63,7 +63,7 @@
 				<div class="modal-body">
 					<form class="form-horizontal">
 						<div class="form-group row">
-							<label for="nameInput" class="col-sm-3 col-form-label text-end">都市名</label>
+							<label for="nameInput" class="col-sm-3 col-form-label text-end">都市名</label>
 							<div class="col-sm-9" style="height: 60px;">
 								<input type="text" class="form-control" id="nameInput" placeholder="都市の名称"> 
 								<span class="form-text" style="font-size: 12px;"></span>
@@ -77,7 +77,7 @@
 							</div>
 						</div>
 						<div class="form-group row">
-							<label for="districtInput" class="col-sm-3 col-form-label text-end">都道府県</label>
+							<label for="districtInput" class="col-sm-3 col-form-label text-end">都道府県</label>
 							<div class="col-sm-9" style="height: 60px;">
 								<select id="districtInput" class="form-select"></select>
 							</div>
@@ -92,9 +92,9 @@
 						</div>
 						<div class="form-group row">
 							<label for="cityFlagInput"
-								class="col-sm-3 col-form-label text-end">市町村旗</label>
+								class="col-sm-3 col-form-label text-end">市町村旗</label>
 							<div class="col-sm-9" style="height: 60px;">
-								<input type="text" class="form-control" id="cityFlagInput" placeholder="市町村旗"> 
+								<input type="text" class="form-control" id="cityFlagInput" placeholder="市町村旗"> 
 								<span class="form-text" style="font-size: 12px;"></span>
 							</div>
 						</div>
