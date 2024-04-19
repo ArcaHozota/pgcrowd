@@ -21,7 +21,6 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import jp.co.sony.ppogah.common.PgCrowd2URLConstants;
 import jp.co.sony.ppogah.dto.DistrictDto;
-import jp.co.sony.ppogah.service.ICityService;
 import jp.co.sony.ppogah.service.IDistrictService;
 import jp.co.sony.ppogah.utils.Pagination;
 import jp.co.sony.ppogah.utils.ResultDto;
@@ -46,12 +45,6 @@ import lombok.Setter;
 public class DistrictHandler extends ActionSupport implements ServletRequestAware {
 
 	private static final long serialVersionUID = 646905610745129665L;
-
-	/**
-	 * 都市サービスインターフェス
-	 */
-	@Resource
-	private ICityService iCityService;
 
 	/**
 	 * 地域サービスインターフェス
