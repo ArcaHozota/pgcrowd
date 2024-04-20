@@ -31,10 +31,8 @@
 								</button>
 							</div>
 						</div>
-						<#if pageNum?exists>
+						<#if pageNum?exists!''>
 							<input type="hidden" value="${pageNum}" id="pageNumContainer">
-							<#else>
-							<input type="hidden" value="''" id="pageNumContainer">
 						</#if>
 						<table class="table table-sm table-hover">
 							<caption style="font-size: 10px;">社員情報一覧</caption>
