@@ -1,5 +1,7 @@
 package jp.co.sony.ppogah.service;
 
+import java.util.Optional;
+
 import jp.co.sony.ppogah.dto.EmployeeDto;
 import jp.co.sony.ppogah.entity.Employee;
 import jp.co.sony.ppogah.utils.Pagination;
@@ -26,7 +28,7 @@ public interface IEmployeeService {
 	 * @param account アカウント
 	 * @return Employee
 	 */
-	Employee getEmployeeByAccount(String account);
+	Optional<Employee> getEmployeeByAccount(String account);
 
 	/**
 	 * IDによって社員情報を取得する

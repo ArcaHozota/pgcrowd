@@ -1,5 +1,7 @@
 package jp.co.sony.ppogah.listener;
 
+import java.util.Optional;
+
 import javax.annotation.Resource;
 
 import org.apache.shiro.authc.AuthenticationException;
@@ -37,9 +39,9 @@ public class PgCrowd2Realm extends AuthorizingRealm {
 	protected AuthenticationInfo doGetAuthenticationInfo(final AuthenticationToken token)
 			throws AuthenticationException {
 		final String account = token.getPrincipal().toString();
-		final Employee employee = this.iEmployeeService.getEmployeeByAccount(account);
-		if (employee != null) {
-			return new SimpleAuthenticationInfo(token.getPrincipal(), employee.getPassword(),
+		final Optional<Employee> employee = this.iEmployeeService.getEmployeeByAccount(account);
+		if (employee.isPresent()) {
+			return new SimpleAuthenticationInfo(token.getPrincipal(), employee.get().getPassword(),
 					ByteSource.Util.bytes("pgcrowd2"), account);
 		}
 		return null;

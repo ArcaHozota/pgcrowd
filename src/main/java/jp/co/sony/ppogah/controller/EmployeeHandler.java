@@ -208,25 +208,28 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 		final Subject subject = SecurityUtils.getSubject();
 		final String loginAcct = this.getRequest().getParameter("loginAcct");
 		final String userPswd = this.getRequest().getParameter("userPswd");
-		final UsernamePasswordToken token = new UsernamePasswordToken(loginAcct, userPswd);
+		final String rememberMe = this.getRequest().getParameter("rememberMe");
+		final UsernamePasswordToken token = new UsernamePasswordToken(loginAcct, userPswd,
+				Boolean.parseBoolean(rememberMe));
 		try {
 			subject.login(token);
 		} catch (final AuthenticationException e) {
 			return LOGIN;
 		}
+		this.getRequest().getSession().setAttribute("displayedUsername", subject.getPrincipal().toString());
 		return SUCCESS;
 	}
 
-	/**
-	 * ログアウトする
-	 *
-	 * @return String
-	 */
-	@Action(PgCrowd2URLConstants.URL_LOG_OUT)
-	public String logout() {
-		this.request.getSession().invalidate();
-		return LOGIN;
-	}
+//	/**
+//	 * ログアウトする
+//	 *
+//	 * @return String
+//	 */
+//	@Action(PgCrowd2URLConstants.URL_LOG_OUT)
+//	public String logout() {
+//		this.request.getSession().invalidate();
+//		return LOGIN;
+//	}
 
 	/**
 	 * 情報一覧画面初期表示する
