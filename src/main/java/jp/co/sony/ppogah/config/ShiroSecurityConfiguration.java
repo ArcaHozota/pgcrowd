@@ -50,7 +50,7 @@ public class ShiroSecurityConfiguration {
 				PgCrowd2URLConstants.URL_EMPLOYEE_NAMESPACE.concat("/").concat(PgCrowd2URLConstants.URL_LOG_OUT),
 				"logout");
 		defaultShiroFilterChainDefinition.addPathDefinition("/static/**", "anon");
-		defaultShiroFilterChainDefinition.addPathDefinition("/**", "authc");
+		defaultShiroFilterChainDefinition.addPathDefinition("/**", "anon");
 		defaultShiroFilterChainDefinition.addPathDefinition("/**", "user");
 		return defaultShiroFilterChainDefinition;
 	}

@@ -1,6 +1,7 @@
 package jp.co.sony.ppogah.controller;
 
 import static com.opensymphony.xwork2.Action.ERROR;
+import static com.opensymphony.xwork2.Action.INPUT;
 import static com.opensymphony.xwork2.Action.LOGIN;
 import static com.opensymphony.xwork2.Action.NONE;
 import static com.opensymphony.xwork2.Action.SUCCESS;
@@ -50,6 +51,7 @@ import lombok.Setter;
 @Results({ @Result(name = SUCCESS, location = "/WEB-INF/admin-pages.ftl"),
 		@Result(name = ERROR, location = "/WEB-INF/system-error.ftl"),
 		@Result(name = NONE, type = "json", params = { "root", "responsedJsondata" }),
+		@Result(name = INPUT, location = "/WEB-INF/admin-login.ftl"),
 		@Result(name = LOGIN, location = "/WEB-INF/admin-login.ftl") })
 @ParentPackage("json-default")
 @Controller
