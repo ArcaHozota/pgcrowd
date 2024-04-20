@@ -22,6 +22,7 @@ import jp.co.sony.ppogah.common.PgCrowd2Constants;
 import jp.co.sony.ppogah.dto.EmployeeDto;
 import jp.co.sony.ppogah.entity.Employee;
 import jp.co.sony.ppogah.entity.EmployeeRole;
+import jp.co.sony.ppogah.exception.LoginFailedException;
 import jp.co.sony.ppogah.exception.PgCrowdException;
 import jp.co.sony.ppogah.repository.EmployeeRepository;
 import jp.co.sony.ppogah.repository.EmployeeRoleRepository;
@@ -72,6 +73,18 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		return this.employeeRepository.findOne(example).isPresent()
 				? ResultDto.failed(PgCrowd2Constants.MESSAGE_STRING_DUPLICATED)
 				: ResultDto.successWithoutData();
+	}
+
+	@Override
+	public Employee getEmployeeByAccount(final String account) {
+		final Specification<Employee> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get("deleteFlg"), PgCrowd2Constants.LOGIC_DELETE_INITIAL);
+		final Specification<Employee> where2 = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get("loginAccount"), account);
+		final Specification<Employee> specification = Specification.where(where1).and(where2);
+		return this.employeeRepository.findOne(specification).orElseThrow(() -> {
+			throw new LoginFailedException(PgCrowd2Constants.MESSAGE_STRING_PROHIBITED);
+		});
 	}
 
 	@Override
