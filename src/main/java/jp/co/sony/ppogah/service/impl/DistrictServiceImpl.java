@@ -22,10 +22,10 @@ import jp.co.sony.ppogah.exception.PgCrowdException;
 import jp.co.sony.ppogah.repository.CityRepository;
 import jp.co.sony.ppogah.repository.DistrictRepository;
 import jp.co.sony.ppogah.service.IDistrictService;
+import jp.co.sony.ppogah.utils.CommonProjectUtils;
 import jp.co.sony.ppogah.utils.Pagination;
 import jp.co.sony.ppogah.utils.ResultDto;
 import jp.co.sony.ppogah.utils.SecondBeanUtils;
-import jp.co.sony.ppogah.utils.CommonProjectUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -66,6 +66,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 			final DistrictDto districtDto = new DistrictDto();
 			districtDto.setId("0");
 			districtDto.setName(PgCrowd2Constants.DEFAULT_ROLE_NAME);
+			districtDto.setChiho(CommonProjectUtils.EMPTY_STRING);
 			districtDtos.add(districtDto);
 			districtDtos.addAll(districtDtos1);
 			return districtDtos;

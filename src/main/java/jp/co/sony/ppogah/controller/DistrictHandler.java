@@ -36,7 +36,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Namespace(PgCrowd2URLConstants.URL_DISTRICT_NAMESPACE)
-@Results({ @Result(name = SUCCESS, location = "/WEB-INF/city-pages.ftl"),
+@Results({ @Result(name = SUCCESS, location = "/WEB-INF/district-pages.ftl"),
 		@Result(name = ERROR, location = "/WEB-INF/system-error.ftl"),
 		@Result(name = NONE, type = "json", params = { "root", "responsedJsondata" }),
 		@Result(name = LOGIN, location = "/WEB-INF/admin-login.ftl") })
