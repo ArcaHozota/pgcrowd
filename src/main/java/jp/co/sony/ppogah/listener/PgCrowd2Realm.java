@@ -10,6 +10,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.springframework.stereotype.Component;
 
 import jp.co.sony.ppogah.entity.Employee;
 import jp.co.sony.ppogah.service.IEmployeeService;
@@ -20,6 +21,7 @@ import jp.co.sony.ppogah.service.IEmployeeService;
  * @author ArkamaHozota
  * @since 1.00beta
  */
+@Component
 public class PgCrowd2Realm extends AuthorizingRealm {
 
 	/**

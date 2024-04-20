@@ -10,6 +10,10 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -201,10 +205,13 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	@Action(value = PgCrowd2URLConstants.URL_LOGIN, results = {
 			@Result(name = SUCCESS, location = "/WEB-INF/mainmenu.ftl") })
 	public String login() {
+		final Subject subject = SecurityUtils.getSubject();
 		final String loginAcct = this.getRequest().getParameter("loginAcct");
 		final String userPswd = this.getRequest().getParameter("userPswd");
-		final Boolean loginBoolean = this.iEmployeeService.login(loginAcct, userPswd);
-		if (Boolean.FALSE.equals(loginBoolean)) {
+		final UsernamePasswordToken token = new UsernamePasswordToken(loginAcct, userPswd);
+		try {
+			subject.login(token);
+		} catch (final AuthenticationException e) {
 			return LOGIN;
 		}
 		return SUCCESS;
