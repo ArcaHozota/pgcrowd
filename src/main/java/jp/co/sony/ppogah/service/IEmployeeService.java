@@ -37,15 +37,6 @@ public interface IEmployeeService {
 	Pagination<EmployeeDto> getEmployeesByKeyword(Integer pageNum, String keyword);
 
 	/**
-	 * ログインする
-	 *
-	 * @param account  アカウント
-	 * @param password パスワード
-	 * @return Boolean
-	 */
-	Boolean login(String account, String password);
-
-	/**
 	 * 社員登録
 	 *
 	 * @param employeeDto 社員情報DTO
