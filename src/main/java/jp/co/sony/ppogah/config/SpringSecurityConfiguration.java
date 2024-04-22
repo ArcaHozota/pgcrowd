@@ -8,9 +8,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder.BCryptVersion;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import jp.co.sony.ppogah.common.PgCrowd2Constants;
 import jp.co.sony.ppogah.common.PgCrowd2URLConstants;
@@ -44,8 +46,20 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
 		log.info(PgCrowd2Constants.MESSAGE_SPRING_SECURITY);
-		http.authorizeRequests(requests -> requests.antMatchers(PgCrowd2URLConstants.URL_STATIC_RESOURCE).permitAll()
-				.anyRequest().authenticated()).csrf(CsrfConfigurer::disable)
+		http.authorizeRequests(
+				requests -> requests.antMatchers(PgCrowd2URLConstants.URL_STATIC_RESOURCE).permitAll().anyRequest()
+						.authenticated())
+				.csrf(csrf -> csrf
+						.ignoringRequestMatchers(
+								new AntPathRequestMatcher(PgCrowd2URLConstants.URL_STATIC_RESOURCE,
+										RequestMethod.GET.toString()),
+								new AntPathRequestMatcher(PgCrowd2URLConstants.URL_EMPLOYEE_NAMESPACE.concat("/")
+										.concat(PgCrowd2URLConstants.URL_TO_LOGIN), RequestMethod.GET.toString()),
+								new AntPathRequestMatcher(PgCrowd2URLConstants.URL_EMPLOYEE_NAMESPACE.concat("/")
+										.concat(PgCrowd2URLConstants.URL_LOGIN), RequestMethod.POST.toString()),
+								new AntPathRequestMatcher(PgCrowd2URLConstants.URL_EMPLOYEE_NAMESPACE.concat("/")
+										.concat(PgCrowd2URLConstants.URL_LOG_OUT), RequestMethod.POST.toString()))
+						.csrfTokenRepository(new CookieCsrfTokenRepository()))
 				.exceptionHandling(
 						handling -> handling.authenticationEntryPoint((request, response, authenticationException) -> {
 							final ResponseLoginDto responseResult = new ResponseLoginDto(

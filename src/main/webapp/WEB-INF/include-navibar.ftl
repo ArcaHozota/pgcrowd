@@ -3,9 +3,10 @@
 <body>
 	<#if Session.SPRING_SECURITY_CONTEXT?exists>    
 	    <#assign principalAdmin = Session.SPRING_SECURITY_CONTEXT.authentication.principal
-	        userAdminName = principalAdmin.getOriginalAdmin().getUsername()>
+	        userAdminName = principalAdmin.getOriginalAdmin().getUsername()
+	        personalId = principalAdmin.getOriginalAdmin().getId()>
 	<#else>
-	    <#assign userAdminName="unknown">
+	    <#assign userAdminName="unknown" personalId="0L">
 	</#if>
 	<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top"
 		data-bs-theme="dark">
@@ -25,12 +26,13 @@
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle btn btn-success me-2" href="#" role="button" 
 							data-bs-toggle="dropdown" aria-expanded="false" style="height: 37.6px;"> 
-							<i class="fa-solid fa-user-circle" text="${userAdminName}"></i>
+							<i class="fa-solid fa-user-circle">${userAdminName}</i>
 						</a>
 						<ul class="dropdown-menu dropdown-menu-end" role="menu">
 							<li>
 								<a class="dropdown-item" href="#" id="toPersonal"> 
 									<i class="fa-solid fa-user-gear"></i> 個人設定
+									<input type="hidden" value="${personalId}">
 								</a>
 							</li>
 							<li>
