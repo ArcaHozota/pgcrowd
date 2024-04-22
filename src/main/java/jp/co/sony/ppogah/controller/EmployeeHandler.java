@@ -17,6 +17,7 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.apache.struts2.interceptor.ServletRequestAware;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -136,6 +137,7 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
+	@PreAuthorize("hasAuthority('employee%delete')")
 	@Action(PgCrowd2URLConstants.URL_INFO_DELETE)
 	public String infoDelete() {
 		final String userId = this.getRequest().getParameter("userId");
