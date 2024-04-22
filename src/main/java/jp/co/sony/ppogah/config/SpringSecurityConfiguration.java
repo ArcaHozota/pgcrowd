@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import jp.co.sony.ppogah.common.PgCrowd2Constants;
 import jp.co.sony.ppogah.common.PgCrowd2URLConstants;
 import jp.co.sony.ppogah.listener.PgCrowd2UserDetailsService;
+import jp.co.sony.ppogah.listener.PgCrowdAccessDeniedHandler;
 import jp.co.sony.ppogah.utils.CommonProjectUtils;
 import lombok.extern.log4j.Log4j2;
 
@@ -67,11 +68,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 							final ResponseLoginDto responseResult = new ResponseLoginDto(
 									HttpStatus.UNAUTHORIZED.value(), authenticationException.getMessage());
 							CommonProjectUtils.renderString(response, responseResult);
-						}).accessDeniedHandler((request, response, accessDeniedException) -> {
-							final ResponseLoginDto responseResult = new ResponseLoginDto(HttpStatus.FORBIDDEN.value(),
-									PgCrowd2Constants.MESSAGE_SPRINGSECURITY_REQUIRED_AUTH);
-							CommonProjectUtils.renderString(response, responseResult);
-						}))
+						}).accessDeniedHandler(new PgCrowdAccessDeniedHandler("/WEB-INF/system-error.ftl")))
 				.formLogin(login -> login
 						.loginPage(PgCrowd2URLConstants.URL_EMPLOYEE_NAMESPACE.concat("/")
 								.concat(PgCrowd2URLConstants.URL_TO_LOGIN))
