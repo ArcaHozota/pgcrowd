@@ -1,5 +1,6 @@
 package jp.co.sony.ppogah.utils;
 
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -7,11 +8,16 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
+import org.springframework.http.MediaType;
 import org.springframework.lang.Nullable;
 
+import com.alibaba.fastjson2.JSON;
+
+import jp.co.sony.ppogah.config.ResponseLoginDto;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -352,6 +358,22 @@ public final class CommonProjectUtils {
 	 */
 	public static boolean isNotEqual(@Nullable final String str1, @Nullable final String str2) {
 		return !CommonProjectUtils.isEqual(str1, str2);
+	}
+
+	/**
+	 * 文字列をクライアントにレンダリングする
+	 *
+	 * @param response リスポンス
+	 * @param string   ストリング
+	 */
+	public static void renderString(final HttpServletResponse response, final ResponseLoginDto aResult) {
+		try {
+			response.setStatus(aResult.getCode());
+			response.setContentType(MediaType.APPLICATION_JSON.toString());
+			response.getWriter().print(JSON.toJSONString(aResult));
+		} catch (final IOException e) {
+			// do nothing
+		}
 	}
 
 	/**

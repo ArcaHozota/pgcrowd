@@ -3,6 +3,7 @@ package jp.co.sony.ppogah.config;
 import javax.annotation.Resource;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import jp.co.sony.ppogah.common.PgCrowd2Constants;
 import jp.co.sony.ppogah.common.PgCrowd2URLConstants;
 import jp.co.sony.ppogah.listener.PgCrowd2UserDetailsService;
+import jp.co.sony.ppogah.utils.CommonProjectUtils;
 import lombok.extern.log4j.Log4j2;
 
 /**
@@ -50,6 +52,16 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 								.ignoringRequestMatchers(new AntPathRequestMatcher(
 										PgCrowd2URLConstants.URL_STATIC_RESOURCE, RequestMethod.GET.toString()))
 								.csrfTokenRepository(new CookieCsrfTokenRepository()))
+				.exceptionHandling(
+						handling -> handling.authenticationEntryPoint((request, response, authenticationException) -> {
+							final ResponseLoginDto responseResult = new ResponseLoginDto(
+									HttpStatus.UNAUTHORIZED.value(), authenticationException.getMessage());
+							CommonProjectUtils.renderString(response, responseResult);
+						}).accessDeniedHandler((request, response, accessDeniedException) -> {
+							final ResponseLoginDto responseResult = new ResponseLoginDto(HttpStatus.FORBIDDEN.value(),
+									PgCrowd2Constants.MESSAGE_SPRINGSECURITY_REQUIRED_AUTH);
+							CommonProjectUtils.renderString(response, responseResult);
+						}))
 				.formLogin(login -> login
 						.loginPage(PgCrowd2URLConstants.URL_EMPLOYEE_NAMESPACE.concat("/")
 								.concat(PgCrowd2URLConstants.URL_TO_LOGIN))
