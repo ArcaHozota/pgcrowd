@@ -1,7 +1,6 @@
 package jp.co.sony.ppogah.controller;
 
 import static com.opensymphony.xwork2.Action.ERROR;
-import static com.opensymphony.xwork2.Action.INPUT;
 import static com.opensymphony.xwork2.Action.LOGIN;
 import static com.opensymphony.xwork2.Action.NONE;
 import static com.opensymphony.xwork2.Action.SUCCESS;
@@ -11,10 +10,6 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -51,7 +46,6 @@ import lombok.Setter;
 @Results({ @Result(name = SUCCESS, location = "/WEB-INF/admin-pages.ftl"),
 		@Result(name = ERROR, location = "/WEB-INF/system-error.ftl"),
 		@Result(name = NONE, type = "json", params = { "root", "responsedJsondata" }),
-		@Result(name = INPUT, location = "/WEB-INF/admin-login.ftl"),
 		@Result(name = LOGIN, location = "/WEB-INF/admin-login.ftl") })
 @ParentPackage("json-default")
 @Controller
@@ -207,31 +201,25 @@ public class EmployeeHandler extends ActionSupport implements ServletRequestAwar
 	@Action(value = PgCrowd2URLConstants.URL_LOGIN, results = {
 			@Result(name = SUCCESS, location = "/WEB-INF/mainmenu.ftl") })
 	public String login() {
-		final Subject subject = SecurityUtils.getSubject();
 		final String loginAcct = this.getRequest().getParameter("loginAcct");
 		final String userPswd = this.getRequest().getParameter("userPswd");
-		final String rememberMe = this.getRequest().getParameter("rememberMe");
-		final UsernamePasswordToken token = new UsernamePasswordToken(loginAcct, userPswd,
-				Boolean.parseBoolean(rememberMe));
-		try {
-			subject.login(token);
-		} catch (final AuthenticationException e) {
+		final Boolean loginBoolean = this.iEmployeeService.login(loginAcct, userPswd);
+		if (Boolean.FALSE.equals(loginBoolean)) {
 			return LOGIN;
 		}
-		this.getRequest().getSession().setAttribute("displayedUsername", subject.getPrincipal().toString());
 		return SUCCESS;
 	}
 
-//	/**
-//	 * ログアウトする
-//	 *
-//	 * @return String
-//	 */
-//	@Action(PgCrowd2URLConstants.URL_LOG_OUT)
-//	public String logout() {
-//		this.request.getSession().invalidate();
-//		return LOGIN;
-//	}
+	/**
+	 * ログアウトする
+	 *
+	 * @return String
+	 */
+	@Action(PgCrowd2URLConstants.URL_LOG_OUT)
+	public String logout() {
+		this.request.getSession().invalidate();
+		return LOGIN;
+	}
 
 	/**
 	 * 情報一覧画面初期表示する
