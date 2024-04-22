@@ -3,6 +3,7 @@ package jp.co.sony.ppogah.config;
 import javax.annotation.Resource;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -30,6 +31,7 @@ import lombok.extern.log4j.Log4j2;
  */
 @Log4j2
 @Configuration
+@Order(1)
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
