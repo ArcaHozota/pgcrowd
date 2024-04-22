@@ -16,26 +16,34 @@
 					</button>
 				</div>
 				<ul class="navbar-nav mb-2 mb-lg-0 d-flex" id="dropdown-info">
-					<li class="nav-item dropdown"><a
-						class="nav-link dropdown-toggle btn btn-success me-2" href="#"
-						role="button" data-bs-toggle="dropdown" aria-expanded="false"
-						style="height: 37.6px;"> <i class="fa-solid fa-user-circle" text="${session.displayedUsername}"></i></a>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle btn btn-success me-2" href="#" role="button" 
+							data-bs-toggle="dropdown" aria-expanded="false" style="height: 37.6px;"> 
+							<i class="fa-solid fa-user-circle"></i>
+						</a>
 						<ul class="dropdown-menu dropdown-menu-end" role="menu">
-							<li><a class="dropdown-item" href="#" id="toPersonal"> <i
-									class="fa-solid fa-user-gear"></i> 個人設定
-							</a></li>
-							<li><a class="dropdown-item" href="#"> <i
-									class="fa-solid fa-comments"></i> メッセージ
-							</a></li>
+							<li>
+								<a class="dropdown-item" href="#" id="toPersonal"> 
+									<i class="fa-solid fa-user-gear"></i> 個人設定
+								</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="#"> 
+									<i class="fa-solid fa-comments"></i> メッセージ
+								</a>
+							</li>
 							<li>
 								<hr class="dropdown-divider">
 							</li>
-							<li><a id="logoutLink" class="dropdown-item" href="#"> <i
-									class="fa-solid fa-right-from-bracket"></i> ログアウト
-							</a></li>
-							<form id="logoutForm" method="post"
-								action="/pgcrowd/employee/logout" style="display: none;"></form>
-						</ul></li>
+							<li>
+								<a id="logoutLink" class="dropdown-item" href="#"> 
+									<i class="fa-solid fa-right-from-bracket"></i> ログアウト
+								</a>
+							</li>
+							<form id="logoutForm" method="post" action="/pgcrowd/employee/logout" 
+								style="display: none;"></form>
+						</ul>
+					</li>
 				</ul>
 				<div class="d-flex">
 					<button id="logoutBtn" type="button" class="btn btn-danger me-2">
