@@ -4,10 +4,11 @@ import javax.annotation.Resource;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder.BCryptVersion;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,7 +27,6 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity
 public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	/**
@@ -37,7 +37,8 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(this.pgCrowd2UserDetailsService).passwordEncoder(new PgCrowd2PasswordEncoder());
+		auth.userDetailsService(this.pgCrowd2UserDetailsService)
+				.passwordEncoder(new BCryptPasswordEncoder(BCryptVersion.$2Y, 7));
 	}
 
 	@Override
@@ -49,11 +50,19 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 								.ignoringRequestMatchers(new AntPathRequestMatcher(
 										PgCrowd2URLConstants.URL_STATIC_RESOURCE, RequestMethod.GET.toString()))
 								.csrfTokenRepository(new CookieCsrfTokenRepository()))
-				.formLogin(login -> login.loginPage("/pgcrowd/employee/login")
-						.loginProcessingUrl("/pgcrowd/employee/do/login").defaultSuccessUrl("/pgcrowd/to/mainmenu")
+				.formLogin(login -> login
+						.loginPage(PgCrowd2URLConstants.URL_EMPLOYEE_NAMESPACE.concat("/")
+								.concat(PgCrowd2URLConstants.URL_TO_LOGIN))
+						.loginProcessingUrl(PgCrowd2URLConstants.URL_EMPLOYEE_NAMESPACE.concat("/")
+								.concat(PgCrowd2URLConstants.URL_LOGIN))
+						.defaultSuccessUrl(PgCrowd2URLConstants.URL_EMPLOYEE_NAMESPACE.concat("/")
+								.concat(PgCrowd2URLConstants.URL_TO_MAINMENU))
 						.permitAll().usernameParameter("loginAcct").passwordParameter("userPswd"))
-				.logout(logout -> logout.logoutUrl("/pgcrowd/employee/logout")
-						.logoutSuccessUrl("/pgcrowd/employee/login"));
+				.logout(logout -> logout
+						.logoutUrl(PgCrowd2URLConstants.URL_EMPLOYEE_NAMESPACE.concat("/")
+								.concat(PgCrowd2URLConstants.URL_LOG_OUT))
+						.logoutSuccessUrl(PgCrowd2URLConstants.URL_EMPLOYEE_NAMESPACE.concat("/")
+								.concat(PgCrowd2URLConstants.URL_TO_LOGIN)));
 	}
 
 //	@Bean
