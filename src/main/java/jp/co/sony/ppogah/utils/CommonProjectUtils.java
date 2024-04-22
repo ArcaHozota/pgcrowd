@@ -366,10 +366,11 @@ public final class CommonProjectUtils {
 	 * @param response リスポンス
 	 * @param string   ストリング
 	 */
+	@SuppressWarnings("deprecation")
 	public static void renderString(final HttpServletResponse response, final ResponseLoginDto aResult) {
 		try {
 			response.setStatus(aResult.getCode());
-			response.setContentType(MediaType.APPLICATION_JSON.toString());
+			response.setContentType(MediaType.APPLICATION_JSON_UTF8.toString());
 			response.getWriter().print(JSON.toJSONString(aResult));
 		} catch (final IOException e) {
 			// do nothing
