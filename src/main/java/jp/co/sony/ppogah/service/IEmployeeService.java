@@ -1,9 +1,6 @@
 package jp.co.sony.ppogah.service;
 
-import java.util.Optional;
-
 import jp.co.sony.ppogah.dto.EmployeeDto;
-import jp.co.sony.ppogah.entity.Employee;
 import jp.co.sony.ppogah.utils.Pagination;
 import jp.co.sony.ppogah.utils.ResultDto;
 
@@ -21,14 +18,6 @@ public interface IEmployeeService {
 	 * @param loginAccount ログインアカウント
 	 */
 	ResultDto<String> checkDuplicated(String loginAccount);
-
-	/**
-	 * アカウントによって社員情報を取得する
-	 *
-	 * @param account アカウント
-	 * @return Employee
-	 */
-	Optional<Employee> getEmployeeByAccount(String account);
 
 	/**
 	 * IDによって社員情報を取得する

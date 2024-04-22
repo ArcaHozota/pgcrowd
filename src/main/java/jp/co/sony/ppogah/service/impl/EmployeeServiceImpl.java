@@ -75,19 +75,6 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
-	public Optional<Employee> getEmployeeByAccount(final String account) {
-		final Specification<Employee> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("deleteFlg"), PgCrowd2Constants.LOGIC_DELETE_INITIAL);
-		final Specification<Employee> where2 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("loginAccount"), account);
-		final Specification<Employee> where3 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("email"), account);
-		final Specification<Employee> specification = Specification.where(where1)
-				.and(Specification.where(where2).or(where3));
-		return this.employeeRepository.findOne(specification);
-	}
-
-	@Override
 	public EmployeeDto getEmployeeById(final String id) {
 		final Employee employee = this.employeeRepository.findById(Long.parseLong(id)).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowd2Constants.MESSAGE_STRING_FATAL_ERROR);
