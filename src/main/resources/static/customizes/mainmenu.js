@@ -1,8 +1,10 @@
 $(document).ready(function() {
 	$("#toMainmenu").css('color', '#7F0020');
-	$("#adminKanriImg").attr('src', require['/static/image/icons/castilia.svg']);
-	$("#roleKanriImg").attr('src', require['/static/image/icons/burgundy.svg']);
-	$("#categoryKanriImg").attr('src', require['/static/image/icons/bourbon.svg']);
+	require(['/static/image/icons/castilia.svg', '/static/image/icons/burgundy.svg', '/static/image/icons/bourbon.svg'], function(moduleA, moduleB, moduleC) {
+		$("#adminKanriImg").attr('src', moduleA);
+		$("#roleKanriImg").attr('src', moduleB);
+		$("#categoryKanriImg").attr('src', moduleC);
+	});
 });
 $("#categoryKanriMainmenu").on('click', function() {
 	let url = '/pgcrowd/category/initial';
