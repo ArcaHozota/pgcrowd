@@ -18,6 +18,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
 
 import jp.co.sony.ppogah.utils.CommonProjectUtils;
 import jp.co.sony.ppogah.utils.ResultDto;
@@ -39,7 +40,9 @@ import lombok.Setter;
 		@Result(name = LOGIN, location = "/WEB-INF/admin-login.ftl") })
 @ParentPackage("json-default")
 @Controller
-public class SvgHandler {
+public class SvgHandler extends ActionSupport {
+
+	private static final long serialVersionUID = -171237033831060185L;
 
 	/**
 	 * JSONリスポンス
