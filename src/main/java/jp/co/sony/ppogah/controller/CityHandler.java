@@ -16,7 +16,6 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
-import org.apache.struts2.interceptor.ServletRequestAware;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -46,7 +45,7 @@ import lombok.Setter;
 		@Result(name = LOGIN, location = "/WEB-INF/admin-login.ftl") })
 @ParentPackage("json-default")
 @Controller
-public class CityHandler extends ActionSupport implements ServletRequestAware {
+public class CityHandler extends ActionSupport {
 
 	private static final long serialVersionUID = -6017782752547971104L;
 
@@ -207,13 +206,5 @@ public class CityHandler extends ActionSupport implements ServletRequestAware {
 		final Pagination<CityDto> cities = this.iCityService.getCitiesByKeyword(Integer.parseInt(pageNum), keyword);
 		this.setResponsedJsondata(ResultDto.successWithData(cities));
 		return NONE;
-	}
-
-	/**
-	 * @see org.apache.struts2.interceptor.ServletRequestAware.setServletRequest();
-	 */
-	@Override
-	public void setServletRequest(final HttpServletRequest request) {
-		this.request = request;
 	}
 }

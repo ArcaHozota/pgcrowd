@@ -14,7 +14,7 @@
 	<properties>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
-		<struts.version>2.5.33</struts.version>
+		<struts.version>6.3.0.2</struts.version>
 	</properties>
 	<dependencies>
 		<!--
