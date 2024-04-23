@@ -30,7 +30,7 @@ public class ResponseLoginDto implements Serializable {
 	/**
 	 * コンストラクタ
 	 */
-	protected ResponseLoginDto() {
+	ResponseLoginDto() {
 		this.code = 200;
 	}
 
@@ -40,7 +40,7 @@ public class ResponseLoginDto implements Serializable {
 	 * @param code    コード
 	 * @param message メッセージ
 	 */
-	protected ResponseLoginDto(final Integer code, final String message) {
+	public ResponseLoginDto(final Integer code, final String message) {
 		this.code = code;
 		this.message = message;
 	}
