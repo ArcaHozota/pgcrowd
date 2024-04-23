@@ -25,12 +25,16 @@
 		text-decoration: none;
 	}
 </style>
-<script type="text/javascript" src="/static/jquery/jquery-3.7.1.min.js" strict-dynamic></script>
-<script type="text/javascript" src="/static/bootstrap/js/bootstrap.bundle.min.js" strict-dynamic></script>
-<script type="text/javascript" src="/static/layer/layer.js" strict-dynamic></script>
-<script type="text/javascript" src="/static/ztree/jquery.ztree.all.js" strict-dynamic></script>
-<script type="text/javascript" src="/static/treeview/js/bstreeview.js" strict-dynamic></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2@11" strict-dynamic></script>
-<script type="text/javascript" src="/static/customizes/commons.js" strict-dynamic></script>
+<script type="text/javascript" src="/static/labjs/LAB.js" nonce="Ytvk0lE3pg1BL713YR9i89Kn" strict-dynamic></script>
+<script>
+	$LAB
+	  .script("/static/jquery/jquery-3.7.1.min.js").wait()
+	  .script("/static/bootstrap/js/bootstrap.bundle.min.js").wait()
+	  .script("/static/layer/layer.js").wait()
+	  .script("/static/ztree/jquery.ztree.all.js").wait()
+	  .script("/static/treeview/js/bstreeview.js").wait()
+	  .script("/static/customizes/commons.js").wait()
+	  .script("https://cdn.jsdelivr.net/npm/sweetalert2@11");
+</script>
 </head>
 </html>
