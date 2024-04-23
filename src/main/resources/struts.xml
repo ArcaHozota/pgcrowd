@@ -40,7 +40,4 @@
 		value="false" />
 	<!-- 关闭开发模式用以提高性能 -->
 	<constant name="struts.devMode" value="false" />
-	<!-- 自定义异常处理器 -->
-	<constant name="struts.exceptionHandler"
-		value="jp.co.sony.ppogah.listener.PgCrowdErrorListener" />
 </struts>
