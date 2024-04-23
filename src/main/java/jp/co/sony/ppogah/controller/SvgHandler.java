@@ -73,6 +73,7 @@ public class SvgHandler extends ActionSupport {
 		ActionContext.getContext().getServletResponse().setContentType("image/svg+xml");
 		ActionContext.getContext().getServletResponse().setCharacterEncoding(CommonProjectUtils.CHARSET_UTF8.name());
 		ActionContext.getContext().getServletResponse().getOutputStream().write(buffer);
+		ActionContext.getContext().getServletResponse().getOutputStream().flush();
 		return SUCCESS;
 	}
 
@@ -94,6 +95,7 @@ public class SvgHandler extends ActionSupport {
 		ActionContext.getContext().getServletResponse().setContentType("image/svg+xml");
 		ActionContext.getContext().getServletResponse().setCharacterEncoding(CommonProjectUtils.CHARSET_UTF8.name());
 		ActionContext.getContext().getServletResponse().getOutputStream().write(buffer);
+		ActionContext.getContext().getServletResponse().getOutputStream().flush();
 		return SUCCESS;
 	}
 
@@ -116,6 +118,7 @@ public class SvgHandler extends ActionSupport {
 		ActionContext.getContext().getServletResponse().setContentType("image/svg+xml");
 		ActionContext.getContext().getServletResponse().setCharacterEncoding(CommonProjectUtils.CHARSET_UTF8.name());
 		ActionContext.getContext().getServletResponse().getOutputStream().write(buffer);
+		ActionContext.getContext().getServletResponse().getOutputStream().flush();
 		return SUCCESS;
 	}
 }
