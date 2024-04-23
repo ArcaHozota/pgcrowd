@@ -72,6 +72,11 @@ public class CityHandler extends ActionSupport {
 	private final CityDto cityDto = new CityDto();
 
 	/**
+	 * アクションコンテキスト
+	 */
+	private final ActionContext actionContext = ActionContext.getContext();
+
+	/**
 	 * ID
 	 */
 	private String id;
@@ -113,8 +118,8 @@ public class CityHandler extends ActionSupport {
 	 */
 	@Action(PgCrowd2URLConstants.URL_CHECK_NAME)
 	public String checkDuplicated() {
-		final String nameVal = ActionContext.getContext().getServletRequest().getParameter("nameVal");
-		final String districtId2 = ActionContext.getContext().getServletRequest().getParameter("districtId");
+		final String nameVal = this.getActionContext().getServletRequest().getParameter("nameVal");
+		final String districtId2 = this.getActionContext().getServletRequest().getParameter("districtId");
 		final ResultDto<String> checkDuplicated = this.iCityService.checkDuplicated(nameVal,
 				Long.parseLong(districtId2));
 		this.setResponsedJsondata(checkDuplicated);
@@ -144,7 +149,7 @@ public class CityHandler extends ActionSupport {
 	 */
 	@Action(PgCrowd2URLConstants.URL_DISTRICT_LIST)
 	public String getDistricts() {
-		final String cityId = ActionContext.getContext().getServletRequest().getParameter("cityId");
+		final String cityId = this.getActionContext().getServletRequest().getParameter("cityId");
 		final List<DistrictDto> districtsByCityId = this.iDistrictService.getDistrictsByCityId(cityId);
 		this.setResponsedJsondata(ResultDto.successWithData(districtsByCityId));
 		return NONE;
@@ -157,7 +162,7 @@ public class CityHandler extends ActionSupport {
 	 */
 	@Action(PgCrowd2URLConstants.URL_INFO_DELETE)
 	public String infoDelete() {
-		final String cityId = ActionContext.getContext().getServletRequest().getParameter("cityId");
+		final String cityId = this.getActionContext().getServletRequest().getParameter("cityId");
 		final ResultDto<String> remove = this.iCityService.remove(Long.parseLong(cityId));
 		this.setResponsedJsondata(remove);
 		return NONE;
@@ -196,8 +201,8 @@ public class CityHandler extends ActionSupport {
 	 */
 	@Action(PgCrowd2URLConstants.URL_PAGINATION)
 	public String pagination() {
-		final String pageNum = ActionContext.getContext().getServletRequest().getParameter("pageNum");
-		final String keyword = ActionContext.getContext().getServletRequest().getParameter("keyword");
+		final String pageNum = this.getActionContext().getServletRequest().getParameter("pageNum");
+		final String keyword = this.getActionContext().getServletRequest().getParameter("keyword");
 		final Pagination<CityDto> cities = this.iCityService.getCitiesByKeyword(Integer.parseInt(pageNum), keyword);
 		this.setResponsedJsondata(ResultDto.successWithData(cities));
 		return NONE;
