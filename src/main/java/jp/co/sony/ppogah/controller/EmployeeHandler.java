@@ -8,7 +8,6 @@ import static com.opensymphony.xwork2.Action.SUCCESS;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
@@ -64,11 +63,6 @@ public class EmployeeHandler extends ActionSupport {
 	 */
 	@Resource
 	private IRoleService iRoleService;
-
-	/**
-	 * リクエスト
-	 */
-	private transient HttpServletRequest request;
 
 	/**
 	 * JSONリスポンス
@@ -139,7 +133,7 @@ public class EmployeeHandler extends ActionSupport {
 	@PreAuthorize("hasAuthority('employee%delete')")
 	@Action(PgCrowd2URLConstants.URL_INFO_DELETE)
 	public String infoDelete() {
-		final String userId = this.getRequest().getParameter("userId");
+		final String userId = ActionContext.getContext().getServletRequest().getParameter("userId");
 		this.iEmployeeService.remove(Long.parseLong(userId));
 		this.setResponsedJsondata(ResultDto.successWithoutData());
 		return NONE;
@@ -152,7 +146,7 @@ public class EmployeeHandler extends ActionSupport {
 	 */
 	@Action(PgCrowd2URLConstants.URL_INFO_RESTORE)
 	public String infoRestore() {
-		final String editId = this.getRequest().getParameter("editId");
+		final String editId = ActionContext.getContext().getServletRequest().getParameter("editId");
 		final EmployeeDto employeeDto2 = this.iEmployeeService.getEmployeeById(editId);
 		this.setResponsedJsondata(ResultDto.successWithData(employeeDto2));
 		return NONE;
@@ -201,8 +195,8 @@ public class EmployeeHandler extends ActionSupport {
 	 */
 	@Action(PgCrowd2URLConstants.URL_PAGINATION)
 	public String pagination() {
-		final String pageNum = this.getRequest().getParameter("pageNum");
-		final String keyword = this.getRequest().getParameter("keyword");
+		final String pageNum = ActionContext.getContext().getServletRequest().getParameter("pageNum");
+		final String keyword = ActionContext.getContext().getServletRequest().getParameter("keyword");
 		final Pagination<EmployeeDto> employees = this.iEmployeeService.getEmployeesByKeyword(Integer.parseInt(pageNum),
 				keyword);
 		this.setResponsedJsondata(ResultDto.successWithData(employees));
@@ -230,8 +224,8 @@ public class EmployeeHandler extends ActionSupport {
 	@Action(value = PgCrowd2URLConstants.URL_TO_EDITION, results = {
 			@Result(name = SUCCESS, location = "/WEB-INF/admin-editinfo.ftl") })
 	public String toEdition() {
-		final String editId = this.getRequest().getParameter("editId");
-		final String pageNum = this.getRequest().getParameter("pageNum");
+		final String editId = ActionContext.getContext().getServletRequest().getParameter("editId");
+		final String pageNum = ActionContext.getContext().getServletRequest().getParameter("pageNum");
 		final EmployeeDto employeeDto2 = this.iEmployeeService.getEmployeeById(editId);
 		final List<RoleDto> roleDtos = this.iRoleService.getRolesByEmployeeId(editId);
 		ActionContext.getContext().put(PgCrowd2Constants.ATTRNAME_EDITED_INFO, employeeDto2);
@@ -269,7 +263,7 @@ public class EmployeeHandler extends ActionSupport {
 	 */
 	@Action(PgCrowd2URLConstants.URL_TO_PAGES)
 	public String toPages() {
-		String pageNum = this.getRequest().getParameter("pageNum");
+		String pageNum = ActionContext.getContext().getServletRequest().getParameter("pageNum");
 		if (!CommonProjectUtils.isDigital(pageNum)) {
 			pageNum = String.valueOf(1L);
 		}
@@ -284,9 +278,9 @@ public class EmployeeHandler extends ActionSupport {
 	 */
 	@Action(PgCrowd2URLConstants.URL_REGISTER)
 	public String toroku() {
-		final String inputEmail = this.getRequest().getParameter("email");
-		final String inputPassword = this.getRequest().getParameter("password");
-		final String inputDate = this.getRequest().getParameter("dateOfBirth");
+		final String inputEmail = ActionContext.getContext().getServletRequest().getParameter("email");
+		final String inputPassword = ActionContext.getContext().getServletRequest().getParameter("password");
+		final String inputDate = ActionContext.getContext().getServletRequest().getParameter("dateOfBirth");
 		final EmployeeDto employeeDto2 = new EmployeeDto();
 		employeeDto2.setEmail(inputEmail);
 		employeeDto2.setPassword(inputPassword);
