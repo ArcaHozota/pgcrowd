@@ -85,6 +85,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 								.concat(PgCrowd2URLConstants.URL_LOG_OUT))
 						.logoutSuccessUrl(PgCrowd2URLConstants.URL_EMPLOYEE_NAMESPACE.concat("/")
 								.concat(PgCrowd2URLConstants.URL_TO_LOGIN)))
-				.headers(headers -> headers.contentSecurityPolicy("script-src 'self' 'strict-dynamic'"));
+				.headers(headers -> headers
+						.contentSecurityPolicy("script-src 'nonce-Ytvk0lE3pg1BL713YR9i89Kn' 'strict-dynamic'"));
 	}
 }
