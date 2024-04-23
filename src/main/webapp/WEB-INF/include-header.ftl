@@ -25,16 +25,6 @@
 		text-decoration: none;
 	}
 </style>
-<script type="text/javascript" src="/static/labjs/LAB.js" nonce="Ytvk0lE3pg1BL713YR9i89Kn" strict-dynamic></script>
-<script>
-	$LAB
-	  .script("/static/jquery/jquery-3.7.1.min.js").wait()
-	  .script("/static/bootstrap/js/bootstrap.bundle.min.js").wait()
-	  .script("/static/layer/layer.js").wait()
-	  .script("/static/ztree/jquery.ztree.all.js").wait()
-	  .script("/static/treeview/js/bstreeview.js").wait()
-	  .script("/static/customizes/commons.js").wait()
-	  .script("https://cdn.jsdelivr.net/npm/sweetalert2@11");
-</script>
+<script data-main="/static/requirejs/main" src="/static/requirejs/require.js" nonce="Ytvk0lE3pg1BL713YR9i89Kn" strict-dynamic></script>
 </head>
 </html>
