@@ -6,8 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/static/css/style.css">
 <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico">
-<script type="text/javascript" nonce="Ytvk0lE3pg1BL713YR9i89Kn" src="/static/jquery/jquery-3.7.1.min.js"></script>
-<script type="text/javascript" src="/static/layer/layer.js"　strict-dynamic></script>
+<script type="text/javascript" src="/static/jquery/jquery-3.7.1.min.js" nonce="Ytvk0lE3pg1BL713YR9i89Kn"></script>
+<script type="text/javascript" src="/static/layer/layer.js"　nonce="Ytvk0lE3pg1BL713YR9i89Kn"></script>
 </head>
 <body>
 	<style type="text/css">
@@ -70,9 +70,10 @@
 				</div>
 			</form>
 		</div>
-		<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"　strict-dynamic></script>
-		<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"　strict-dynamic></script>
+		<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"　
+			nonce="Ytvk0lE3pg1BL713YR9i89Kn"></script>
+		<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 	</div>
-	<script type="text/javascript" src="/static/customizes/logintoroku.js"　strict-dynamic></script>
+	<script type="text/javascript" src="/static/customizes/logintoroku.js" nonce="Ytvk0lE3pg1BL713YR9i89Kn"></script>
 </body>
 </html>

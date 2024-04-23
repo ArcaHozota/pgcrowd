@@ -25,12 +25,16 @@
 		text-decoration: none;
 	}
 </style>
-<script type="text/javascript" nonce="Ytvk0lE3pg1BL713YR9i89Kn" src="/static/jquery/jquery-3.7.1.min.js"></script>
-<script type="text/javascript" src="/static/bootstrap/js/bootstrap.bundle.min.js"　strict-dynamic></script>
-<script type="text/javascript" src="/static/layer/layer.js"　strict-dynamic></script>
-<script type="text/javascript" src="/static/ztree/jquery.ztree.all.js"　strict-dynamic></script>
-<script type="text/javascript" src="/static/treeview/js/bstreeview.js"　strict-dynamic></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2@11"　strict-dynamic></script>
-<script type="text/javascript" src="/static/customizes/commons.js"　strict-dynamic></script>
+<script type="text/javascript" src="/static/jquery/require-2.3.6.js" nonce="Ytvk0lE3pg1BL713YR9i89Kn"></script>
+<script type="text/javascript">
+	 require(["/static/jquery/jquery-3.7.1.min.js"], function() {
+	    require(["/static/bootstrap/js/bootstrap.bundle.min.js", "/static/layer/layer.js"], function() {
+	      require(["/static/ztree/jquery.ztree.all.js", "/static/treeview/js/bstreeview.js", 
+	      		"/static/customizes/commons.js"], function() {
+	        require(["https://cdn.jsdelivr.net/npm/sweetalert2@11"]);
+	      });
+	    });
+	  });
+</script>
 </head>
 </html>
