@@ -16,6 +16,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder.BCryptVersion;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jp.co.sony.ppogah.common.PgCrowd2Constants;
@@ -63,6 +66,11 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	 * 日時フォマーター
 	 */
 	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+	/**
+	 * パスワードエンコーダ
+	 */
+	private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(BCryptVersion.$2Y, 7);
 
 	@Override
 	public ResultDto<String> checkDuplicated(final String loginAccount) {
@@ -176,6 +184,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
 		employee.setId(SnowflakeUtils.snowflakeId());
 		employee.setDeleteFlg(PgCrowd2Constants.LOGIC_DELETE_INITIAL);
+		employee.setPassword(this.passwordEncoder.encode(employeeDto.getPassword()));
 		employee.setCreatedTime(LocalDateTime.now());
 		employee.setDateOfBirth(LocalDate.parse(employeeDto.getDateOfBirth(), this.formatter));
 		this.employeeRepository.saveAndFlush(employee);
@@ -199,6 +208,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		final EmployeeRole employeeRole = this.employeeExRepository.findById(Long.parseLong(employeeDto.getId()))
 				.orElseGet(EmployeeRole::new);
 		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
+		employee.setPassword(this.passwordEncoder.encode(employeeDto.getPassword()));
 		employee.setDateOfBirth(LocalDate.parse(employeeDto.getDateOfBirth(), this.formatter));
 		if (originalEntity.equals(employee)
 				&& Objects.equals(employeeRole.getRoleId(), Long.parseLong(employeeDto.getRoleId()))) {
