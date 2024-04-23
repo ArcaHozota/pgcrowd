@@ -35,6 +35,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.struts2.StrutsConstants;
 import org.apache.struts2.StrutsException;
 import org.apache.struts2.views.freemarker.FreemarkerManager;
+import org.springframework.security.access.AccessDeniedException;
 
 import com.opensymphony.xwork2.inject.Inject;
 import com.opensymphony.xwork2.util.location.Location;
@@ -121,16 +122,16 @@ public class DefaultDispatcherErrorHandler implements DispatcherErrorHandler {
 	}
 
 	protected void sendErrorResponse(final HttpServletRequest request, final HttpServletResponse response,
-			final int code, final Exception e) {
+			final int code, final Exception exception) {
 		ResponseLoginDto responseResult = null;
 		try {
 			// WW-1977: Only put errors in the request when code is a 500 error
-			if (code == HttpServletResponse.SC_FORBIDDEN) {
+			if (exception instanceof AccessDeniedException) {
 				responseResult = new ResponseLoginDto(code, PgCrowd2Constants.MESSAGE_SPRINGSECURITY_REQUIRED_AUTH);
 			} else {
 				// WW-4103: Only logs error when application error occurred, not Struts error
-				LOG.error("Exception occurred during processing request: {}", e.getMessage());
-				responseResult = new ResponseLoginDto(code, e.getMessage());
+				LOG.error("Exception occurred during processing request: {}", exception.getMessage());
+				responseResult = new ResponseLoginDto(code, exception.getMessage());
 			}
 			CommonProjectUtils.renderString(response, responseResult);
 		} catch (final IllegalStateException ise) {
