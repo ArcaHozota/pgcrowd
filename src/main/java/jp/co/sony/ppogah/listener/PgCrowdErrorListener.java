@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.dispatcher.DefaultDispatcherErrorHandler;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 
 import jp.co.sony.ppogah.common.PgCrowd2Constants;
 import jp.co.sony.ppogah.config.ResponseLoginDto;
@@ -18,7 +18,7 @@ import lombok.extern.log4j.Log4j2;
  * @since 2.21
  */
 @Log4j2
-@Component
+@ControllerAdvice
 public final class PgCrowdErrorListener extends DefaultDispatcherErrorHandler {
 
 	/**
