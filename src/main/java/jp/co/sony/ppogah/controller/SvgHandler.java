@@ -8,6 +8,8 @@ import static com.opensymphony.xwork2.Action.SUCCESS;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.servlet.ServletOutputStream;
+
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -72,8 +74,10 @@ public class SvgHandler extends ActionSupport {
 		inputStream.read(buffer);
 		ActionContext.getContext().getServletResponse().setContentType("image/svg+xml");
 		ActionContext.getContext().getServletResponse().setCharacterEncoding(CommonProjectUtils.CHARSET_UTF8.name());
-		ActionContext.getContext().getServletResponse().getOutputStream().write(buffer);
-		ActionContext.getContext().getServletResponse().getOutputStream().flush();
+		final ServletOutputStream outputStream = ActionContext.getContext().getServletResponse().getOutputStream();
+		outputStream.write(buffer);
+		outputStream.flush();
+		outputStream.close();
 		return SUCCESS;
 	}
 
@@ -94,8 +98,10 @@ public class SvgHandler extends ActionSupport {
 		inputStream.read(buffer);
 		ActionContext.getContext().getServletResponse().setContentType("image/svg+xml");
 		ActionContext.getContext().getServletResponse().setCharacterEncoding(CommonProjectUtils.CHARSET_UTF8.name());
-		ActionContext.getContext().getServletResponse().getOutputStream().write(buffer);
-		ActionContext.getContext().getServletResponse().getOutputStream().flush();
+		final ServletOutputStream outputStream = ActionContext.getContext().getServletResponse().getOutputStream();
+		outputStream.write(buffer);
+		outputStream.flush();
+		outputStream.close();
 		return SUCCESS;
 	}
 
@@ -117,8 +123,10 @@ public class SvgHandler extends ActionSupport {
 		inputStream.read(buffer);
 		ActionContext.getContext().getServletResponse().setContentType("image/svg+xml");
 		ActionContext.getContext().getServletResponse().setCharacterEncoding(CommonProjectUtils.CHARSET_UTF8.name());
-		ActionContext.getContext().getServletResponse().getOutputStream().write(buffer);
-		ActionContext.getContext().getServletResponse().getOutputStream().flush();
+		final ServletOutputStream outputStream = ActionContext.getContext().getServletResponse().getOutputStream();
+		outputStream.write(buffer);
+		outputStream.flush();
+		outputStream.close();
 		return SUCCESS;
 	}
 }
