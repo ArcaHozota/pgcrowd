@@ -65,7 +65,48 @@ public class SvgHandler extends ActionSupport {
 	@Action("getIcons")
 	public String getSvgImage() throws IOException {
 		final String svgSource = ActionContext.getContext().getServletRequest().getParameter("icons");
-		final Resource resource = this.getResourceLoader().getResource("classpath:static/image/" + svgSource);
+		final Resource resource = this.getResourceLoader().getResource("classpath:static/image/icons/" + svgSource);
+		final InputStream inputStream = resource.getInputStream();
+		final byte[] buffer = new byte[(int) resource.getFile().length()];
+		inputStream.read(buffer);
+		ActionContext.getContext().getServletResponse().setContentType("image/svg+xml");
+		ActionContext.getContext().getServletResponse().setCharacterEncoding(CommonProjectUtils.CHARSET_UTF8.name());
+		ActionContext.getContext().getServletResponse().getOutputStream().write(buffer);
+		return SUCCESS;
+	}
+
+	/**
+	 * 都市アイコン取得する
+	 *
+	 * @param svgSource ソースパス
+	 * @param response  リスポンス
+	 * @throws IOException
+	 */
+	@Action(value = "getCityFlags", results = { @Result(name = SUCCESS, location = "/WEB-INF/city-pages.ftl") })
+	public String getSvgImageCity() throws IOException {
+		final String svgSource = ActionContext.getContext().getServletRequest().getParameter("flags");
+		final Resource resource = this.getResourceLoader().getResource("classpath:static/image/flags/" + svgSource);
+		final InputStream inputStream = resource.getInputStream();
+		final byte[] buffer = new byte[(int) resource.getFile().length()];
+		inputStream.read(buffer);
+		ActionContext.getContext().getServletResponse().setContentType("image/svg+xml");
+		ActionContext.getContext().getServletResponse().setCharacterEncoding(CommonProjectUtils.CHARSET_UTF8.name());
+		ActionContext.getContext().getServletResponse().getOutputStream().write(buffer);
+		return SUCCESS;
+	}
+
+	/**
+	 * 地域アイコン取得する
+	 *
+	 * @param svgSource ソースパス
+	 * @param response  リスポンス
+	 * @throws IOException
+	 */
+	@Action(value = "getDistrictFlags", results = { @Result(name = SUCCESS, location = "/WEB-INF/district-pages.ftl") })
+	public String getSvgImageDistrict() throws IOException {
+		final String svgSource = ActionContext.getContext().getServletRequest().getParameter("flags");
+		final Resource resource = this.getResourceLoader()
+				.getResource("classpath:static/image/flags/prefectures/" + svgSource);
 		final InputStream inputStream = resource.getInputStream();
 		final byte[] buffer = new byte[(int) resource.getFile().length()];
 		inputStream.read(buffer);
