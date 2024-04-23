@@ -6,6 +6,7 @@ import static com.opensymphony.xwork2.Action.NONE;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -65,11 +66,12 @@ public class SvgHandler extends ActionSupport {
 	public String getSvgImage() throws IOException {
 		final String svgSource = ActionContext.getContext().getServletRequest().getParameter("icons");
 		final Resource resource = this.getResourceLoader().getResource("classpath:static/image/" + svgSource);
-		final String svgContent = resource.toString();
+		final InputStream inputStream = resource.getInputStream();
+		final byte[] buffer = new byte[(int) resource.getFile().length()];
+		inputStream.read(buffer);
 		ActionContext.getContext().getServletResponse().setContentType("image/svg+xml");
 		ActionContext.getContext().getServletResponse().setCharacterEncoding(CommonProjectUtils.CHARSET_UTF8.name());
-		ActionContext.getContext().getServletResponse().getWriter().write(svgContent);
-		ActionContext.getContext().getServletResponse().getWriter().close();
+		ActionContext.getContext().getServletResponse().getOutputStream().write(buffer);
 		return SUCCESS;
 	}
 }
