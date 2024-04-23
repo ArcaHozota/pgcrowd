@@ -3,7 +3,6 @@ package jp.co.sony.ppogah.config;
 import org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -15,7 +14,6 @@ import lombok.extern.log4j.Log4j2;
  */
 @Log4j2
 @Configuration
-@Order(2)
 public class ServletFilterConfiguration {
 
 	/**
