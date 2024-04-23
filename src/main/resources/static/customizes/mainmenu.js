@@ -1,8 +1,8 @@
 $(document).ready(function() {
 	$("#toMainmenu").css('color', '#7F0020');
-	$("#adminKanriMainmenu").find('img').attr('src', require['/static/image/icons/castilia.svg']);
-	$("#roleKanriMainmenu").find('img').attr('src', require['/static/image/icons/burgundy.svg']);
-	$("#categoryKanriMainmenu").find('img').attr('src', require['/static/image/icons/bourbon.svg']);
+	$("#adminKanriImg").attr('src', require['/static/image/icons/castilia.svg']);
+	$("#roleKanriImg").attr('src', require['/static/image/icons/burgundy.svg']);
+	$("#categoryKanriImg").attr('src', require['/static/image/icons/bourbon.svg']);
 });
 $("#categoryKanriMainmenu").on('click', function() {
 	let url = '/pgcrowd/category/initial';
