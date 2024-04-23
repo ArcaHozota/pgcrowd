@@ -49,6 +49,15 @@ function buildTableBody(result) {
 	});
 }
 $("#tableBody").on('click', '.delete-btn', function() {
+	let ajaxResult = $.ajax({
+		url: '/pgcrowd/employee/infoDelete?userId=0L',
+		type: 'GET',
+		async: false
+	});
+	if (ajaxResult.status !== 200) {
+		layer.msg(ajaxResult.responseJSON.message);
+		return;
+	}
 	let userName = $(this).parents("tr").find("td:eq(0)").text().trim();
 	let userId = $(this).attr("deleteId");
 	swal.fire({
