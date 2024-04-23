@@ -20,6 +20,6 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src="/static/customizes/menukanri.js"></script>
+	<input type="hidden" value="/static/customizes/menukanri.js" id="jsContainer">
 </body>
 </html>

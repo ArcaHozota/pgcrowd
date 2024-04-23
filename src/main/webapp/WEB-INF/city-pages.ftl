@@ -160,6 +160,6 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src="/static/customizes/city-pages.js"></script>
+	<input type="hidden" value="/static/customizes/city-pages.js" id="jsContainer">
 </body>
 </html>

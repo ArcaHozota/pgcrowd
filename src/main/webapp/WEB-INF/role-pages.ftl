@@ -126,6 +126,6 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src="/static/customizes/role-pages.js"></script>
+	<input type="hidden" value="/static/customizes/role-pages.js" id="jsContainer">
 </body>
 </html>

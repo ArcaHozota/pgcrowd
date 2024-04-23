@@ -96,6 +96,6 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src="/static/customizes/district-pages.js"></script>
+	<input type="hidden" value="/static/customizes/district-pages.js" id="jsContainer">
 </body>
 </html>
