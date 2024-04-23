@@ -62,6 +62,11 @@ public class DistrictHandler extends ActionSupport {
 	private final DistrictDto districtDto = new DistrictDto();
 
 	/**
+	 * アクションコンテキスト
+	 */
+	private final ActionContext actionContext = ActionContext.getContext();
+
+	/**
 	 * ID
 	 */
 	private String id;
@@ -132,8 +137,8 @@ public class DistrictHandler extends ActionSupport {
 	 */
 	@Action(PgCrowd2URLConstants.URL_PAGINATION)
 	public String pagination() {
-		final String pageNum = ActionContext.getContext().getServletRequest().getParameter("pageNum");
-		final String keyword = ActionContext.getContext().getServletRequest().getParameter("keyword");
+		final String pageNum = this.getActionContext().getServletRequest().getParameter("pageNum");
+		final String keyword = this.getActionContext().getServletRequest().getParameter("keyword");
 		final Pagination<DistrictDto> districtsByKeyword = this.iDistrictService
 				.getDistrictsByKeyword(Integer.parseInt(pageNum), keyword);
 		this.setResponsedJsondata(ResultDto.successWithData(districtsByKeyword));

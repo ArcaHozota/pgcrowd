@@ -67,6 +67,11 @@ public class RoleHandler extends ActionSupport {
 	private final RoleDto roleDto = new RoleDto();
 
 	/**
+	 * アクションコンテキスト
+	 */
+	private final ActionContext actionContext = ActionContext.getContext();
+
+	/**
 	 * ID
 	 */
 	private String id;
@@ -93,7 +98,7 @@ public class RoleHandler extends ActionSupport {
 	 */
 	@Action(PgCrowd2URLConstants.URL_CHECK_NAME)
 	public String checkDuplicated() {
-		final String roleName = ActionContext.getContext().getServletRequest().getParameter("roleName");
+		final String roleName = this.getActionContext().getServletRequest().getParameter("roleName");
 		final ResultDto<String> checkDuplicated = this.iRoleService.checkDuplicated(roleName);
 		this.setResponsedJsondata(checkDuplicated);
 		return NONE;
@@ -123,7 +128,7 @@ public class RoleHandler extends ActionSupport {
 	 */
 	@Action(PgCrowd2URLConstants.URL_AUTH_ASSIGNED)
 	public String getAssignedAuth() {
-		final String fuyoId = ActionContext.getContext().getServletRequest().getParameter("fuyoId");
+		final String fuyoId = this.getActionContext().getServletRequest().getParameter("fuyoId");
 		final List<Long> authIdsById = this.iRoleService.getAuthIdsById(Long.parseLong(fuyoId));
 		this.setResponsedJsondata(ResultDto.successWithData(authIdsById));
 		return NONE;
@@ -159,7 +164,7 @@ public class RoleHandler extends ActionSupport {
 	 */
 	@Action(PgCrowd2URLConstants.URL_INFO_DELETE)
 	public String infoDelete() {
-		final String roleId = ActionContext.getContext().getServletRequest().getParameter("roleId");
+		final String roleId = this.getActionContext().getServletRequest().getParameter("roleId");
 		final ResultDto<String> remove = this.iRoleService.remove(Long.parseLong(roleId));
 		this.setResponsedJsondata(remove);
 		return NONE;
@@ -198,8 +203,8 @@ public class RoleHandler extends ActionSupport {
 	 */
 	@Action(PgCrowd2URLConstants.URL_PAGINATION)
 	public String pagination() {
-		final String pageNum = ActionContext.getContext().getServletRequest().getParameter("pageNum");
-		final String keyword = ActionContext.getContext().getServletRequest().getParameter("keyword");
+		final String pageNum = this.getActionContext().getServletRequest().getParameter("pageNum");
+		final String keyword = this.getActionContext().getServletRequest().getParameter("keyword");
 		final Pagination<RoleDto> roleDtos = this.iRoleService.getRolesByKeyword(Integer.parseInt(pageNum), keyword);
 		this.setResponsedJsondata(ResultDto.successWithData(roleDtos));
 		return NONE;
