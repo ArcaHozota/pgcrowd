@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.dispatcher.DefaultDispatcherErrorHandler;
+import org.springframework.stereotype.Component;
 
 import jp.co.sony.ppogah.common.PgCrowd2Constants;
 import jp.co.sony.ppogah.config.ResponseLoginDto;
@@ -17,7 +18,8 @@ import lombok.extern.log4j.Log4j2;
  * @since 2.21
  */
 @Log4j2
-public class PgCrowdErrorListener extends DefaultDispatcherErrorHandler {
+@Component
+public final class PgCrowdErrorListener extends DefaultDispatcherErrorHandler {
 
 	/**
 	 * エラーリスポンスを転送
@@ -29,7 +31,7 @@ public class PgCrowdErrorListener extends DefaultDispatcherErrorHandler {
 			// WW-1977: Only put errors in the request when code is a 500 error
 			if ((code == HttpServletResponse.SC_INTERNAL_SERVER_ERROR) || (code == HttpServletResponse.SC_FORBIDDEN)) {
 				// WW-4103: Only logs error when application error occurred, not Struts error
-				log.error("Exception occurred during processing request: {}", e.getMessage(), e);
+				log.error("Exception occurred during processing request: {}", e.getMessage());
 			}
 			final ResponseLoginDto responseResult = new ResponseLoginDto(code,
 					PgCrowd2Constants.MESSAGE_SPRINGSECURITY_REQUIRED_AUTH);

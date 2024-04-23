@@ -372,6 +372,7 @@ public final class CommonProjectUtils {
 			response.setStatus(aResult.getCode());
 			response.setContentType(MediaType.APPLICATION_JSON_UTF8.toString());
 			response.getWriter().print(JSON.toJSONString(aResult));
+			response.getWriter().close();
 		} catch (final IOException e) {
 			// do nothing
 		}
