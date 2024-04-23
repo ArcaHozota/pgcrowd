@@ -41,6 +41,6 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src="/static/customizes/mainmenu.js"　strict-dynamic></script>
+	<script type="text/javascript" src="/static/customizes/mainmenu.js" strict-dynamic></script>
 </body>
 </html>

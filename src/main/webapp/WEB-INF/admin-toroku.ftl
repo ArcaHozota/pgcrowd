@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="/static/css/style.css">
 <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico">
 <script type="text/javascript" src="/static/jquery/jquery-3.7.1.min.js" nonce="Ytvk0lE3pg1BL713YR9i89Kn"></script>
-<script type="text/javascript" src="/static/layer/layer.js"　nonce="Ytvk0lE3pg1BL713YR9i89Kn"></script>
+<script type="text/javascript" src="/static/layer/layer.js" nonce="Ytvk0lE3pg1BL713YR9i89Kn"></script>
 </head>
 <body>
 	<style type="text/css">

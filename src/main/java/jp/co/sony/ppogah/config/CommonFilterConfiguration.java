@@ -3,6 +3,7 @@ package jp.co.sony.ppogah.config;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 
 /**
  * CSPFilter配置クラス
@@ -22,7 +23,7 @@ public class CommonFilterConfiguration {
 		// 设置过滤器的名称
 		registrationBean.setName("CSPFilter");
 		// 设置过滤器的顺序
-		registrationBean.setOrder(1);
+		registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
 		// 设置过滤器的 URL 匹配模式
 		registrationBean.addUrlPatterns("/*");
 		// 返回过滤器注册对象
