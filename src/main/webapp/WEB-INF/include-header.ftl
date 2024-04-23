@@ -25,6 +25,7 @@
 		text-decoration: none;
 	}
 </style>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2@11" nonce="Ytvk0lE3pg1BL713YR9i89Kn"></script>
 <script data-main="/static/requirejs/main" src="/static/requirejs/require.js" nonce="Ytvk0lE3pg1BL713YR9i89Kn" strict-dynamic></script>
 </head>
 </html>

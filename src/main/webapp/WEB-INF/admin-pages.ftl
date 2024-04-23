@@ -56,6 +56,6 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript"　src="/static/customizes/employee-pages.js" nonce="Ytvk0lE3pg1BL713YR9i89Kn"></script>
+	<input type="hidden" value="/static/customizes/employee-pages.js" id="jsContainer">
 </body>
 </html>

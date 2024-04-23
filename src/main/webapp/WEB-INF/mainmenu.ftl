@@ -41,6 +41,6 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src="/static/customizes/mainmenu.js" nonce="Ytvk0lE3pg1BL713YR9i89Kn"></script>
+	<input type="hidden" value="/static/customizes/mainmenu.js" id="jsContainer">
 </body>
 </html>
