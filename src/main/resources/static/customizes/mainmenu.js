@@ -1,11 +1,8 @@
 $(document).ready(function() {
 	$("#toMainmenu").css('color', '#7F0020');
-	let adminKanriImg = $("#adminKanriMainmenu").find('img');
-	$(adminKanriImg).attr('src', require['/static/image/icons/castilia.svg']);
-	let roleKanriImg = $("#roleKanriMainmenu").find('img');
-	$(roleKanriImg).attr('src', require['/static/image/icons/burgundy.svg']);
-	let categoryKanriImg = $("#categoryKanriMainmenu").find('img');
-	$(categoryKanriImg).attr('src', require['/static/image/icons/bourbon.svg']);
+	$("#adminKanriMainmenu").find('img').attr('src', require['/static/image/icons/castilia.svg']);
+	$("#roleKanriMainmenu").find('img').attr('src', require['/static/image/icons/burgundy.svg']);
+	$("#categoryKanriMainmenu").find('img').attr('src', require['/static/image/icons/bourbon.svg']);
 });
 $("#categoryKanriMainmenu").on('click', function() {
 	let url = '/pgcrowd/category/initial';
