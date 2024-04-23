@@ -5,8 +5,6 @@ import static com.opensymphony.xwork2.Action.LOGIN;
 import static com.opensymphony.xwork2.Action.NONE;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -39,11 +37,6 @@ import lombok.Setter;
 public class CategoryHandler extends ActionSupport {
 
 	private static final long serialVersionUID = -6017782752547971104L;
-
-	/**
-	 * リクエスト
-	 */
-	private transient HttpServletRequest request;
 
 	/**
 	 * JSONリスポンス

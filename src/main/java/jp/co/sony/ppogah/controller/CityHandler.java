@@ -8,7 +8,6 @@ import static com.opensymphony.xwork2.Action.SUCCESS;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
@@ -18,6 +17,7 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.stereotype.Controller;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import jp.co.sony.ppogah.common.PgCrowd2URLConstants;
@@ -60,11 +60,6 @@ public class CityHandler extends ActionSupport {
 	 */
 	@Resource
 	private IDistrictService iDistrictService;
-
-	/**
-	 * リクエスト
-	 */
-	private transient HttpServletRequest request;
 
 	/**
 	 * JSONリスポンス
@@ -118,8 +113,8 @@ public class CityHandler extends ActionSupport {
 	 */
 	@Action(PgCrowd2URLConstants.URL_CHECK_NAME)
 	public String checkDuplicated() {
-		final String nameVal = this.getRequest().getParameter("nameVal");
-		final String districtId2 = this.getRequest().getParameter("districtId");
+		final String nameVal = ActionContext.getContext().getServletRequest().getParameter("nameVal");
+		final String districtId2 = ActionContext.getContext().getServletRequest().getParameter("districtId");
 		final ResultDto<String> checkDuplicated = this.iCityService.checkDuplicated(nameVal,
 				Long.parseLong(districtId2));
 		this.setResponsedJsondata(checkDuplicated);
@@ -149,7 +144,7 @@ public class CityHandler extends ActionSupport {
 	 */
 	@Action(PgCrowd2URLConstants.URL_DISTRICT_LIST)
 	public String getDistricts() {
-		final String cityId = this.getRequest().getParameter("cityId");
+		final String cityId = ActionContext.getContext().getServletRequest().getParameter("cityId");
 		final List<DistrictDto> districtsByCityId = this.iDistrictService.getDistrictsByCityId(cityId);
 		this.setResponsedJsondata(ResultDto.successWithData(districtsByCityId));
 		return NONE;
@@ -162,7 +157,7 @@ public class CityHandler extends ActionSupport {
 	 */
 	@Action(PgCrowd2URLConstants.URL_INFO_DELETE)
 	public String infoDelete() {
-		final String cityId = this.getRequest().getParameter("cityId");
+		final String cityId = ActionContext.getContext().getServletRequest().getParameter("cityId");
 		final ResultDto<String> remove = this.iCityService.remove(Long.parseLong(cityId));
 		this.setResponsedJsondata(remove);
 		return NONE;
@@ -201,8 +196,8 @@ public class CityHandler extends ActionSupport {
 	 */
 	@Action(PgCrowd2URLConstants.URL_PAGINATION)
 	public String pagination() {
-		final String pageNum = this.getRequest().getParameter("pageNum");
-		final String keyword = this.getRequest().getParameter("keyword");
+		final String pageNum = ActionContext.getContext().getServletRequest().getParameter("pageNum");
+		final String keyword = ActionContext.getContext().getServletRequest().getParameter("keyword");
 		final Pagination<CityDto> cities = this.iCityService.getCitiesByKeyword(Integer.parseInt(pageNum), keyword);
 		this.setResponsedJsondata(ResultDto.successWithData(cities));
 		return NONE;

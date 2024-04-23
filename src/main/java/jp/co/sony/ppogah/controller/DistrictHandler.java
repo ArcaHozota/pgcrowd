@@ -6,7 +6,6 @@ import static com.opensymphony.xwork2.Action.NONE;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
@@ -16,6 +15,7 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.stereotype.Controller;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import jp.co.sony.ppogah.common.PgCrowd2URLConstants;
@@ -50,11 +50,6 @@ public class DistrictHandler extends ActionSupport {
 	 */
 	@Resource
 	private IDistrictService iDistrictService;
-
-	/**
-	 * リクエスト
-	 */
-	private transient HttpServletRequest request;
 
 	/**
 	 * JSONリスポンス
@@ -137,8 +132,8 @@ public class DistrictHandler extends ActionSupport {
 	 */
 	@Action(PgCrowd2URLConstants.URL_PAGINATION)
 	public String pagination() {
-		final String pageNum = this.getRequest().getParameter("pageNum");
-		final String keyword = this.getRequest().getParameter("keyword");
+		final String pageNum = ActionContext.getContext().getServletRequest().getParameter("pageNum");
+		final String keyword = ActionContext.getContext().getServletRequest().getParameter("keyword");
 		final Pagination<DistrictDto> districtsByKeyword = this.iDistrictService
 				.getDistrictsByKeyword(Integer.parseInt(pageNum), keyword);
 		this.setResponsedJsondata(ResultDto.successWithData(districtsByKeyword));
