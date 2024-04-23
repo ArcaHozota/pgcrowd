@@ -25,7 +25,7 @@
 		text-decoration: none;
 	}
 </style>
-<script type="text/javascript" src="/static/jquery/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" nonce="HLPxZRvdUiWD4_Lcx_yuwaly" src="/static/jquery/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="/static/layer/layer.js"></script>
 <script type="text/javascript" src="/static/ztree/jquery.ztree.all.js"></script>
