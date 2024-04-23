@@ -93,6 +93,6 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src="/static/customizes/employee-addition.js"></script>
+	<script type="text/javascript" src="/static/customizes/employee-addition.js"　strict-dynamic></script>
 </body>
 </html>

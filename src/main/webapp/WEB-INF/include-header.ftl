@@ -26,11 +26,11 @@
 	}
 </style>
 <script type="text/javascript" nonce="Ytvk0lE3pg1BL713YR9i89Kn" src="/static/jquery/jquery-3.7.1.min.js"></script>
-<script type="text/javascript" nonce="Ytvk0lE3pg1BL713YR9i89Kn" src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" nonce="Ytvk0lE3pg1BL713YR9i89Kn" src="/static/layer/layer.js"></script>
-<script type="text/javascript" nonce="Ytvk0lE3pg1BL713YR9i89Kn" src="/static/ztree/jquery.ztree.all.js"></script>
-<script type="text/javascript" nonce="Ytvk0lE3pg1BL713YR9i89Kn" src="/static/treeview/js/bstreeview.js"></script>
-<script type="text/javascript" nonce="Ytvk0lE3pg1BL713YR9i89Kn" src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script type="text/javascript" nonce="Ytvk0lE3pg1BL713YR9i89Kn" src="/static/customizes/commons.js"></script>
+<script type="text/javascript" src="/static/bootstrap/js/bootstrap.bundle.min.js"　strict-dynamic></script>
+<script type="text/javascript" src="/static/layer/layer.js"　strict-dynamic></script>
+<script type="text/javascript" src="/static/ztree/jquery.ztree.all.js"　strict-dynamic></script>
+<script type="text/javascript" src="/static/treeview/js/bstreeview.js"　strict-dynamic></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2@11"　strict-dynamic></script>
+<script type="text/javascript" src="/static/customizes/commons.js"　strict-dynamic></script>
 </head>
 </html>

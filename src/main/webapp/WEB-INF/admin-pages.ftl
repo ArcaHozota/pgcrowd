@@ -56,7 +56,6 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript"
-		src="/static/customizes/employee-pages.js"></script>
+	<script type="text/javascript"　src="/static/customizes/employee-pages.js"　strict-dynamic></script>
 </body>
 </html>
