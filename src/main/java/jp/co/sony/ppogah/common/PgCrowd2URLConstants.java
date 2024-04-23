@@ -22,6 +22,10 @@ public final class PgCrowd2URLConstants {
 
 	public static final String URL_ROLE_NAMESPACE = "/pgcrowd/role";
 
+	public static final String URL_SVG_NAMESPACE = "/pgcrowd/svgImages";
+
+	public static final String URL_MAINMENU_ICONS = "getIcons";
+
 	public static final String URL_INIT_TEMPLATE = "initial";
 
 	public static final String URL_CHECK_NAME = "check";
@@ -67,6 +71,10 @@ public final class PgCrowd2URLConstants {
 	public static final String URL_TO_CITIES = "toCities";
 
 	public static final String URL_DISTRICT_LIST = "getDistrictlist";
+
+	public static final String URL_CITY_FLAGS = "getCityFlags";
+
+	public static final String URL_DISTRICT_FLAGS = "getFlags";
 
 	public static final String URL_STATIC_RESOURCE = "/static/**";
 }

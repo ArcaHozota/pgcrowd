@@ -36,7 +36,7 @@ function buildTableBody(result) {
 		let shutoTd = $("<td scope='row' class='text-center table-light' style='width:70px;vertical-align:middle;'></td>").append(item.shutoName);
 		let chihoTd = $("<td scope='row' class='text-center table-light' style='width:70px;vertical-align:middle;'></td>").append(item.chiho);
 		let populationTd = $("<td scope='row' class='text-center table-light' style='width:50px;vertical-align:middle;'></td>").append(patternedPop);
-		let flagImg = $("<img>").attr('src', '/pgcrowd/svgImages/getDistrictFlags&flags=' + item.districtFlag + '.svg').attr('alt', '').height(27).width(40);
+		let flagImg = $("<img>").attr('src', '/pgcrowd/svgImages/getFlags&flags=' + item.districtFlag + '.svg').attr('alt', '').height(27).width(40);
 		let flagTd = $("<td scope='row' class='text-center table-light' style='width:50px;vertical-align:middle;'></td>").append(flagImg);
 		let editBtn = $("<button style='width:100px;'></button>").addClass("btn btn-success btn-sm edit-btn")
 			.append($("<i class='fa-solid fa-pen-to-square'></i>")).append(" 編集");

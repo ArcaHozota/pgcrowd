@@ -21,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import jp.co.sony.ppogah.common.PgCrowd2URLConstants;
 import jp.co.sony.ppogah.utils.CommonProjectUtils;
 import jp.co.sony.ppogah.utils.ResultDto;
 import lombok.Getter;
@@ -34,7 +35,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@Namespace("/pgcrowd/svgImages")
+@Namespace(PgCrowd2URLConstants.URL_SVG_NAMESPACE)
 @Results({ @Result(name = SUCCESS, location = "/WEB-INF/mainmenu.ftl"),
 		@Result(name = ERROR, location = "/WEB-INF/system-error.ftl"),
 		@Result(name = NONE, type = "json", params = { "root", "responsedJsondata" }),
@@ -62,7 +63,7 @@ public class SvgHandler extends ActionSupport {
 	 * @param response  リスポンス
 	 * @throws IOException
 	 */
-	@Action("getIcons")
+	@Action(PgCrowd2URLConstants.URL_MAINMENU_ICONS)
 	public String getSvgImage() throws IOException {
 		final String svgSource = ActionContext.getContext().getServletRequest().getParameter("icons");
 		final Resource resource = this.getResourceLoader().getResource("classpath:static/image/icons/" + svgSource);
@@ -82,7 +83,8 @@ public class SvgHandler extends ActionSupport {
 	 * @param response  リスポンス
 	 * @throws IOException
 	 */
-	@Action(value = "getCityFlags", results = { @Result(name = SUCCESS, location = "/WEB-INF/city-pages.ftl") })
+	@Action(value = PgCrowd2URLConstants.URL_CITY_FLAGS, results = {
+			@Result(name = SUCCESS, location = "/WEB-INF/city-pages.ftl") })
 	public String getSvgImageCity() throws IOException {
 		final String svgSource = ActionContext.getContext().getServletRequest().getParameter("flags");
 		final Resource resource = this.getResourceLoader().getResource("classpath:static/image/flags/" + svgSource);
@@ -102,7 +104,8 @@ public class SvgHandler extends ActionSupport {
 	 * @param response  リスポンス
 	 * @throws IOException
 	 */
-	@Action(value = "getDistrictFlags", results = { @Result(name = SUCCESS, location = "/WEB-INF/district-pages.ftl") })
+	@Action(value = PgCrowd2URLConstants.URL_DISTRICT_FLAGS, results = {
+			@Result(name = SUCCESS, location = "/WEB-INF/district-pages.ftl") })
 	public String getSvgImageDistrict() throws IOException {
 		final String svgSource = ActionContext.getContext().getServletRequest().getParameter("flags");
 		final Resource resource = this.getResourceLoader()
