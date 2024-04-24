@@ -35,8 +35,8 @@ function buildTableBody(result) {
 		let fuyoBtn = $("<button></button>").addClass("btn btn-success btn-sm fuyo-btn")
 			.append($("<i class='fa-solid fa-check-to-slot'></i>")).append("権限付与");
 		fuyoBtn.attr("fuyoId", item.id);
-		let editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit-btn")
-			.append($("<i class='fa-solid fa-pencil'></i>")).append("編集");
+		let editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit-btn").attr('data-bs-toggle', 'modal')
+			.attr('data-bs-target', '#roleEditModal').append($("<i class='fa-solid fa-pencil'></i>")).append("編集");
 		editBtn.attr("editId", item.id);
 		let deleteBtn = $("<button></button>").addClass("btn btn-danger btn-sm delete-btn")
 			.append($("<i class='fa-solid fa-trash'></i>")).append("削除");
@@ -86,10 +86,9 @@ $("#tableBody").on('click', '.edit-btn', function() {
 	$("#idEdit").text(editId);
 	let nameVal = $(this).parent().parent().find("td:eq(0)").text();
 	$("#nameEdit").val(nameVal);
-	let editModal = new bootstrap.Modal($("#roleEditModal"), {
+	$('#roleEditModal').modal({
 		backdrop: 'static'
 	});
-	editModal.show();
 });
 $("#roleInfoChangeBtn").on('click', function() {
 	let inputArrays = ["#nameEdit"];
