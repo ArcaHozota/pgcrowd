@@ -98,7 +98,7 @@ $(function() {
 	});
 	$("#toPersonal").on('click', function(e) {
 		e.preventDefault();
-		let userId = $(this).find("p").text();
+		let userId = $(this).find("input").val();
 		let authChkFlag = $("#authChkFlgContainer").val();
 		let url = '/pgcrowd/employee/toEdition?editId=' + userId + '&authChkFlag=' + authChkFlag;
 		checkPermissionAndTransfer(url);
