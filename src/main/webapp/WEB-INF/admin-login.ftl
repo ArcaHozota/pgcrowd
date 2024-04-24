@@ -58,7 +58,7 @@
 				</div>
 				<div class="remember-forget">
 					<label>
-						<input type="checkbox" name="rememberMe">私を記憶する
+						<input type="checkbox" name="remember-me">私を記憶する
 					</label> 
 					<a href="#">パスワード忘れ?</a>
 				</div>

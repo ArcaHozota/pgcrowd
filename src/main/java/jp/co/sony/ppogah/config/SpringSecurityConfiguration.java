@@ -1,5 +1,7 @@
 package jp.co.sony.ppogah.config;
 
+import java.util.UUID;
+
 import javax.annotation.Resource;
 
 import org.springframework.context.annotation.Configuration;
@@ -92,6 +94,8 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 						.logoutSuccessUrl(PgCrowd2URLConstants.URL_EMPLOYEE_NAMESPACE.concat("/")
 								.concat(PgCrowd2URLConstants.URL_TO_LOGIN)))
 				.headers(headers -> headers
-						.contentSecurityPolicy("script-src 'nonce-Ytvk0lE3pg1BL713YR9i89Kn' 'strict-dynamic'"));
+						.contentSecurityPolicy("script-src 'nonce-Ytvk0lE3pg1BL713YR9i89Kn' 'strict-dynamic'"))
+				.rememberMe(remember -> remember.key(UUID.randomUUID().toString())
+						.tokenValiditySeconds(PgCrowd2Constants.DEFAULT_TOKEN_EXPIRED));
 	}
 }
