@@ -25,7 +25,8 @@
 								</div>
 							</form>
 							<div class="col-md-2 offset-md-4">
-								<button class="btn btn-warning my-2 my-sm-0" id="addRoleBtn">
+								<button class="btn btn-warning my-2 my-sm-0" id="addRoleBtn" 
+									data-bs-toggle="modal" data-bs-target="#roleAddModal">
 									<i class="fa-solid fa-id-badge"></i> 役割情報追加
 								</button>
 							</div>

@@ -47,10 +47,9 @@ function buildTableBody(result) {
 }
 $("#addRoleBtn").on('click', function() {
 	formReset("#roleAddModal form");
-	let addModal = new bootstrap.Modal($("#roleAddModal"), {
+	$('#roleAddModal').modal({
 		backdrop: 'static'
 	});
-	addModal.show();
 });
 $("#nameInput").on('change', function() {
 	$.ajax({
