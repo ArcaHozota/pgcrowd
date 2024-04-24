@@ -1,4 +1,3 @@
-<#import "jp.co.sony.ppogah.utils.CommonProjectUtils" as CommonUtils>
 <!DOCTYPE html>
 <html lang="ja-JP">
 <body>
@@ -51,8 +50,8 @@
 							</li>
 							<form id="logoutForm" method="post" action="/pgcrowd/employee/logout" 
 								style="display: none;"></form>
-							<#assign authlist = CommonUtils.getAuthNames(principalAdmin.getAuthorities().stream())>
-							<#if authList.contains('employee%edition') || authList.contains('employee%delete')>
+							<#assign authNames = statics["jp.co.sony.ppogah.utils.CommonProjectUtils"].getAuthNames(principalAdmin.authorities.stream())>
+							<#if authNames.contains('employee%edition') || authNames.contains('employee%delete')>
 								<input type="hidden" value="true" id="authChkFlgContainer">
 								<#else>
 								<input type="hidden" value="false" id="authChkFlgContainer">
