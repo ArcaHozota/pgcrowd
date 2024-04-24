@@ -236,16 +236,15 @@ public class EmployeeHandler extends ActionSupport {
 			pageNum = "1";
 		}
 		final EmployeeDto employeeDto2 = this.iEmployeeService.getEmployeeById(editId);
+		final ActionContext actionContext = ActionContext.getContext();
 		if (Boolean.FALSE.equals(Boolean.valueOf(authChkFlag))) {
 			final RoleDto roleDto = this.iRoleService.getRoleById(Long.parseLong(employeeDto2.getRoleId()));
-			final ActionContext actionContext = ActionContext.getContext();
 			actionContext.put(PgCrowd2Constants.ATTRNAME_EDITED_INFO, employeeDto2);
 			actionContext.put(PgCrowd2Constants.ATTRNAME_EMPLOYEE_ROLES, roleDto);
 			actionContext.put(PgCrowd2Constants.ATTRNAME_PAGE_NUMBER, pageNum);
 			return SUCCESS;
 		}
 		final List<RoleDto> roleDtos = this.iRoleService.getRolesByEmployeeId(editId);
-		final ActionContext actionContext = ActionContext.getContext();
 		actionContext.put(PgCrowd2Constants.ATTRNAME_EDITED_INFO, employeeDto2);
 		actionContext.put(PgCrowd2Constants.ATTRNAME_EMPLOYEE_ROLES, roleDtos);
 		actionContext.put(PgCrowd2Constants.ATTRNAME_PAGE_NUMBER, pageNum);
@@ -305,12 +304,13 @@ public class EmployeeHandler extends ActionSupport {
 		employeeDto2.setPassword(inputPassword);
 		employeeDto2.setDateOfBirth(inputDate);
 		final Boolean toroku = this.iEmployeeService.register(employeeDto2);
+		final ActionContext actionContext = ActionContext.getContext();
 		if (Boolean.FALSE.equals(toroku)) {
-			ActionContext.getContext().put("torokuMsg", PgCrowd2Constants.MESSAGE_TOROKU_FAILURE);
+			actionContext.put("torokuMsg", PgCrowd2Constants.MESSAGE_TOROKU_FAILURE);
 		} else {
-			ActionContext.getContext().put("torokuMsg", PgCrowd2Constants.MESSAGE_TOROKU_SUCCESS);
+			actionContext.put("torokuMsg", PgCrowd2Constants.MESSAGE_TOROKU_SUCCESS);
 		}
-		ActionContext.getContext().put("registeredEmail", inputEmail);
+		actionContext.put("registeredEmail", inputEmail);
 		return LOGIN;
 	}
 
