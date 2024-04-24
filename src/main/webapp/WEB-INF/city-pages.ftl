@@ -24,7 +24,8 @@
 								</div>
 							</form>
 							<div class="col-md-2 offset-md-5">
-								<button class="btn btn-primary my-2 my-sm-0" id="addCityBtn">
+								<button class="btn btn-primary my-2 my-sm-0" id="addCityBtn"
+									data-bs-toggle="modal" data-bs-target="#cityAddModal">
 									<i class="fa-solid fa-city"></i> 都市情報追加
 								</button>
 							</div>
@@ -53,8 +54,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="cityAddModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel">
+	<div class="modal fade" id="cityAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -111,8 +111,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="cityEditModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel">
+	<div class="modal fade" id="cityEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">

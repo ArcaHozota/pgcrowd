@@ -32,8 +32,8 @@ function buildTableBody(result) {
 	$.each(index, (index, item) => {
 		let idTd = $("<th scope='row' class='text-center table-light' style='width:150px;vertical-align:middle;'></th>").append(item.id);
 		let nameTd = $("<td scope='row' class='text-center table-light' style='width:100px;vertical-align:middle;'></td>").append(item.name);
-		let fuyoBtn = $("<button></button>").addClass("btn btn-success btn-sm fuyo-btn")
-			.append($("<i class='fa-solid fa-check-to-slot'></i>")).append("権限付与");
+		let fuyoBtn = $("<button></button>").addClass("btn btn-success btn-sm fuyo-btn").attr('data-bs-toggle', 'modal')
+			.attr('data-bs-target', '#authEditModal').append($("<i class='fa-solid fa-check-to-slot'></i>")).append("権限付与");
 		fuyoBtn.attr("fuyoId", item.id);
 		let editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit-btn").attr('data-bs-toggle', 'modal')
 			.attr('data-bs-target', '#roleEditModal').append($("<i class='fa-solid fa-pencil'></i>")).append("編集");
@@ -128,9 +128,6 @@ $("#tableBody").on('click', '.fuyo-btn', function() {
 	$("#authChangeBtn").attr("fuyoId", fuyoId);
 	let nameVal = $(this).parent().parent().find("td:eq(0)").text();
 	$("#roleName").text(nameVal);
-	let authModal = new bootstrap.Modal($("#authEditModal"), {
-		backdrop: 'static'
-	});
 	let ajaxReturn = $.ajax({
 		url: '/pgcrowd/role/getAuthlist',
 		type: 'GET',
@@ -140,7 +137,9 @@ $("#tableBody").on('click', '.fuyo-btn', function() {
 		layer.msg(ajaxResult.responseJSON.message);
 		return;
 	}
-	authModal.show();
+	$("#authEditModal").modal({
+		backdrop: 'static'
+	});
 	let setting = {
 		'data': {
 			'simpleData': {

@@ -38,8 +38,8 @@ function buildTableBody(result) {
 		let populationTd = $("<td scope='row' class='text-center table-light' style='width:50px;vertical-align:middle;'></td>").append(patternedPop);
 		let flagImg = $("<img>").attr('src', '/pgcrowd/svgImages/getFlags?flags=' + item.districtFlag + '.svg').attr('alt', '').height(27).width(40);
 		let flagTd = $("<td scope='row' class='text-center table-light' style='width:50px;vertical-align:middle;'></td>").append(flagImg);
-		let editBtn = $("<button style='width:100px;'></button>").addClass("btn btn-success btn-sm edit-btn")
-			.append($("<i class='fa-solid fa-pen-to-square'></i>")).append(" 編集");
+		let editBtn = $("<button style='width:100px;'></button>").addClass("btn btn-success btn-sm edit-btn").attr('data-bs-toggle', 'modal')
+			.attr('data-bs-target', '#districtEditModal').append($("<i class='fa-solid fa-pen-to-square'></i>")).append(" 編集");
 		editBtn.attr("editId", item.id);
 		let btnTd = $("<td class='text-center table-light' style='width:100px;vertical-align:middle;'></td>").append(editBtn);
 		$("<tr></tr>").append(idTd).append(nameTd).append(shutoTd).append(chihoTd).append(populationTd).append(flagTd).append(btnTd).appendTo("#tableBody");
@@ -57,10 +57,9 @@ $("#tableBody").on('click', '.edit-btn', function() {
 	$("#chihoEdit").val(chihoVal);
 	$("#shutoEdit").text(shutoVal);
 	$("#populationEdit").text(populationVal);
-	let addModal = new bootstrap.Modal($("#districtEditModal"), {
+	$("#districtEditModal").modal({
 		backdrop: 'static'
 	});
-	addModal.show();
 });
 $("#districtInfoChangeBtn").on('click', function() {
 	let inputArrays = ["#nameEdit", "#chihoEdit"];

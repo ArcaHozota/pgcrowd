@@ -38,8 +38,8 @@ function buildTableBody(result) {
 		let populationTd = $("<td scope='row' class='text-center table-light' style='width:50px;vertical-align:middle;'></td>").append(patternedPop);
 		let flagImg = $("<img>").attr('src', '/pgcrowd/svgImages/getCityFlags?flags=' + item.cityFlag + '.svg').attr('alt', '').height(27).width(40);
 		let flagTd = $("<td scope='row' class='text-center table-light' style='width:50px;vertical-align:middle;'></td>").append(flagImg);
-		let editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit-btn")
-			.append($("<i class='fa-solid fa-pencil'></i>")).append("編集");
+		let editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit-btn").attr('data-bs-toggle', 'modal')
+			.attr('data-bs-target', '#cityEditModal').append($("<i class='fa-solid fa-pencil'></i>")).append("編集");
 		editBtn.attr("editId", item.id);
 		let deleteBtn = $("<button></button>").addClass("btn btn-danger btn-sm delete-btn")
 			.append($("<i class='fa-solid fa-trash'></i>")).append("削除");
@@ -51,10 +51,9 @@ function buildTableBody(result) {
 $("#addCityBtn").on('click', function() {
 	formReset("#cityAddModal form");
 	getDistricts("#districtInput", null);
-	let addModal = new bootstrap.Modal($("#cityAddModal"), {
+	$("#cityAddModal").modal({
 		backdrop: 'static'
 	});
-	addModal.show();
 });
 $("#nameInput").on('change', function() {
 	checkCityName(this, "#districtInput");
@@ -102,10 +101,9 @@ $("#tableBody").on('click', '.edit-btn', function() {
 	$("#poEdit").val(poVal);
 	$("#populationEdit").val(populationVal);
 	getDistricts("#districtEdit", editId);
-	let addModal = new bootstrap.Modal($("#cityEditModal"), {
+	$("#cityEditModal").modal({
 		backdrop: 'static'
 	});
-	addModal.show();
 });
 $("#nameEdit").on('change', function() {
 	checkCityName(this, "#districtEdit");
