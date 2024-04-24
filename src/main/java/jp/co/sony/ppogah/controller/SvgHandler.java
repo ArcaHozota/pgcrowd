@@ -9,7 +9,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.struts2.action.ServletResponseAware;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -44,9 +46,14 @@ import lombok.Setter;
 		@Result(name = LOGIN, location = "/WEB-INF/admin-login.ftl") })
 @ParentPackage("json-default")
 @Controller
-public class SvgHandler extends ActionSupport {
+public class SvgHandler extends ActionSupport implements ServletResponseAware {
 
 	private static final long serialVersionUID = -171237033831060185L;
+
+	/**
+	 * リスポンス
+	 */
+	private transient HttpServletResponse response;
 
 	/**
 	 * JSONリスポンス
@@ -65,20 +72,21 @@ public class SvgHandler extends ActionSupport {
 	 * @param response  リスポンス
 	 * @throws IOException
 	 */
-	@Action(PgCrowd2URLConstants.URL_MAINMENU_ICONS)
+	@Action(value = PgCrowd2URLConstants.URL_MAINMENU_ICONS, results = { @Result(type = "stream") })
 	public String getSvgImage() throws IOException {
 		final String svgSource = ActionContext.getContext().getServletRequest().getParameter("icons");
 		final Resource resource = this.getResourceLoader().getResource("classpath:static/image/icons/" + svgSource);
 		final InputStream inputStream = resource.getInputStream();
 		final byte[] buffer = new byte[(int) resource.getFile().length()];
 		inputStream.read(buffer);
-		ActionContext.getContext().getServletResponse().setContentType("image/svg+xml");
-		ActionContext.getContext().getServletResponse().setCharacterEncoding(CommonProjectUtils.CHARSET_UTF8.name());
-		final ServletOutputStream outputStream = ActionContext.getContext().getServletResponse().getOutputStream();
+		inputStream.close();
+		this.getResponse().setContentType("image/svg+xml");
+		this.getResponse().setCharacterEncoding(CommonProjectUtils.CHARSET_UTF8.name());
+		final ServletOutputStream outputStream = this.getResponse().getOutputStream();
 		outputStream.write(buffer);
 		outputStream.flush();
 		outputStream.close();
-		return SUCCESS;
+		return null;
 	}
 
 	/**
@@ -88,21 +96,21 @@ public class SvgHandler extends ActionSupport {
 	 * @param response  リスポンス
 	 * @throws IOException
 	 */
-	@Action(value = PgCrowd2URLConstants.URL_CITY_FLAGS, results = {
-			@Result(name = SUCCESS, location = "/WEB-INF/city-pages.ftl") })
+	@Action(value = PgCrowd2URLConstants.URL_CITY_FLAGS, results = { @Result(type = "stream") })
 	public String getSvgImageCity() throws IOException {
 		final String svgSource = ActionContext.getContext().getServletRequest().getParameter("flags");
 		final Resource resource = this.getResourceLoader().getResource("classpath:static/image/flags/" + svgSource);
 		final InputStream inputStream = resource.getInputStream();
 		final byte[] buffer = new byte[(int) resource.getFile().length()];
 		inputStream.read(buffer);
-		ActionContext.getContext().getServletResponse().setContentType("image/svg+xml");
-		ActionContext.getContext().getServletResponse().setCharacterEncoding(CommonProjectUtils.CHARSET_UTF8.name());
-		final ServletOutputStream outputStream = ActionContext.getContext().getServletResponse().getOutputStream();
+		inputStream.close();
+		this.getResponse().setContentType("image/svg+xml");
+		this.getResponse().setCharacterEncoding(CommonProjectUtils.CHARSET_UTF8.name());
+		final ServletOutputStream outputStream = this.getResponse().getOutputStream();
 		outputStream.write(buffer);
 		outputStream.flush();
 		outputStream.close();
-		return SUCCESS;
+		return null;
 	}
 
 	/**
@@ -112,8 +120,7 @@ public class SvgHandler extends ActionSupport {
 	 * @param response  リスポンス
 	 * @throws IOException
 	 */
-	@Action(value = PgCrowd2URLConstants.URL_DISTRICT_FLAGS, results = {
-			@Result(name = SUCCESS, location = "/WEB-INF/district-pages.ftl") })
+	@Action(value = PgCrowd2URLConstants.URL_DISTRICT_FLAGS, results = { @Result(type = "stream") })
 	public String getSvgImageDistrict() throws IOException {
 		final String svgSource = ActionContext.getContext().getServletRequest().getParameter("flags");
 		final Resource resource = this.getResourceLoader()
@@ -121,12 +128,18 @@ public class SvgHandler extends ActionSupport {
 		final InputStream inputStream = resource.getInputStream();
 		final byte[] buffer = new byte[(int) resource.getFile().length()];
 		inputStream.read(buffer);
-		ActionContext.getContext().getServletResponse().setContentType("image/svg+xml");
-		ActionContext.getContext().getServletResponse().setCharacterEncoding(CommonProjectUtils.CHARSET_UTF8.name());
-		final ServletOutputStream outputStream = ActionContext.getContext().getServletResponse().getOutputStream();
+		inputStream.close();
+		this.getResponse().setContentType("image/svg+xml");
+		this.getResponse().setCharacterEncoding(CommonProjectUtils.CHARSET_UTF8.name());
+		final ServletOutputStream outputStream = this.getResponse().getOutputStream();
 		outputStream.write(buffer);
 		outputStream.flush();
 		outputStream.close();
-		return SUCCESS;
+		return null;
+	}
+
+	@Override
+	public void withServletResponse(final HttpServletResponse response) {
+		this.response = response;
 	}
 }
