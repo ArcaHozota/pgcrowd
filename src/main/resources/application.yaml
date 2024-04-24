@@ -28,7 +28,7 @@ spring:
     allow-session-override: true
     expose-session-attributes: false
     expose-spring-macro-helpers: true
-    template-loader-path: classpath:/WEB-INF/
+    template-loader-path: classpath:/templates/
     suffix: .ftl
     settings:
       {datetimeFormat: yyyy-MM-dd HH:mm:ss, templateUpdateDelay: 0s}

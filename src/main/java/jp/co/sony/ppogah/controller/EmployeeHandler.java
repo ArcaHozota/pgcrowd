@@ -43,10 +43,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @Namespace(PgCrowd2URLConstants.URL_EMPLOYEE_NAMESPACE)
-@Results({ @Result(name = SUCCESS, location = "/WEB-INF/admin-pages.ftl"),
-		@Result(name = ERROR, location = "/WEB-INF/system-error.ftl"),
+@Results({ @Result(name = SUCCESS, location = "/templates/admin-pages.ftl"),
+		@Result(name = ERROR, location = "/templates/system-error.ftl"),
 		@Result(name = NONE, type = "json", params = { "root", "responsedJsondata" }),
-		@Result(name = LOGIN, location = "/WEB-INF/admin-login.ftl") })
+		@Result(name = LOGIN, location = "/templates/admin-login.ftl") })
 @ParentPackage("json-default")
 @Controller
 public class EmployeeHandler extends ActionSupport {
@@ -213,7 +213,7 @@ public class EmployeeHandler extends ActionSupport {
 	 * @return String
 	 */
 	@Action(value = PgCrowd2URLConstants.URL_TO_ADDITION, results = {
-			@Result(name = SUCCESS, location = "/WEB-INF/admin-addinfo.ftl") })
+			@Result(name = SUCCESS, location = "/templates/admin-addinfo.ftl") })
 	public String toAddition() {
 		final List<RoleDto> roleDtos = this.iRoleService.getRolesByEmployeeId(null);
 		ActionContext.getContext().put(PgCrowd2Constants.ATTRNAME_EMPLOYEE_ROLES, roleDtos);
@@ -226,7 +226,7 @@ public class EmployeeHandler extends ActionSupport {
 	 * @return String
 	 */
 	@Action(value = PgCrowd2URLConstants.URL_TO_EDITION, results = {
-			@Result(name = SUCCESS, location = "/WEB-INF/admin-editinfo.ftl") })
+			@Result(name = SUCCESS, location = "/templates/admin-editinfo.ftl") })
 	public String toEdition() {
 		final HttpServletRequest servletRequest = ActionContext.getContext().getServletRequest();
 		final String editId = servletRequest.getParameter("editId");
@@ -246,7 +246,7 @@ public class EmployeeHandler extends ActionSupport {
 	 * @return String
 	 */
 	@Action(value = PgCrowd2URLConstants.URL_TO_MAINMENU, results = {
-			@Result(name = SUCCESS, location = "/WEB-INF/mainmenu.ftl") })
+			@Result(name = SUCCESS, location = "/templates/mainmenu.ftl") })
 	public String toMainmenu() {
 		return SUCCESS;
 	}
@@ -257,7 +257,7 @@ public class EmployeeHandler extends ActionSupport {
 	 * @return String
 	 */
 	@Action(value = PgCrowd2URLConstants.URL_MENU_INITIAL, results = {
-			@Result(name = SUCCESS, location = "/WEB-INF/menukanri.ftl") })
+			@Result(name = SUCCESS, location = "/templates/menukanri.ftl") })
 	public String toMenu() {
 		return SUCCESS;
 	}
@@ -308,7 +308,7 @@ public class EmployeeHandler extends ActionSupport {
 	 * @return String
 	 */
 	@Action(value = PgCrowd2URLConstants.URL_TO_REGISTER, results = {
-			@Result(name = SUCCESS, location = "/WEB-INF/admin-toroku.ftl") })
+			@Result(name = SUCCESS, location = "/templates/admin-toroku.ftl") })
 	public String toSignUp() {
 		return SUCCESS;
 	}
