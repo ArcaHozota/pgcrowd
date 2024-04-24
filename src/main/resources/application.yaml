@@ -1,5 +1,11 @@
 server:
-  port: 8688
+  port: 8443
+  ssl: 
+    enabled: true
+    key-store: classpath:tomcat.keystore
+    key-store-type: JKS
+    key-store-password: pgcrowd2
+    key-alias: tomcat
 spring:
   application:
     name: pgcrowd2
