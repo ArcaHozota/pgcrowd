@@ -54,11 +54,10 @@
 							<#if authNames?exists>
 								<#list authNames as authName>
 									<#if authName.getAuthority() == 'employee%delete' || authName.getAuthority() == 'employee%edition'>
-										<input type="hidden" value="true" id="authChkFlgContainer">
-										<#else>
-										<input type="hidden" value="false" id="authChkFlgContainer">
+										<#assign chkFlg = 'true'>
 									</#if>
 								</#list>
+								<input type="hidden" value="${chkFlg}" id="authChkFlgContainer">
 								<#else>
 								<input type="hidden" value="false" id="authChkFlgContainer">
 							</#if>
