@@ -18,7 +18,7 @@ function toSelectedPg(pageNum, keyword) {
 		data: {
 			'pageNum': pageNum,
 			'keyword': keyword,
-			'userId': $("#toPersonal").find("input").val(),
+			'userId': $("#toPersonal").find("input").val().replace(/,/g, ''),
 			'authChkFlag': $("#authChkFlgContainer").val()
 		},
 		type: 'GET',

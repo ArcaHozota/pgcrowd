@@ -51,12 +51,12 @@
 							<form id="logoutForm" method="post" action="/pgcrowd/employee/logout" 
 								style="display: none;"></form>
 							<#assign authNames = principalAdmin.getAuthorities()>
-							<#if authNames?exists>
-								<#list authNames as authName>
-									<#if authName.getAuthority() == 'employee%delete' || authName.getAuthority() == 'employee%edition'>
-										<#assign chkFlg = 'true'>
-									</#if>
-								</#list>
+							<#list authNames as authName>
+								<#if authName.getAuthority() == 'employee%delete' || authName.getAuthority() == 'employee%edition'>
+									<#assign chkFlg = 'true'>
+								</#if>
+							</#list>
+							<#if chkFlg?exists>
 								<input type="hidden" value="${chkFlg}" id="authChkFlgContainer">
 								<#else>
 								<input type="hidden" value="false" id="authChkFlgContainer">
