@@ -99,7 +99,8 @@ $(function() {
 	$("#toPersonal").on('click', function(e) {
 		e.preventDefault();
 		let userId = $(this).find("p").text();
-		let url = '/pgcrowd/employee/toEdition?editId=' + userId;
+		let authChkFlag = $("#authChkFlgContainer").val();
+		let url = '/pgcrowd/employee/toEdition?editId=' + userId + '&authChkFlag=' + authChkFlag;
 		checkPermissionAndTransfer(url);
 	});
 	$("#toAdmin").on('click', function(e) {

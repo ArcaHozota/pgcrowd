@@ -6,6 +6,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +16,7 @@ import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 import org.springframework.http.MediaType;
 import org.springframework.lang.Nullable;
+import org.springframework.security.core.GrantedAuthority;
 
 import com.alibaba.fastjson2.JSON;
 
@@ -249,6 +252,16 @@ public final class CommonProjectUtils {
 				&& acceptInformation.contains("application/json"))
 				|| ((xRequestInformation != null) && (xRequestInformation.length() > 0)
 						&& "XMLHttpRequest".equals(xRequestInformation));
+	}
+
+	/**
+	 * 共通権限管理ストリーム
+	 *
+	 * @param stream 権限ストリーム
+	 * @return List<String>
+	 */
+	public static final List<String> getAuthNames(final Stream<GrantedAuthority> stream) {
+		return stream.map(GrantedAuthority::getAuthority).collect(Collectors.toList());
 	}
 
 	/**

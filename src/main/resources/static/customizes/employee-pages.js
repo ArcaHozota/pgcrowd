@@ -17,7 +17,9 @@ function toSelectedPg(pageNum, keyword) {
 		url: '/pgcrowd/employee/pagination',
 		data: {
 			'pageNum': pageNum,
-			'keyword': keyword
+			'keyword': keyword,
+			'userId': $("#toPersonal").find("input").val(),
+			'authChkFlag': $("#authChkFlgContainer").val()
 		},
 		type: 'GET',
 		success: function(result) {
@@ -82,6 +84,7 @@ $("#addInfoBtn").on('click', function(e) {
 });
 $("#tableBody").on('click', '.edit-btn', function() {
 	let editId = $(this).attr("editId");
-	let url = '/pgcrowd/employee/toEdition?editId=' + editId + '&pageNum=' + pageNum;
+	let authChkFlag = $("#authChkFlgContainer").val();
+	let url = '/pgcrowd/employee/toEdition?editId=' + editId + '&pageNum=' + pageNum + '&authChkFlag=' + authChkFlag;
 	checkPermissionAndTransfer(url);
 });
