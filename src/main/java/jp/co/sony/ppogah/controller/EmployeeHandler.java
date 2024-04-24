@@ -8,6 +8,7 @@ import static com.opensymphony.xwork2.Action.SUCCESS;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
@@ -195,10 +196,13 @@ public class EmployeeHandler extends ActionSupport {
 	 */
 	@Action(PgCrowd2URLConstants.URL_PAGINATION)
 	public String pagination() {
-		final String pageNum = ActionContext.getContext().getServletRequest().getParameter("pageNum");
-		final String keyword = ActionContext.getContext().getServletRequest().getParameter("keyword");
+		final HttpServletRequest servletRequest = ActionContext.getContext().getServletRequest();
+		final String pageNum = servletRequest.getParameter("pageNum");
+		final String keyword = servletRequest.getParameter("keyword");
+		final String userId = servletRequest.getParameter("userId");
+		final String authChkFlag = servletRequest.getParameter("authChkFlag");
 		final Pagination<EmployeeDto> employees = this.iEmployeeService.getEmployeesByKeyword(Integer.parseInt(pageNum),
-				keyword);
+				keyword, Long.parseLong(userId), authChkFlag);
 		this.setResponsedJsondata(ResultDto.successWithData(employees));
 		return NONE;
 	}
@@ -224,13 +228,15 @@ public class EmployeeHandler extends ActionSupport {
 	@Action(value = PgCrowd2URLConstants.URL_TO_EDITION, results = {
 			@Result(name = SUCCESS, location = "/WEB-INF/admin-editinfo.ftl") })
 	public String toEdition() {
-		final String editId = ActionContext.getContext().getServletRequest().getParameter("editId");
-		final String pageNum = ActionContext.getContext().getServletRequest().getParameter("pageNum");
+		final HttpServletRequest servletRequest = ActionContext.getContext().getServletRequest();
+		final String editId = servletRequest.getParameter("editId");
+		final String pageNum = servletRequest.getParameter("pageNum");
 		final EmployeeDto employeeDto2 = this.iEmployeeService.getEmployeeById(editId);
 		final List<RoleDto> roleDtos = this.iRoleService.getRolesByEmployeeId(editId);
-		ActionContext.getContext().put(PgCrowd2Constants.ATTRNAME_EDITED_INFO, employeeDto2);
-		ActionContext.getContext().put(PgCrowd2Constants.ATTRNAME_EMPLOYEE_ROLES, roleDtos);
-		ActionContext.getContext().put(PgCrowd2Constants.ATTRNAME_PAGE_NUMBER, pageNum);
+		final ActionContext actionContext = ActionContext.getContext();
+		actionContext.put(PgCrowd2Constants.ATTRNAME_EDITED_INFO, employeeDto2);
+		actionContext.put(PgCrowd2Constants.ATTRNAME_EMPLOYEE_ROLES, roleDtos);
+		actionContext.put(PgCrowd2Constants.ATTRNAME_PAGE_NUMBER, pageNum);
 		return SUCCESS;
 	}
 
@@ -278,9 +284,10 @@ public class EmployeeHandler extends ActionSupport {
 	 */
 	@Action(PgCrowd2URLConstants.URL_REGISTER)
 	public String toroku() {
-		final String inputEmail = ActionContext.getContext().getServletRequest().getParameter("email");
-		final String inputPassword = ActionContext.getContext().getServletRequest().getParameter("password");
-		final String inputDate = ActionContext.getContext().getServletRequest().getParameter("dateOfBirth");
+		final HttpServletRequest servletRequest = ActionContext.getContext().getServletRequest();
+		final String inputEmail = servletRequest.getParameter("email");
+		final String inputPassword = servletRequest.getParameter("password");
+		final String inputDate = servletRequest.getParameter("dateOfBirth");
 		final EmployeeDto employeeDto2 = new EmployeeDto();
 		employeeDto2.setEmail(inputEmail);
 		employeeDto2.setPassword(inputPassword);

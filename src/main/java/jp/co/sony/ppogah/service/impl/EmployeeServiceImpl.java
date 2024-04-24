@@ -3,6 +3,7 @@ package jp.co.sony.ppogah.service.impl;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -99,11 +100,27 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
-	public Pagination<EmployeeDto> getEmployeesByKeyword(final Integer pageNum, final String keyword) {
-		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowd2Constants.DEFAULT_PAGE_SIZE,
-				Sort.by(Direction.ASC, "id"));
+	public Pagination<EmployeeDto> getEmployeesByKeyword(final Integer pageNum, final String keyword, final Long userId,
+			final String authChkFlag) {
 		final Specification<Employee> status = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("deleteFlg"), PgCrowd2Constants.LOGIC_DELETE_INITIAL);
+		if (Boolean.FALSE.equals(Boolean.valueOf(authChkFlag))) {
+			final Specification<Employee> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
+					.equal(root.get("id"), userId);
+			final Specification<Employee> specification = Specification.where(status).and(where1);
+			final Employee employee = this.employeeRepository.findOne(specification).orElseThrow(() -> {
+				throw new PgCrowdException(PgCrowd2Constants.MESSAGE_STRING_FATAL_ERROR);
+			});
+			final EmployeeDto employeeDto = new EmployeeDto();
+			SecondBeanUtils.copyNullableProperties(employee, employeeDto);
+			employeeDto.setId(employee.getId().toString());
+			employeeDto.setDateOfBirth(this.formatter.format(employee.getDateOfBirth()));
+			final List<EmployeeDto> employeeDtos = new ArrayList<>();
+			employeeDtos.add(employeeDto);
+			return Pagination.of(employeeDtos, employeeDtos.size(), pageNum, PgCrowd2Constants.DEFAULT_PAGE_SIZE);
+		}
+		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowd2Constants.DEFAULT_PAGE_SIZE,
+				Sort.by(Direction.ASC, "id"));
 		if (CommonProjectUtils.isEmpty(keyword)) {
 			final Specification<Employee> specification = Specification.where(status);
 			final Page<Employee> pages = this.employeeRepository.findAll(specification, pageRequest);
