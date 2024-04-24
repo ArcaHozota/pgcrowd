@@ -230,11 +230,20 @@ public class EmployeeHandler extends ActionSupport {
 	public String toEdition() {
 		final HttpServletRequest servletRequest = ActionContext.getContext().getServletRequest();
 		final String editId = servletRequest.getParameter("editId");
+		final String authChkFlag = servletRequest.getParameter("authChkFlag");
 		String pageNum = servletRequest.getParameter("pageNum");
 		if (!CommonProjectUtils.isDigital(pageNum)) {
 			pageNum = "1";
 		}
 		final EmployeeDto employeeDto2 = this.iEmployeeService.getEmployeeById(editId);
+		if (Boolean.FALSE.equals(Boolean.valueOf(authChkFlag))) {
+			final RoleDto roleDto = this.iRoleService.getRoleById(Long.parseLong(employeeDto2.getRoleId()));
+			final ActionContext actionContext = ActionContext.getContext();
+			actionContext.put(PgCrowd2Constants.ATTRNAME_EDITED_INFO, employeeDto2);
+			actionContext.put(PgCrowd2Constants.ATTRNAME_EMPLOYEE_ROLES, roleDto);
+			actionContext.put(PgCrowd2Constants.ATTRNAME_PAGE_NUMBER, pageNum);
+			return SUCCESS;
+		}
 		final List<RoleDto> roleDtos = this.iRoleService.getRolesByEmployeeId(editId);
 		final ActionContext actionContext = ActionContext.getContext();
 		actionContext.put(PgCrowd2Constants.ATTRNAME_EDITED_INFO, employeeDto2);
