@@ -230,7 +230,10 @@ public class EmployeeHandler extends ActionSupport {
 	public String toEdition() {
 		final HttpServletRequest servletRequest = ActionContext.getContext().getServletRequest();
 		final String editId = servletRequest.getParameter("editId");
-		final String pageNum = servletRequest.getParameter("pageNum");
+		String pageNum = servletRequest.getParameter("pageNum");
+		if (!CommonProjectUtils.isDigital(pageNum)) {
+			pageNum = "1";
+		}
 		final EmployeeDto employeeDto2 = this.iEmployeeService.getEmployeeById(editId);
 		final List<RoleDto> roleDtos = this.iRoleService.getRolesByEmployeeId(editId);
 		final ActionContext actionContext = ActionContext.getContext();
