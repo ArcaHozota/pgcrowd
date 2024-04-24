@@ -37,7 +37,7 @@ function buildTableBody(result) {
 		let districtTd = $("<td scope='row' class='text-center table-light' style='width:70px;vertical-align:middle;'></td>").append(item.districtName);
 		let populationTd = $("<td scope='row' class='text-center table-light' style='width:50px;vertical-align:middle;'></td>").append(patternedPop);
 		let flagImg = $("<img>").attr('src', '/pgcrowd/svgImages/getCityFlags?flags=' + item.cityFlag + '.svg').attr('alt', '').height(27).width(40);
-		let flagTd = $("<td scope='row' class='text-center table-light' style='width:50px;vertical-align:middle;'></td>").append(flagImg);
+		let flagTd = $("<td scope='row' class='text-center table-light city-flag-td' role='button' style='width:50px;vertical-align:middle;'></td>").append(flagImg);
 		let editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit-btn").attr('data-bs-toggle', 'modal')
 			.attr('data-bs-target', '#cityEditModal').append($("<i class='fa-solid fa-pencil'></i>")).append("編集");
 		editBtn.attr("editId", item.id);
@@ -155,6 +155,10 @@ $("#tableBody").on('click', '.delete-btn', function() {
 			$(this).close();
 		}
 	});
+});
+$("#tableBody").on('click', '.city-flag-td', function() {
+	let nameVal = $(this).parent().find("td:eq(0)").text();
+	window.open('https://ja.wikipedia.org/wiki/' + nameVal);
 });
 function checkCityName(cityName, district) {
 	let nameVal = $(cityName).val().trim();
