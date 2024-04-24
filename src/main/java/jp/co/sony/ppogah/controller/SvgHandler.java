@@ -40,10 +40,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @Namespace(PgCrowd2URLConstants.URL_SVG_NAMESPACE)
-@Results({ @Result(name = SUCCESS, location = "/WEB-INF/mainmenu.ftl"),
-		@Result(name = ERROR, location = "/WEB-INF/system-error.ftl"),
+@Results({ @Result(name = SUCCESS, location = "/templates/mainmenu.ftl"),
+		@Result(name = ERROR, location = "/templates/system-error.ftl"),
 		@Result(name = NONE, type = "json", params = { "root", "responsedJsondata" }),
-		@Result(name = LOGIN, location = "/WEB-INF/admin-login.ftl") })
+		@Result(name = LOGIN, location = "/templates/admin-login.ftl") })
 @ParentPackage("json-default")
 @Controller
 public class SvgHandler extends ActionSupport implements ServletResponseAware {
