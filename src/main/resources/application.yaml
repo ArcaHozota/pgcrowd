@@ -1,5 +1,11 @@
 server:
   port: 8688
+  jetty:
+    threads:
+      acceptors: 2 # 接收连接的线程数
+      selectors: 4 # 处理连接的线程数
+      max: 20 # 最大的线程数
+      min: 4 # 最小的线程数
 spring:
   application:
     name: pgcrowd2
