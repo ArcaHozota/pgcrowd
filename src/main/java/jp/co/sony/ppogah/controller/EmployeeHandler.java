@@ -47,8 +47,7 @@ import lombok.Setter;
 		@Result(name = ERROR, location = "/templates/system-error.ftl"),
 		@Result(name = NONE, type = "json", params = { "root", "responsedJsondata" }),
 		@Result(name = LOGIN, location = "/templates/admin-login.ftl") })
-@ParentPackage("json-default")
-@InterceptorRef("myErrorHandlerStack")
+@ParentPackage("basePackage")
 @Controller
 public class EmployeeHandler extends ActionSupport {
 

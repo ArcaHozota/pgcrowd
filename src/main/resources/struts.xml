@@ -41,13 +41,12 @@
 	<!-- 关闭开发模式用以提高性能 -->
 	<constant name="struts.devMode" value="false" />
 	<!-- 自定义异常处理器 -->
-	<bean class="jp.co.sony.ppogah.listener.PgCrowd2ExceptionHandler"
-		name="customizedErrorHandler" />
-	<interceptor-stack name="myErrorHandlerStack">
-		<interceptor-ref name="exception">
-			<param name="exception.logEnabled">true</param>
-			<param name="exception.logLevel">ERROR</param>
-		</interceptor-ref>
-		<interceptor-ref name="customizedErrorHandler" />
-	</interceptor-stack>
+	<package name="basePackage"
+		extends="struts-default,json-deafult">
+		<interceptors>
+			<interceptor name="errorHandler"
+				class="jp.co.sony.ppogah.listener.PgCrowd2ExceptionHandler" />
+		</interceptors>
+		<default-interceptor-ref name="errorHandler" />
+	</package>
 </struts>
