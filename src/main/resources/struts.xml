@@ -43,7 +43,7 @@
 	<!-- 自定义异常处理器 -->
 	<bean class="jp.co.sony.ppogah.listener.PgCrowd2ExceptionHandler"
 		name="customizedErrorHandler" />
-	<interceptor-stack name="myStack">
+	<interceptor-stack name="myErrorHandlerStack">
 		<interceptor-ref name="exception">
 			<param name="exception.logEnabled">true</param>
 			<param name="exception.logLevel">ERROR</param>
