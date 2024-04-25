@@ -6,6 +6,7 @@ server:
       selectors: 4 # 处理连接的线程数
       max: 20 # 最大的线程数
       min: 4 # 最小的线程数
+    max-http-form-post-size: 600000B # 最大的 HTTP POST 大小，0 表示无限制
 spring:
   application:
     name: pgcrowd2
@@ -21,7 +22,7 @@ spring:
     hibernate:
       ddl-auto: update
       naming:
-        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
     show-sql: true
     open-in-view: false
   output:
