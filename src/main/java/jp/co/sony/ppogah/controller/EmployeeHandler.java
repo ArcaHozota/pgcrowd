@@ -158,6 +158,7 @@ public class EmployeeHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
+	@PreAuthorize("hasAuthority('employee%edition')")
 	@Action(value = PgCrowd2URLConstants.URL_INFO_INSERT, interceptorRefs = { @InterceptorRef("json") })
 	public String infoSave() {
 		final EmployeeDto employeeDto2 = this.getEmployeeDto();
@@ -171,6 +172,7 @@ public class EmployeeHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
+	@PreAuthorize("hasAuthority('employee%edition')")
 	@Action(value = PgCrowd2URLConstants.URL_INFO_UPDATE, interceptorRefs = { @InterceptorRef("json") })
 	public String infoUpdate() {
 		final EmployeeDto employeeDto2 = this.getEmployeeDto();
@@ -194,6 +196,7 @@ public class EmployeeHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
+	@PreAuthorize("hasAuthority('employee%retrieve')")
 	@Action(PgCrowd2URLConstants.URL_PAGINATION)
 	public String pagination() {
 		final HttpServletRequest servletRequest = ActionContext.getContext().getServletRequest();
@@ -212,6 +215,7 @@ public class EmployeeHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
+	@PreAuthorize("hasAuthority('employee%edition')")
 	@Action(value = PgCrowd2URLConstants.URL_TO_ADDITION, results = {
 			@Result(name = SUCCESS, location = "/templates/admin-addinfo.ftl") })
 	public String toAddition() {
@@ -225,6 +229,7 @@ public class EmployeeHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
+	@PreAuthorize("hasAuthority('employee%retrieve')")
 	@Action(value = PgCrowd2URLConstants.URL_TO_EDITION, results = {
 			@Result(name = SUCCESS, location = "/templates/admin-editinfo.ftl") })
 	public String toEdition() {
@@ -278,6 +283,7 @@ public class EmployeeHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
+	@PreAuthorize("hasAuthority('employee%retrieve')")
 	@Action(PgCrowd2URLConstants.URL_TO_PAGES)
 	public String toPages() {
 		String pageNum = ActionContext.getContext().getServletRequest().getParameter("pageNum");
