@@ -17,6 +17,7 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -104,6 +105,7 @@ public class RoleHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
+	@PreAuthorize("hasAuthority('role%edition')")
 	@Action(value = PgCrowd2URLConstants.URL_DO_ASSIGNMENT, interceptorRefs = { @InterceptorRef("json") })
 	public String doAssignment() {
 		final List<Long> authIds2 = this.getAuthIds();
@@ -121,6 +123,7 @@ public class RoleHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
+	@PreAuthorize("hasAuthority('role%edition')")
 	@Action(PgCrowd2URLConstants.URL_AUTH_ASSIGNED)
 	public String getAssignedAuth() {
 		final String fuyoId = ActionContext.getContext().getServletRequest().getParameter("fuyoId");
@@ -134,6 +137,7 @@ public class RoleHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
+	@PreAuthorize("hasAuthority('role%edition')")
 	@Action(PgCrowd2URLConstants.URL_AUTH_LIST)
 	public String getAuthlist() {
 		final List<Authority> authList = this.iRoleService.getAuthList();
@@ -157,6 +161,7 @@ public class RoleHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
+	@PreAuthorize("hasAuthority('role%delete')")
 	@Action(PgCrowd2URLConstants.URL_INFO_DELETE)
 	public String infoDelete() {
 		final String roleId = ActionContext.getContext().getServletRequest().getParameter("roleId");
@@ -170,6 +175,7 @@ public class RoleHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
+	@PreAuthorize("hasAuthority('role%edition')")
 	@Action(value = PgCrowd2URLConstants.URL_INFO_INSERT, interceptorRefs = { @InterceptorRef("json") })
 	public String infoSave() {
 		final RoleDto roleDto2 = this.getRoleDto();
@@ -183,6 +189,7 @@ public class RoleHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
+	@PreAuthorize("hasAuthority('role%edition')")
 	@Action(value = PgCrowd2URLConstants.URL_INFO_UPDATE, interceptorRefs = { @InterceptorRef("json") })
 	public String infoUpdate() {
 		final RoleDto roleDto2 = this.getRoleDto();
@@ -196,6 +203,7 @@ public class RoleHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
+	@PreAuthorize("hasAuthority('role%retrieve')")
 	@Action(PgCrowd2URLConstants.URL_PAGINATION)
 	public String pagination() {
 		final String pageNum = ActionContext.getContext().getServletRequest().getParameter("pageNum");
@@ -210,6 +218,7 @@ public class RoleHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
+	@PreAuthorize("hasAuthority('role%retrieve')")
 	@Action(PgCrowd2URLConstants.URL_TO_PAGES)
 	public String toPages() {
 		return SUCCESS;

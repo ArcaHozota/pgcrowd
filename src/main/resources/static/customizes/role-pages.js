@@ -46,6 +46,15 @@ function buildTableBody(result) {
 	});
 }
 $("#addRoleBtn").on('click', function() {
+	let ajaxResult = $.ajax({
+		url: '/pgcrowd/role/infoSave',
+		type: 'GET',
+		async: false
+	});
+	if (ajaxResult.status !== 200) {
+		later.msg(ajaxResult.responseJSON.message);
+		return;
+	}
 	formReset("#roleAddModal form");
 	$('#roleAddModal').modal({
 		backdrop: 'static'
@@ -76,10 +85,19 @@ $("#roleInfoSaveBtn").on('click', function() {
 		let postData = JSON.stringify({
 			'name': $("#nameInput").val().trim()
 		});
-		pgcrowdAjaxModify('pgcrowd/role/infoSave', 'POST', postData, normalPostSuccessFunction("#roleAddModal"));
+		pgcrowdAjaxModify('/pgcrowd/role/infoSave', 'POST', postData, normalPostSuccessFunction("#roleAddModal"));
 	}
 });
 $("#tableBody").on('click', '.edit-btn', function() {
+	let ajaxResult = $.ajax({
+		url: '/pgcrowd/role/infoUpdate',
+		type: 'GET',
+		async: false
+	});
+	if (ajaxResult.status !== 200) {
+		later.msg(ajaxResult.responseJSON.message);
+		return;
+	}
 	formReset("#roleEditModal form");
 	let editId = $(this).attr("editId");
 	$("#roleInfoChangeBtn").val(editId);
@@ -106,6 +124,15 @@ $("#roleInfoChangeBtn").on('click', function() {
 	}
 });
 $("#tableBody").on('click', '.delete-btn', function() {
+	let ajaxResult = $.ajax({
+		url: '/pgcrowd/role/infoDelete?roleId=0L',
+		type: 'GET',
+		async: false
+	});
+	if (ajaxResult.status !== 200) {
+		later.msg(ajaxResult.responseJSON.message);
+		return;
+	}
 	let roleName = $(this).parents("tr").find("td:eq(0)").text().trim();
 	let roleId = $(this).attr("deleteId");
 	swal.fire({
@@ -124,10 +151,6 @@ $("#tableBody").on('click', '.delete-btn', function() {
 	});
 });
 $("#tableBody").on('click', '.fuyo-btn', function() {
-	let fuyoId = $(this).attr("fuyoId");
-	$("#authChangeBtn").attr("fuyoId", fuyoId);
-	let nameVal = $(this).parent().parent().find("td:eq(0)").text();
-	$("#roleName").text(nameVal);
 	let ajaxReturn = $.ajax({
 		url: '/pgcrowd/role/getAuthlist',
 		type: 'GET',
@@ -137,6 +160,10 @@ $("#tableBody").on('click', '.fuyo-btn', function() {
 		layer.msg(ajaxResult.responseJSON.message);
 		return;
 	}
+	let fuyoId = $(this).attr("fuyoId");
+	$("#authChangeBtn").attr("fuyoId", fuyoId);
+	let nameVal = $(this).parent().parent().find("td:eq(0)").text();
+	$("#roleName").text(nameVal);
 	$("#authEditModal").modal({
 		backdrop: 'static'
 	});
