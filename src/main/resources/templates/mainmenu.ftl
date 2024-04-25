@@ -22,15 +22,15 @@
 			<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
 				<h1 class="page-header" style="color: #7F0020;">メインメニュー</h1>
 				<div class="row">
-					<div class="col" id="adminKanriMainmenu" role="button" style="height: 80%;">
+					<div class="col" id="adminKanriMainmenu" role="button">
 						<img style="height: 80%; width: 100%;" class="rounded" alt="img01">
 						<h2 class="text-center">社員管理</h2>
 					</div>
-					<div class="col" id="roleKanriMainmenu" role="button" style="height: 80%;">
+					<div class="col" id="roleKanriMainmenu" role="button">
 						<img style="height: 80%; width: 100%;" class="rounded" alt="img02">
 						<h2 class="text-center">役割管理</h2>
 					</div>
-					<div class="col" id="categoryKanriMainmenu" role="button" style="height: 80%;">
+					<div class="col" id="categoryKanriMainmenu" role="button">
 						<img style="height: 80%; width: 100%;" class="rounded" alt="img03">
 						<h2 class="text-center">分類管理</h2>
 					</div>

@@ -20,7 +20,7 @@ public final class PgCrowd2Constants {
 
 	public static final String MESSAGE_SPRING_MAPPER = "静的リソースのマッピングが開始しました。";
 
-	public static final String MESSAGE_SPRING_APPLICATION = "アプリは正常に起動しました。";
+	public static final String MESSAGE_SPRING_APPLICATION = "アプリは正常に起動されました。";
 
 	public static final String ATTRNAME_EXCEPTION = "exception";
 

@@ -132,7 +132,7 @@ public class DefaultDispatcherErrorHandler implements DispatcherErrorHandler {
 				// WW-4103: Only logs error when application error occurred, not Struts error
 				responseResult = new ResponseLoginDto(code, exception.getMessage());
 			}
-			LOG.error("Exception occurred during processing request: {}", exception.getMessage());
+			LOG.error("Exception occurred during processing request: {}", responseResult.getMessage());
 			CommonProjectUtils.renderString(response, responseResult);
 		} catch (final IllegalStateException ise) {
 			// Log illegalstate instead of passing unrecoverable exception to calling thread
