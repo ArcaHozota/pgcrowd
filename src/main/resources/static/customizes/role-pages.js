@@ -52,7 +52,7 @@ $("#addRoleBtn").on('click', function() {
 		async: false
 	});
 	if (ajaxResult.status !== 200) {
-		later.msg(ajaxResult.responseJSON.message);
+		layer.msg(ajaxResult.responseJSON.message);
 		return;
 	}
 	formReset("#roleAddModal form");
@@ -95,7 +95,7 @@ $("#tableBody").on('click', '.edit-btn', function() {
 		async: false
 	});
 	if (ajaxResult.status !== 200) {
-		later.msg(ajaxResult.responseJSON.message);
+		layer.msg(ajaxResult.responseJSON.message);
 		return;
 	}
 	formReset("#roleEditModal form");
@@ -130,7 +130,7 @@ $("#tableBody").on('click', '.delete-btn', function() {
 		async: false
 	});
 	if (ajaxResult.status !== 200) {
-		later.msg(ajaxResult.responseJSON.message);
+		layer.msg(ajaxResult.responseJSON.message);
 		return;
 	}
 	let roleName = $(this).parents("tr").find("td:eq(0)").text().trim();
