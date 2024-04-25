@@ -32,3 +32,6 @@ spring:
     suffix: .ftl
     settings:
       {datetimeFormat: yyyy-MM-dd HH:mm:ss, templateUpdateDelay: 0s}
+logging:
+  level:
+    root: DEBUG
