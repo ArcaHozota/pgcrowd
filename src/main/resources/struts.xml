@@ -43,7 +43,4 @@
 	<!-- 自定义异常处理器 -->
 	<constant name="struts.dispatcher.errorHandler"
 		value="jp.co.sony.ppogah.listener.PgCrowd2ExceptionHandler" />
-	<package name="basePackage"
-		extends="struts-default,json-default">
-	</package>
 </struts>
