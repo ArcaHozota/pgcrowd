@@ -95,7 +95,7 @@ public class SpringSecurityConfiguration {
 								.concat(PgCrowd2URLConstants.URL_TO_LOGIN))
 						.loginProcessingUrl(PgCrowd2URLConstants.URL_EMPLOYEE_NAMESPACE.concat("/")
 								.concat(PgCrowd2URLConstants.URL_LOGIN))
-						.defaultSuccessUrl(PgCrowd2URLConstants.URL_EMPLOYEE_NAMESPACE.concat("/")
+						.defaultSuccessUrl(PgCrowd2URLConstants.URL_CATEGORY_NAMESPACE.concat("/")
 								.concat(PgCrowd2URLConstants.URL_TO_MAINMENU))
 						.permitAll().usernameParameter("loginAcct").passwordParameter("userPswd"))
 				.logout(logout -> logout
