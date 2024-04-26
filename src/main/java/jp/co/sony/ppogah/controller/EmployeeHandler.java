@@ -257,28 +257,6 @@ public class EmployeeHandler extends ActionSupport {
 	}
 
 	/**
-	 * メインメニューへ移動する
-	 *
-	 * @return String
-	 */
-	@Action(value = PgCrowd2URLConstants.URL_TO_MAINMENU, results = {
-			@Result(name = SUCCESS, location = "/templates/mainmenu.ftl") })
-	public String toMainmenu() {
-		return SUCCESS;
-	}
-
-	/**
-	 * 登録画面へ移動する
-	 *
-	 * @return String
-	 */
-	@Action(value = PgCrowd2URLConstants.URL_MENU_INITIAL, results = {
-			@Result(name = SUCCESS, location = "/templates/menukanri.ftl") })
-	public String toMenu() {
-		return SUCCESS;
-	}
-
-	/**
 	 * 情報一覧画面へ移動する
 	 *
 	 * @return String

@@ -54,6 +54,17 @@ public class CategoryHandler extends ActionSupport {
 	}
 
 	/**
+	 * メニュー管理画面初期表示
+	 *
+	 * @return String
+	 */
+	@Action(value = PgCrowd2URLConstants.URL_MENU_INITIAL, results = {
+			@Result(name = SUCCESS, location = "/templates/menukanri.ftl") })
+	public String menuInitial() {
+		return SUCCESS;
+	}
+
+	/**
 	 * 都市情報画面初期表示
 	 *
 	 * @return String
@@ -72,6 +83,17 @@ public class CategoryHandler extends ActionSupport {
 	@Action(value = PgCrowd2URLConstants.URL_TO_DISTRICTS, results = {
 			@Result(name = SUCCESS, location = "/templates/district-pages.ftl") })
 	public String toDistricts() {
+		return SUCCESS;
+	}
+
+	/**
+	 * メインメニューへ移動する
+	 *
+	 * @return String
+	 */
+	@Action(value = PgCrowd2URLConstants.URL_TO_MAINMENU, results = {
+			@Result(name = SUCCESS, location = "/templates/mainmenu.ftl") })
+	public String toMainmenu() {
 		return SUCCESS;
 	}
 }

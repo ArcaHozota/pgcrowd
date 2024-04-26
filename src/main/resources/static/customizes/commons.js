@@ -90,11 +90,11 @@ $(function() {
 	});
 	$("#toMainmenu").on('click', function(e) {
 		e.preventDefault();
-		window.location.replace('/pgcrowd/employee/toMainmenu');
+		window.location.replace('/pgcrowd/category/toMainmenu');
 	});
 	$("#toMainmenu2").on('click', function(e) {
 		e.preventDefault();
-		window.location.replace('/pgcrowd/employee/toMainmenu');
+		window.location.replace('/pgcrowd/category/toMainmenu');
 	});
 	$("#toPersonal").on('click', function(e) {
 		e.preventDefault();
@@ -115,7 +115,7 @@ $(function() {
 	});
 	$("#toMenu").on('click', function(e) {
 		e.preventDefault();
-		window.location.replace('/pgcrowd/employee/toMenuKanri');
+		window.location.replace('/pgcrowd/category/menuInitial');
 	});
 	$("#toPages").on('click', function(e) {
 		e.preventDefault();

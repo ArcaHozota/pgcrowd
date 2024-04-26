@@ -1,18 +1,14 @@
 <!DOCTYPE html>
 <html lang="ja-JP">
 <body>
-	<#if Session.SPRING_SECURITY_CONTEXT?exists>    
-	    <#assign principalAdmin = Session.SPRING_SECURITY_CONTEXT.authentication.principal
+	<#assign principalAdmin = Session.SPRING_SECURITY_CONTEXT.authentication.principal
 	        userAdminName = principalAdmin.getOriginalAdmin().getUsername()
 	        personalId = principalAdmin.getOriginalAdmin().getId()>
-	<#else>
-	    <#assign userAdminName="unknown" personalId="0L">
-	</#if>
 	<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top"
 		data-bs-theme="dark">
 		<div class="container-fluid">
 			<a class="navbar-brand" style="font-size: 24px;"
-				href="/pgcrowd/employee/toMainmenu">PGアプリケーション</a>
+				href="/pgcrowd/category/toMainmenu">PGアプリケーション</a>
 			<div class="collapse navbar-collapse">
 				<div class="input-group d-flex justify-content-end">
 					<input type="text" class="form-control" id="searchInput"

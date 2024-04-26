@@ -64,7 +64,7 @@ public final class PgCrowd2URLConstants {
 
 	public static final String URL_DO_ASSIGNMENT = "authAssignment";
 
-	public static final String URL_MENU_INITIAL = "toMenuKanri";
+	public static final String URL_MENU_INITIAL = "menuInitial";
 
 	public static final String URL_TO_DISTRICTS = "toDistricts";
 
