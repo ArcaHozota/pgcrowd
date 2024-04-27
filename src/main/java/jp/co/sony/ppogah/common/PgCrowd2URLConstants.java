@@ -30,6 +30,8 @@ public final class PgCrowd2URLConstants {
 
 	public static final String URL_CHECK_NAME = "check";
 
+	public static final String URL_CHECK_EDITION = "checkEdition";
+
 	public static final String URL_TO_LOGIN = "login";
 
 	public static final String URL_LOG_OUT = "logout";

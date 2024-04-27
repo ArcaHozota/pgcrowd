@@ -17,7 +17,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder.BCryptVersion;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.AccessDeniedHandlerImpl;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -82,7 +81,7 @@ public class SpringSecurityConfiguration {
 							final ResponseLoginDto responseResult = new ResponseLoginDto(
 									HttpStatus.UNAUTHORIZED.value(), authenticationException.getMessage());
 							CommonProjectUtils.renderString(response, responseResult);
-						}).accessDeniedHandler(new AccessDeniedHandlerImpl()))
+						}))
 				.formLogin(login -> login
 						.loginPage(PgCrowd2URLConstants.URL_EMPLOYEE_NAMESPACE.concat("/")
 								.concat(PgCrowd2URLConstants.URL_TO_LOGIN))

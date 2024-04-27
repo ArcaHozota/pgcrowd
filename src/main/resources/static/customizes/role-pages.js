@@ -47,7 +47,7 @@ function buildTableBody(result) {
 }
 $("#addRoleBtn").on('click', function() {
 	let ajaxResult = $.ajax({
-		url: '/pgcrowd/role/infoSave',
+		url: '/pgcrowd/role/checkEdition',
 		type: 'GET',
 		async: false
 	});
@@ -90,7 +90,7 @@ $("#roleInfoSaveBtn").on('click', function() {
 });
 $("#tableBody").on('click', '.edit-btn', function() {
 	let ajaxResult = $.ajax({
-		url: '/pgcrowd/role/infoUpdate',
+		url: '/pgcrowd/role/checkEdition',
 		type: 'GET',
 		async: false
 	});

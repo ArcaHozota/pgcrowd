@@ -49,6 +49,15 @@ function buildTableBody(result) {
 	});
 }
 $("#addCityBtn").on('click', function() {
+	let ajaxResult = $.ajax({
+		url: '/pgcrowd/city/checkEdition',
+		type: 'GET',
+		async: false
+	});
+	if (ajaxResult.status !== 200) {
+		layer.msg(ajaxResult.responseJSON.message);
+		return;
+	}
 	formReset("#cityAddModal form");
 	getDistricts("#districtInput", null);
 	$("#cityAddModal").modal({
@@ -91,6 +100,15 @@ $("#cityInfoSaveBtn").on('click', function() {
 	}
 });
 $("#tableBody").on('click', '.edit-btn', function() {
+	let ajaxResult = $.ajax({
+		url: '/pgcrowd/city/checkEdition',
+		type: 'GET',
+		async: false
+	});
+	if (ajaxResult.status !== 200) {
+		layer.msg(ajaxResult.responseJSON.message);
+		return;
+	}
 	formReset("#cityEditModal form");
 	let editId = $(this).attr("editId");
 	$("#cityInfoChangeBtn").val(editId);
@@ -139,6 +157,15 @@ $("#cityInfoChangeBtn").on('click', function() {
 	}
 });
 $("#tableBody").on('click', '.delete-btn', function() {
+	let ajaxResult = $.ajax({
+		url: '/pgcrowd/city/checkEdition',
+		type: 'GET',
+		async: false
+	});
+	if (ajaxResult.status !== 200) {
+		layer.msg(ajaxResult.responseJSON.message);
+		return;
+	}
 	let cityName = $(this).parents("tr").find("td:eq(0)").text().trim();
 	let cityId = $(this).attr("deleteId");
 	swal.fire({

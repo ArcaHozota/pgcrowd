@@ -101,6 +101,17 @@ public class RoleHandler extends ActionSupport {
 	}
 
 	/**
+	 * 編集権限チェック
+	 *
+	 * @return String
+	 */
+	@Action(PgCrowd2URLConstants.URL_CHECK_EDITION)
+	public String checkEdition() {
+		this.setResponsedJsondata(ResultDto.successWithoutData());
+		return NONE;
+	}
+
+	/**
 	 * 権限情報を更新する
 	 *
 	 * @return String
