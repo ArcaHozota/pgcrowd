@@ -1,54 +1,54 @@
 $(function() {
 	let treeData = [
 		{
-			id: "toMainmenu",
+			id: 'toMainmenu',
 			text: "メインメニュー",
 			icon: "fa-solid fa-compass",
 		},
 		{
-			id: "authKanri",
+			id: 'authKanri',
 			text: "権限管理",
 			icon: "fa-solid fa-building-columns",
 			nodes: [
 				{
-					id: "toAdmin",
+					id: 'toAdmin',
 					text: "社員管理",
 					icon: "fa-solid fa-user-group"
 				},
 				{
-					id: "toRole",
+					id: 'toRole',
 					text: "役割管理",
 					icon: "fa-solid fa-user-shield"
 				},
 				{
-					id: "toMenu",
+					id: 'toMenu',
 					text: "メニュー管理",
 					icon: "fa-solid fa-bars"
 				}
 			]
 		},
 		{
-			id: "businessKanri",
+			id: 'businessKanri',
 			text: "ビジネス管理",
 			icon: "fa-solid fa-radio",
 			nodes: [
 				{
-					id: "toCertification",
+					id: 'toCertification',
 					text: "資格維持",
 					icon: "fa-solid fa-circle-check"
 				},
 				{
-					id: "toCategory",
+					id: 'toCategory',
 					text: "分類管理",
 					icon: "fa-solid fa-list",
 					nodes: [
 						{
-							id: "toDistrict",
+							id: 'toDistrict',
 							text: "地域一覧",
 							icon: "fa-solid fa-earth-americas"
 						},
 						{
-							id: "toCity",
+							id: 'toCity',
 							text: "都市一覧",
 							icon: "fa-solid fa-tree-city"
 						}
