@@ -15,6 +15,7 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -126,6 +127,7 @@ public class CityHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
+	@PreAuthorize("hasAuthority('city%edition')")
 	@Action(PgCrowd2URLConstants.URL_CHECK_EDITION)
 	public String checkEdition() {
 		this.setResponsedJsondata(ResultDto.successWithoutData());
@@ -166,6 +168,7 @@ public class CityHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
+	@PreAuthorize("hasAuthority('city%edition')")
 	@Action(PgCrowd2URLConstants.URL_INFO_DELETE)
 	public String infoDelete() {
 		final String cityId = ActionContext.getContext().getServletRequest().getParameter("cityId");
@@ -179,6 +182,7 @@ public class CityHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
+	@PreAuthorize("hasAuthority('city%edition')")
 	@Action(value = PgCrowd2URLConstants.URL_INFO_INSERT, interceptorRefs = { @InterceptorRef("json") })
 	public String infoSave() {
 		final CityDto cityDto2 = this.getCityDto();
@@ -192,6 +196,7 @@ public class CityHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
+	@PreAuthorize("hasAuthority('city%edition')")
 	@Action(value = PgCrowd2URLConstants.URL_INFO_UPDATE, interceptorRefs = { @InterceptorRef("json") })
 	public String infoUpdate() {
 		final CityDto cityDto2 = this.getCityDto();
@@ -205,6 +210,7 @@ public class CityHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
+	@PreAuthorize("hasAuthority('city%retrieve')")
 	@Action(PgCrowd2URLConstants.URL_PAGINATION)
 	public String pagination() {
 		final String pageNum = ActionContext.getContext().getServletRequest().getParameter("pageNum");

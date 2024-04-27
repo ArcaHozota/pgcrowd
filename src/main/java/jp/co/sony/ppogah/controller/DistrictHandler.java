@@ -13,6 +13,7 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -101,6 +102,7 @@ public class DistrictHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
+	@PreAuthorize("hasAuthority('district%edition')")
 	@Action(PgCrowd2URLConstants.URL_CHECK_EDITION)
 	public String checkEdition() {
 		this.setResponsedJsondata(ResultDto.successWithoutData());
@@ -128,6 +130,7 @@ public class DistrictHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
+	@PreAuthorize("hasAuthority('district%edition')")
 	@Action(value = PgCrowd2URLConstants.URL_INFO_UPDATE, interceptorRefs = { @InterceptorRef("json") })
 	public String infoUpdate() {
 		final DistrictDto districtDto2 = this.getDistrictDto();
@@ -141,6 +144,7 @@ public class DistrictHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
+	@PreAuthorize("hasAuthority('district%retrieve')")
 	@Action(PgCrowd2URLConstants.URL_PAGINATION)
 	public String pagination() {
 		final String pageNum = ActionContext.getContext().getServletRequest().getParameter("pageNum");

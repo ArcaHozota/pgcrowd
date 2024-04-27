@@ -105,6 +105,7 @@ public class RoleHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
+	@PreAuthorize("hasAuthority('role%edition')")
 	@Action(PgCrowd2URLConstants.URL_CHECK_EDITION)
 	public String checkEdition() {
 		this.setResponsedJsondata(ResultDto.successWithoutData());
