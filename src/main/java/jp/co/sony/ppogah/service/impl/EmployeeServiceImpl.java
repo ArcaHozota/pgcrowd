@@ -61,7 +61,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	/**
 	 * 社員役割連携リポジトリ
 	 */
-	private final EmployeeRoleRepository employeeExRepository;
+	private final EmployeeRoleRepository employeeRoleRepository;
 
 	/**
 	 * 日時フォマーター
@@ -88,7 +88,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		final Employee employee = this.employeeRepository.findById(Long.parseLong(id)).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowd2Constants.MESSAGE_STRING_FATAL_ERROR);
 		});
-		final EmployeeRole employeeRole = this.employeeExRepository.findById(Long.parseLong(id))
+		final EmployeeRole employeeRole = this.employeeRoleRepository.findById(Long.parseLong(id))
 				.orElseGet(EmployeeRole::new);
 		final EmployeeDto employeeDto = new EmployeeDto();
 		SecondBeanUtils.copyNullableProperties(employee, employeeDto);
@@ -192,7 +192,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		});
 		employee.setDeleteFlg(PgCrowd2Constants.LOGIC_DELETE_FLG);
 		this.employeeRepository.saveAndFlush(employee);
-		this.employeeExRepository.deleteById(userId);
+		this.employeeRoleRepository.deleteById(userId);
 	}
 
 	@Override
@@ -210,7 +210,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 			final EmployeeRole employeeEx = new EmployeeRole();
 			employeeEx.setEmployeeId(employee.getId());
 			employeeEx.setRoleId(Long.parseLong(employeeDto.getRoleId()));
-			this.employeeExRepository.saveAndFlush(employeeEx);
+			this.employeeRoleRepository.saveAndFlush(employeeEx);
 		}
 	}
 
@@ -222,7 +222,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 				});
 		final Employee originalEntity = new Employee();
 		SecondBeanUtils.copyNullableProperties(employee, originalEntity);
-		final EmployeeRole employeeRole = this.employeeExRepository.findById(Long.parseLong(employeeDto.getId()))
+		final EmployeeRole employeeRole = this.employeeRoleRepository.findById(Long.parseLong(employeeDto.getId()))
 				.orElseGet(EmployeeRole::new);
 		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
 		if (CommonProjectUtils.isNotEmpty(employeeDto.getPassword())) {
@@ -234,7 +234,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 			return ResultDto.failed(PgCrowd2Constants.MESSAGE_STRING_NOCHANGE);
 		}
 		employeeRole.setRoleId(Long.parseLong(employeeDto.getRoleId()));
-		this.employeeExRepository.saveAndFlush(employeeRole);
+		this.employeeRoleRepository.saveAndFlush(employeeRole);
 		this.employeeRepository.saveAndFlush(employee);
 		return ResultDto.successWithoutData();
 	}

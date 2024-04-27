@@ -70,12 +70,12 @@ public final class RoleServiceImpl implements IRoleService {
 	/**
 	 * 権限管理リポジトリ
 	 */
-	private final AuthorityRepository pgAuthRepository;
+	private final AuthorityRepository authorityRepository;
 
 	/**
 	 * 社員役割連携リポジトリ
 	 */
-	private final EmployeeRoleRepository employeeExRepository;
+	private final EmployeeRoleRepository employeeRoleRepository;
 
 	/**
 	 * 役割権限連携リポジトリ
@@ -134,11 +134,11 @@ public final class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public List<AuthorityDto> getAuthList() {
-		return this.pgAuthRepository.findAll().stream().sorted(Comparator.comparing(Authority::getId)).map(item -> {
+		return this.authorityRepository.findAll().stream().sorted(Comparator.comparing(Authority::getId)).map(item -> {
 			final AuthorityDto authorityDto = new AuthorityDto();
 			SecondBeanUtils.copyNullableProperties(item, authorityDto);
 			authorityDto.setId(item.getId().toString());
-			authorityDto.setCategoryId(item.getCategoryId().toString());
+			authorityDto.setCategoryId(String.valueOf(item.getCategoryId()));
 			return authorityDto;
 		}).collect(Collectors.toList());
 	}
@@ -174,7 +174,7 @@ public final class RoleServiceImpl implements IRoleService {
 		if (employeeId == null) {
 			return secondRoles;
 		}
-		final Optional<EmployeeRole> roledOptional = this.employeeExRepository.findById(Long.parseLong(employeeId));
+		final Optional<EmployeeRole> roledOptional = this.employeeRoleRepository.findById(Long.parseLong(employeeId));
 		if (roledOptional.isEmpty()) {
 			return secondRoles;
 		}
@@ -233,7 +233,7 @@ public final class RoleServiceImpl implements IRoleService {
 		final Specification<EmployeeRole> where = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get(ROLE_ID), id);
 		final Specification<EmployeeRole> specification = Specification.where(where);
-		final List<EmployeeRole> list = this.employeeExRepository.findAll(specification);
+		final List<EmployeeRole> list = this.employeeRoleRepository.findAll(specification);
 		if (!list.isEmpty()) {
 			return ResultDto.failed(PgCrowd2Constants.MESSAGE_STRING_FORBIDDEN);
 		}
