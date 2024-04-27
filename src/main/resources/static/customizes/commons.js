@@ -6,9 +6,9 @@ $(function() {
 			icon: "fa-solid fa-compass",
 		},
 		{
+			id: "authKanri",
 			text: "権限管理",
 			icon: "fa-solid fa-building-columns",
-			expanded: true,
 			nodes: [
 				{
 					id: "toAdmin",
@@ -28,9 +28,9 @@ $(function() {
 			]
 		},
 		{
+			id: "businessKanri",
 			text: "ビジネス管理",
 			icon: "fa-solid fa-radio",
-			expanded: true,
 			nodes: [
 				{
 					id: "toCertification",
@@ -41,7 +41,6 @@ $(function() {
 					id: "toCategory",
 					text: "分類管理",
 					icon: "fa-solid fa-list",
-					expanded: true,
 					nodes: [
 						{
 							id: "toDistrict",
@@ -64,7 +63,8 @@ $(function() {
 		collapseIcon: 'fa fa-angle-right fa-fw',
 		indent: 2,
 		parentsMarginLeft: '1.25rem',
-		openNodeLinkOnNewTab: true
+		openNodeLinkOnNewTab: true,
+		expanded: ['authKanri', 'businessKanri', 'toCategory']
 	});
 	$("#logoutBtn").on('click', function() {
 		swal.fire({
