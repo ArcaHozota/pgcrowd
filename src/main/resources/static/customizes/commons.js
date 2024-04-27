@@ -59,12 +59,11 @@ $(function() {
 	];
 	$('#mainmenuTree').bstreeview({
 		data: treeData,
+		expanded: ['authKanri', 'businessKanri', 'toCategory'],
 		expandIcon: 'fa fa-angle-down fa-fw',
 		collapseIcon: 'fa fa-angle-right fa-fw',
 		indent: 2,
-		parentsMarginLeft: '1.25rem',
-		openNodeLinkOnNewTab: true,
-		expanded: ['authKanri', 'businessKanri', 'toCategory']
+		parentsMarginLeft: '1.25rem'
 	});
 	$("#logoutBtn").on('click', function() {
 		swal.fire({
