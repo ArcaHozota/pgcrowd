@@ -12,7 +12,7 @@
 <link rel="stylesheet" type="text/css" href="/static/ztree/metroStyle.css">
 <link rel="stylesheet" type="text/css" href="/static/bstreeview/css/bstreeview.min.css">
 <link rel="stylesheet" type="text/css" href="/static/css/customize.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico">
 <style type="text/css">

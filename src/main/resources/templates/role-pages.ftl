@@ -10,31 +10,32 @@
 				<div class="card border-naples mb-3">
 					<div class="card-header text-bg-naples mb-3">
 						<h5 class="card-title" style="padding-top: 8px;">
-							<i class="fa-solid fa-bars-staggered"></i> 役割情報メンテナンス
+							<i class="fa fa-bars"></i> 役割情報メンテナンス
 						</h5>
 					</div>
 					<div class="card-body">
 						<div class="row">
 							<form class="form-inline col-md-5" role="form">
-								<div class="input-group col-md-5">
+								<div class="input-group mb-3" style="width: 100%;">
 									<input id="keywordInput" class="form-control" type="text"
-										placeholder="検索条件を入力してください">
-									<button id="searchBtn2" class="btn btn-danger my-2 my-sm-0" type="button">
-										<i class="fa-solid fa-magnifying-glass"></i> 検索
-									</button>
+										placeholder="検索条件を入力してください" aria-label="検索条件入力" aria-describedby="searchBtn2">
+									<div class="input-group-append">
+										<button id="searchBtn2" class="btn btn-secondary my-2 my-sm-0" type="button">
+											<i class="fa fa-search"></i> 検索
+										</button>
+									</div>
 								</div>
 							</form>
-							<div class="col-md-2 offset-md-4">
-								<button class="btn btn-warning my-2 my-sm-0" id="addRoleBtn" 
-									data-bs-toggle="modal" data-bs-target="#roleAddModal">
-									<i class="fa-solid fa-id-badge"></i> 役割情報追加
+							<div class="col-md-2 offset-md-5">
+								<button class="btn btn-warning my-2 my-sm-0" id="addRoleBtn">
+									<i class="fa fa-id-badge" aria-hidden="true"></i> 役割情報追加
 								</button>
 							</div>
 						</div>
 						<table class="table table-sm table-hover">
 							<caption style="font-size: 10px;">役割情報一覧</caption>
-							<thead>
-								<tr class="table-warning">
+							<thead class="thead-dark">
+								<tr>
 									<th scope="col" class="text-center" style="width: 70px;">ID</th>
 									<th scope="col" class="text-center" style="width: 120px;">名称</th>
 									<th scope="col" class="text-center" style="width: 120px;">操作</th>
