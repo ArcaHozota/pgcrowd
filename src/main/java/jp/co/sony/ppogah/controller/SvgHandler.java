@@ -75,7 +75,7 @@ public class SvgHandler extends ActionSupport implements ServletResponseAware {
 	@Action(value = PgCrowd2URLConstants.URL_MAINMENU_ICONS, results = { @Result(type = "stream") })
 	public String getSvgImage() throws IOException {
 		final String svgSource = ActionContext.getContext().getServletRequest().getParameter("icons");
-		final Resource resource = this.getResourceLoader().getResource("classpath:static/image/icons/" + svgSource);
+		final Resource resource = this.getResourceLoader().getResource("classpath:/static/image/icons/" + svgSource);
 		final InputStream inputStream = resource.getInputStream();
 		final byte[] buffer = new byte[(int) resource.getFile().length()];
 		inputStream.read(buffer);
@@ -99,7 +99,7 @@ public class SvgHandler extends ActionSupport implements ServletResponseAware {
 	@Action(value = PgCrowd2URLConstants.URL_CITY_FLAGS, results = { @Result(type = "stream") })
 	public String getSvgImageCity() throws IOException {
 		final String svgSource = ActionContext.getContext().getServletRequest().getParameter("flags");
-		final Resource resource = this.getResourceLoader().getResource("classpath:static/image/flags/" + svgSource);
+		final Resource resource = this.getResourceLoader().getResource("classpath:/static/image/flags/" + svgSource);
 		final InputStream inputStream = resource.getInputStream();
 		final byte[] buffer = new byte[(int) resource.getFile().length()];
 		inputStream.read(buffer);
@@ -124,7 +124,7 @@ public class SvgHandler extends ActionSupport implements ServletResponseAware {
 	public String getSvgImageDistrict() throws IOException {
 		final String svgSource = ActionContext.getContext().getServletRequest().getParameter("flags");
 		final Resource resource = this.getResourceLoader()
-				.getResource("classpath:static/image/flags/prefectures/" + svgSource);
+				.getResource("classpath:/static/image/flags/prefectures/" + svgSource);
 		final InputStream inputStream = resource.getInputStream();
 		final byte[] buffer = new byte[(int) resource.getFile().length()];
 		inputStream.read(buffer);

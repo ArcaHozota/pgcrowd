@@ -1,7 +1,8 @@
 /* General Font */
 @font-face {
 	font-family: 'SourceHanSans';
-	src: local('../fonts/SourceHanSans-Regular.otf'), local('../fonts/SourceHanSans-Medium.otf');
+	src: local('../fonts/SourceHanSans-Regular.otf'),
+		local('../fonts/SourceHanSans-Medium.otf');
 }
 
 /* General CSS */
@@ -22,9 +23,9 @@ body {
 }
 
 .btn-primary {
-	--bs-btn-color: #fff !important;
-	--bs-btn-bg: #002fa7 !important;
-	--bs-btn-border-color: #002fa7 !important;
+	color: #fff !important;
+	background-color: #002fa7 !important;
+	border-color: #002fa7 !important;
 }
 
 .text-bg-darkgreen {
@@ -38,9 +39,9 @@ body {
 }
 
 .btn-success {
-	--bs-btn-color: #fff !important;
-	--bs-btn-bg: #006400 !important;
-	--bs-btn-border-color: #006400 !important;
+	color: #fff !important;
+	background-color: #006400 !important;
+	border-color: #006400 !important;
 }
 
 .text-bg-burgundy {
@@ -54,9 +55,9 @@ body {
 }
 
 .btn-danger {
-	--bs-btn-color: #fff !important;
-	--bs-btn-bg: #7f0020 !important;
-	--bs-btn-border-color: #7f0020 !important;
+	color: #fff !important;
+	background-color: #7f0020 !important;
+	border-color: #7f0020 !important;
 }
 
 .text-bg-naples {
@@ -70,9 +71,9 @@ body {
 }
 
 .btn-warning {
-	--bs-btn-color: #000 !important;
-	--bs-btn-bg: #f6c91c !important;
-	--bs-btn-border-color: #f6c91c !important;
+	color: #000 !important;
+	background-color: #f6c91c !important;
+	border-color: #f6c91c !important;
 }
 
 .text-bg-tiffany {
@@ -86,9 +87,9 @@ body {
 }
 
 .btn-info {
-	--bs-btn-color: #000 !important;
-	--bs-btn-bg: #81d8d0 !important;
-	--bs-btn-border-color: #81d8d0 !important;
+	color: #000 !important;
+	background-color: #81d8d0 !important;
+	border-color: #81d8d0 !important;
 }
 
 .text-bg-periwinkle {
