@@ -244,14 +244,12 @@ public class EmployeeHandler extends ActionSupport {
 		final ActionContext actionContext = ActionContext.getContext();
 		if (Boolean.FALSE.equals(Boolean.valueOf(authChkFlag))) {
 			final RoleDto roleDto = this.iRoleService.getRoleById(Long.parseLong(employeeDto2.getRoleId()));
-			actionContext.put(PgCrowd2Constants.ATTRNAME_EDITED_INFO, employeeDto2);
 			actionContext.put(PgCrowd2Constants.ATTRNAME_EMPLOYEE_ROLES, roleDto);
-			actionContext.put(PgCrowd2Constants.ATTRNAME_PAGE_NUMBER, pageNum);
-			return SUCCESS;
+		} else {
+			final List<RoleDto> roleDtos = this.iRoleService.getRolesByEmployeeId(editId);
+			actionContext.put(PgCrowd2Constants.ATTRNAME_EMPLOYEE_ROLES, roleDtos);
 		}
-		final List<RoleDto> roleDtos = this.iRoleService.getRolesByEmployeeId(editId);
 		actionContext.put(PgCrowd2Constants.ATTRNAME_EDITED_INFO, employeeDto2);
-		actionContext.put(PgCrowd2Constants.ATTRNAME_EMPLOYEE_ROLES, roleDtos);
 		actionContext.put(PgCrowd2Constants.ATTRNAME_PAGE_NUMBER, pageNum);
 		return SUCCESS;
 	}
