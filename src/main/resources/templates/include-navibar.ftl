@@ -4,8 +4,7 @@
 	<#assign principalAdmin = Session.SPRING_SECURITY_CONTEXT.authentication.principal
 	        userAdminName = principalAdmin.getOriginalAdmin().getUsername()
 	        personalId = principalAdmin.getOriginalAdmin().getId()>
-	<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top"
-		data-bs-theme="dark">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container-fluid">
 			<a class="navbar-brand" style="font-size: 24px;"
 				href="/pgcrowd/category/toMainmenu">PGアプリケーション</a>
