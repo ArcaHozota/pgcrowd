@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(function() {
 	let treeData = [
 		{
 			id: "toMainmenu",
@@ -8,7 +8,7 @@ $(document).ready(function() {
 		{
 			text: "権限管理",
 			icon: "fa-solid fa-building-columns",
-			state: { expanded: true },
+			expanded: true,
 			nodes: [
 				{
 					id: "toAdmin",
@@ -30,7 +30,7 @@ $(document).ready(function() {
 		{
 			text: "ビジネス管理",
 			icon: "fa-solid fa-radio",
-			state: { expanded: true },
+			expanded: true,
 			nodes: [
 				{
 					id: "toCertification",
@@ -41,7 +41,7 @@ $(document).ready(function() {
 					id: "toCategory",
 					text: "分類管理",
 					icon: "fa-solid fa-list",
-					state: { expanded: true },
+					expanded: true,
 					nodes: [
 						{
 							id: "toDistrict",
@@ -63,7 +63,8 @@ $(document).ready(function() {
 		expandIcon: 'fa fa-angle-down fa-fw',
 		collapseIcon: 'fa fa-angle-right fa-fw',
 		indent: 2,
-		parentsMarginLeft: '1.25rem'
+		parentsMarginLeft: '1.25rem',
+		openNodeLinkOnNewTab: true
 	});
 	$("#logoutBtn").on('click', function() {
 		swal.fire({
