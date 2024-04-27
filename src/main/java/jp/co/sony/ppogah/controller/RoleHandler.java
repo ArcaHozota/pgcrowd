@@ -24,8 +24,8 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import jp.co.sony.ppogah.common.PgCrowd2URLConstants;
+import jp.co.sony.ppogah.dto.AuthorityDto;
 import jp.co.sony.ppogah.dto.RoleDto;
-import jp.co.sony.ppogah.entity.Authority;
 import jp.co.sony.ppogah.service.IRoleService;
 import jp.co.sony.ppogah.utils.Pagination;
 import jp.co.sony.ppogah.utils.ResultDto;
@@ -80,12 +80,12 @@ public class RoleHandler extends ActionSupport {
 	/**
 	 * 権限IDリスト
 	 */
-	private List<Long> authIds;
+	private List<String> authIds;
 
 	/**
 	 * 役割IDリスト
 	 */
-	private List<Long> roleIds;
+	private List<String> roleIds;
 
 	/**
 	 * 名称重複チェック
@@ -108,9 +108,9 @@ public class RoleHandler extends ActionSupport {
 	@PreAuthorize("hasAuthority('role%edition')")
 	@Action(value = PgCrowd2URLConstants.URL_DO_ASSIGNMENT, interceptorRefs = { @InterceptorRef("json") })
 	public String doAssignment() {
-		final List<Long> authIds2 = this.getAuthIds();
-		final List<Long> roleIds2 = this.getRoleIds();
-		final Map<String, List<Long>> paramMaps = new HashMap<>();
+		final List<String> authIds2 = this.getAuthIds();
+		final List<String> roleIds2 = this.getRoleIds();
+		final Map<String, List<String>> paramMaps = new HashMap<>();
 		paramMaps.put("authIds", authIds2);
 		paramMaps.put("roleIds", roleIds2);
 		final ResultDto<String> doAssignment = this.iRoleService.doAssignment(paramMaps);
@@ -127,7 +127,7 @@ public class RoleHandler extends ActionSupport {
 	@Action(PgCrowd2URLConstants.URL_AUTH_ASSIGNED)
 	public String getAssignedAuth() {
 		final String fuyoId = ActionContext.getContext().getServletRequest().getParameter("fuyoId");
-		final List<Long> authIdsById = this.iRoleService.getAuthIdsById(Long.parseLong(fuyoId));
+		final List<String> authIdsById = this.iRoleService.getAuthIdsById(Long.parseLong(fuyoId));
 		this.setResponsedJsondata(ResultDto.successWithData(authIdsById));
 		return NONE;
 	}
@@ -140,7 +140,7 @@ public class RoleHandler extends ActionSupport {
 	@PreAuthorize("hasAuthority('role%edition')")
 	@Action(PgCrowd2URLConstants.URL_AUTH_LIST)
 	public String getAuthlist() {
-		final List<Authority> authList = this.iRoleService.getAuthList();
+		final List<AuthorityDto> authList = this.iRoleService.getAuthList();
 		this.setResponsedJsondata(ResultDto.successWithData(authList));
 		return NONE;
 	}

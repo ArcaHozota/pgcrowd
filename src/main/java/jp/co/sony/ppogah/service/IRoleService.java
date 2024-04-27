@@ -3,8 +3,8 @@ package jp.co.sony.ppogah.service;
 import java.util.List;
 import java.util.Map;
 
+import jp.co.sony.ppogah.dto.AuthorityDto;
 import jp.co.sony.ppogah.dto.RoleDto;
-import jp.co.sony.ppogah.entity.Authority;
 import jp.co.sony.ppogah.utils.Pagination;
 import jp.co.sony.ppogah.utils.ResultDto;
 
@@ -30,7 +30,7 @@ public interface IRoleService {
 	 * @param paramMap パラメータ
 	 * @return ResultDto<String>
 	 */
-	ResultDto<String> doAssignment(Map<String, List<Long>> paramMap);
+	ResultDto<String> doAssignment(Map<String, List<String>> paramMap);
 
 	/**
 	 * 付与された権限を表示する
@@ -38,14 +38,14 @@ public interface IRoleService {
 	 * @param id 役割ID
 	 * @return List<Long>
 	 */
-	List<Long> getAuthIdsById(Long id);
+	List<String> getAuthIdsById(Long id);
 
 	/**
 	 * 権限リストを取得する
 	 *
 	 * @return List<PgAuth>
 	 */
-	List<Authority> getAuthList();
+	List<AuthorityDto> getAuthList();
 
 	/**
 	 * IDによって役割情報を検索する

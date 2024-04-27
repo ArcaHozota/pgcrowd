@@ -17,6 +17,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import jp.co.sony.ppogah.common.PgCrowd2Constants;
+import jp.co.sony.ppogah.dto.AuthorityDto;
 import jp.co.sony.ppogah.dto.RoleDto;
 import jp.co.sony.ppogah.entity.Authority;
 import jp.co.sony.ppogah.entity.EmployeeRole;
@@ -28,11 +29,11 @@ import jp.co.sony.ppogah.repository.EmployeeRoleRepository;
 import jp.co.sony.ppogah.repository.RoleAuthRepository;
 import jp.co.sony.ppogah.repository.RoleRepository;
 import jp.co.sony.ppogah.service.IRoleService;
+import jp.co.sony.ppogah.utils.CommonProjectUtils;
 import jp.co.sony.ppogah.utils.Pagination;
 import jp.co.sony.ppogah.utils.ResultDto;
 import jp.co.sony.ppogah.utils.SecondBeanUtils;
 import jp.co.sony.ppogah.utils.SnowflakeUtils;
-import jp.co.sony.ppogah.utils.CommonProjectUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -94,16 +95,16 @@ public final class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
-	public ResultDto<String> doAssignment(final Map<String, List<Long>> paramMap) {
+	public ResultDto<String> doAssignment(final Map<String, List<String>> paramMap) {
 		final Long[] idArray = { 1L, 5L, 9L, 12L };
-		final Long roleId = paramMap.get("roleIds").get(0);
+		final Long roleId = Long.parseLong(paramMap.get("roleIds").get(0));
 		final Specification<RoleAuth> where = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(ROLE_ID),
 				roleId);
 		final Specification<RoleAuth> specification = Specification.where(where);
 		final List<RoleAuth> list1 = this.roleExRepository.findAll(specification);
 		final List<Long> list2 = list1.stream().map(RoleAuth::getAuthId).sorted().collect(Collectors.toList());
-		final List<Long> authIds = paramMap.get("authIds").stream().filter(a -> !Arrays.asList(idArray).contains(a))
-				.sorted().collect(Collectors.toList());
+		final List<Long> authIds = paramMap.get("authIds").stream().map(Long::parseLong)
+				.filter(a -> !Arrays.asList(idArray).contains(a)).sorted().collect(Collectors.toList());
 		if (list2.equals(authIds)) {
 			return ResultDto.failed(PgCrowd2Constants.MESSAGE_STRING_NOCHANGE);
 		}
@@ -123,18 +124,23 @@ public final class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
-	public List<Long> getAuthIdsById(final Long id) {
+	public List<String> getAuthIdsById(final Long id) {
 		final Specification<RoleAuth> where = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(ROLE_ID),
 				id);
 		final Specification<RoleAuth> specification = Specification.where(where);
-		return this.roleExRepository.findAll(specification).stream().map(RoleAuth::getAuthId)
+		return this.roleExRepository.findAll(specification).stream().map(a -> a.getAuthId().toString())
 				.collect(Collectors.toList());
 	}
 
 	@Override
-	public List<Authority> getAuthList() {
-		return this.pgAuthRepository.findAll().stream().sorted(Comparator.comparing(Authority::getId))
-				.collect(Collectors.toList());
+	public List<AuthorityDto> getAuthList() {
+		return this.pgAuthRepository.findAll().stream().sorted(Comparator.comparing(Authority::getId)).map(item -> {
+			final AuthorityDto authorityDto = new AuthorityDto();
+			SecondBeanUtils.copyNullableProperties(item, authorityDto);
+			authorityDto.setId(item.getId().toString());
+			authorityDto.setCategoryId(item.getCategoryId().toString());
+			return authorityDto;
+		}).collect(Collectors.toList());
 	}
 
 	@Override
@@ -199,8 +205,8 @@ public final class RoleServiceImpl implements IRoleService {
 			return Pagination.of(roleDtos, pages.getTotalElements(), pageNum, PgCrowd2Constants.DEFAULT_PAGE_SIZE);
 		}
 		if (CommonProjectUtils.isDigital(keyword)) {
-			final Page<Role> byIdLike = this.roleRepository.findByIdLike(keyword, PgCrowd2Constants.LOGIC_DELETE_INITIAL,
-					pageRequest);
+			final Page<Role> byIdLike = this.roleRepository.findByIdLike(keyword,
+					PgCrowd2Constants.LOGIC_DELETE_INITIAL, pageRequest);
 			final List<RoleDto> roleDtos = byIdLike.stream().map(item -> {
 				final RoleDto roleDto = new RoleDto();
 				SecondBeanUtils.copyNullableProperties(item, roleDto);
