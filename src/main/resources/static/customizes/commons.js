@@ -1,4 +1,4 @@
-$(function() {
+$(document).ready(function() {
 	let treeData = [
 		{
 			id: 'toMainmenu',
@@ -59,11 +59,11 @@ $(function() {
 	];
 	$('#mainmenuTree').bstreeview({
 		data: treeData,
-		expanded: ['authKanri', 'businessKanri', 'toCategory'],
 		expandIcon: 'fa fa-angle-down fa-fw',
 		collapseIcon: 'fa fa-angle-right fa-fw',
 		indent: 2,
-		parentsMarginLeft: '1.25rem'
+		parentsMarginLeft: '1.25rem',
+		initiallyExpanded: ['authKanri', 'businessKanri', 'toCategory']
 	});
 	$("#logoutBtn").on('click', function() {
 		swal.fire({
