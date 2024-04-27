@@ -5,6 +5,7 @@ import static com.opensymphony.xwork2.Action.LOGIN;
 import static com.opensymphony.xwork2.Action.NONE;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -244,7 +245,9 @@ public class EmployeeHandler extends ActionSupport {
 		final ActionContext actionContext = ActionContext.getContext();
 		if (Boolean.FALSE.equals(Boolean.valueOf(authChkFlag))) {
 			final RoleDto roleDto = this.iRoleService.getRoleById(Long.parseLong(employeeDto2.getRoleId()));
-			actionContext.put(PgCrowd2Constants.ATTRNAME_EMPLOYEE_ROLES, roleDto);
+			final List<RoleDto> defaultRoleDtos = new ArrayList<>();
+			defaultRoleDtos.add(roleDto);
+			actionContext.put(PgCrowd2Constants.ATTRNAME_EMPLOYEE_ROLES, defaultRoleDtos);
 		} else {
 			final List<RoleDto> roleDtos = this.iRoleService.getRolesByEmployeeId(editId);
 			actionContext.put(PgCrowd2Constants.ATTRNAME_EMPLOYEE_ROLES, roleDtos);
