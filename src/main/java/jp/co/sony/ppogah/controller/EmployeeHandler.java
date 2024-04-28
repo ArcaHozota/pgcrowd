@@ -173,7 +173,7 @@ public class EmployeeHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
-	@PreAuthorize("hasAuthority('employee%edition')")
+	@PreAuthorize("hasAuthority('employee%retrieve')")
 	@Action(value = PgCrowdURLConstants.URL_INFO_UPDATE, interceptorRefs = { @InterceptorRef("json") })
 	public String infoUpdate() {
 		final EmployeeDto employeeDto2 = this.getEmployeeDto();
