@@ -61,12 +61,12 @@
 				<div class="modal-body">
 					<form class="form-horizontal">
 						<div class="form-group row">
-							<label for="nameInput" class="col-sm-3 col-form-label text-end">役割名</label>
-							<div class="col-sm-9" style="height: 60px;">
-								<input type="text" class="form-control" id="nameInput" placeholder="役割の名称"> 
-								<span class="form-text" style="font-size: 12px;"></span>
-							</div>
-						</div>
+					        <label for="nameInput" class="col-sm-3 col-form-label text-right">役割名</label>
+					        <div class="col-sm-9" style="height: 5.7vh;">
+					            <input type="text" class="form-control" id="nameInput" placeholder="役割の名称">
+					            <span class="text-muted" style="font-size: 10px;"></span>
+					        </div>
+					    </div>
 					</form>
 				</div>
 				<div class="modal-footer">
@@ -89,12 +89,12 @@
 				<div class="modal-body">
 					<form class="form-horizontal">
 						<div class="form-group row">
-							<label for="nameEdit" class="col-sm-3 col-form-label text-end">役割名</label>
-							<div class="col-sm-9" style="height: 60px;">
-								<input type="text" class="form-control" id="nameEdit" placeholder="役割の名称"> 
-								<span class="form-text" style="font-size: 12px;"></span>
-							</div>
-						</div>
+					        <label for="nameEdit" class="col-sm-3 col-form-label text-right">役割名</label>
+					        <div class="col-sm-9" style="height: 5.7vh;">
+					            <input type="text" class="form-control" id="nameEdit" placeholder="役割の名称">
+					            <span class="text-muted" style="font-size: 10px;"></span>
+					        </div>
+					    </div>
 					</form>
 				</div>
 				<div class="modal-footer">

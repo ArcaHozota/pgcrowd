@@ -7,20 +7,17 @@
 		<div class="row">
 			<#include "include-sidebar.ftl">
 			<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
-				<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);"
-					aria-label="breadcrumb">
-					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="#"
-							style="text-decoration: none;" id="toMainmenu2">メインメニュー</a></li>
-						<li class="breadcrumb-item"><a href="#"
-							style="text-decoration: none;" id="toPages">データリスト</a></li>
-						<li class="breadcrumb-item active" aria-current="page">データ更新</li>
-					</ol>
+				<nav aria-label="breadcrumb">
+				    <ol class="breadcrumb">
+				        <li class="breadcrumb-item"><a href="#" style="text-decoration: none;">メインメニュー</a></li>
+				        <li class="breadcrumb-item"><a href="#" style="text-decoration: none;">データリスト</a></li>
+				        <li class="breadcrumb-item active" aria-current="page">データ追加</li>
+				    </ol>
 				</nav>
 				<div class="card border-klein mb-3">
 					<div class="card-header text-bg-klein mb-3">
 						<h5 class="card-title" style="padding-top: 8px;">
-							<i class="fa-solid fa-grip"></i> 社員情報変更
+							<i class="fa fa-th-large"></i> 社員情報変更
 						</h5>
 					</div>
 					<div class="card-body">
@@ -28,66 +25,61 @@
 							<input type="hidden" value="${arawaseta.id}" id="editIdContainer">
 							<input type="hidden" value="${pageNum}" id="pageNumContainer">
 							<div class="form-group row">
-								<label for="loginAccountEdit"
-									class="col-sm-3 col-form-label text-end">ログインアカウント</label>
-								<div class="col-sm-7" style="height: 60px;">
-									<p class="form-control" id="loginAccountEdit">${arawaseta.loginAccount}</p>
-								</div>
-							</div>
+						        <label for="loginAccountEdit" class="col-sm-3 col-form-label text-right">ログインアカウント</label>
+						        <div class="col-sm-7" style="height: 5.7vh;">
+						            <p class="form-control" id="loginAccountEdit">${arawaseta.loginAccount}</p>
+						            <span class="text-muted" style="font-size: 10px;"></span>
+						        </div>
+						    </div>
 							<div class="form-group row">
-								<label for="usernameEdit"
-									class="col-sm-3 col-form-label text-end">ユーザ名</label>
-								<div class="col-sm-7" style="height: 60px;">
-									<input type="text" class="form-control" id="usernameEdit"
-										placeholder="ユーザ名を入力してください" value="${arawaseta.username}">
-									<span class="form-text" style="font-size: 12px;"></span>
-								</div>
-							</div>
+						        <label for="usernameEdit" class="col-sm-3 col-form-label text-right">ユーザ名</label>
+						        <div class="col-sm-7" style="height: 5.7vh;">
+						            <input type="text" class="form-control" value="${arawaseta.username}" 
+						            	id="usernameEdit" placeholder="ユーザ名を入力してください">
+						            <span class="text-muted" style="font-size: 10px;"></span>
+						        </div>
+						    </div>
 							<div class="form-group row">
-								<label for="passwordEdit"
-									class="col-sm-3 col-form-label text-end">パスワード</label>
-								<div class="col-sm-7" style="height: 60px;">
-									<input type="password" class="form-control" id="passwordEdit"
-										placeholder="パスワードを入力してください" value="${arawaseta.password}">
-									<span class="form-text" style="font-size: 12px;"></span>
-								</div>
-							</div>
+						        <label for="passwordEdit" class="col-sm-3 col-form-label text-right">パスワード</label>
+						        <div class="col-sm-7" style="height: 5.7vh;">
+						            <input type="text" class="form-control" value="${arawaseta.password}" 
+						            	id="passwordEdit" placeholder="パスワードを入力してください">
+						            <span class="text-muted" style="font-size: 10px;"></span>
+						        </div>
+						    </div>
 							<div class="form-group row">
-								<label for="emailEdit" class="col-sm-3 col-form-label text-end">メールアドレス</label>
-								<div class="col-sm-7" style="height: 60px;">
-									<input type="email" class="form-control" id="emailEdit"
-										placeholder="メールアドレスを入力してください" value="${arawaseta.email}">
-									<span class="form-text" style="font-size: 12px;"></span>
-								</div>
-							</div>
+						        <label for="emailEdit" class="col-sm-3 col-form-label text-right">メールアドレス</label>
+						        <div class="col-sm-7" style="height: 5.7vh;">
+						            <input type="email" class="form-control" value="${arawaseta.email}"
+						            	 id="emailEdit" placeholder="メールアドレスを入力してください">
+						            <span class="text-muted" style="font-size: 10px;"></span>
+						        </div>
+						    </div>
 							<div class="form-group row">
-								<label for="dateEdit" class="col-sm-3 col-form-label text-end">生年月日</label>
-								<div class="col-sm-7" style="height: 60px;">
-									<input type="date" class="form-control" id="dateEdit"
-										value="${arawaseta.dateOfBirth}"> <span
-										class="form-text" style="font-size: 12px;"></span>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="roleEdit" class="col-sm-3 col-form-label text-end">役割</label>
-								<div class="col-sm-7" style="height: 45px;">
-									<select id="roleEdit" class="form-select">
-										<#list employeeRoles as employeeRole>
+						        <label for="dateEdit" class="col-sm-3 col-form-label text-right">生年月日</label>
+						        <div class="col-sm-7" style="height: 5.7vh;">
+						            <input type="date" class="form-control" value="${arawaseta.dateOfBirth}" id="dateEdit">
+						            <span class="text-muted" style="font-size: 10px;"></span>
+						        </div>
+						    </div>
+						    <div class="form-group row">
+						        <label for="roleEdit" class="col-sm-3 col-form-label text-right">役割</label>
+						        <div class="col-sm-7" style="height: 5.7vh;">
+						            <select id="roleEdit" class="custom-select">
+						                <#list employeeRoles as employeeRole>
 											<option value="${employeeRole.id}">${employeeRole.name}</option>
 										</#list>
-									</select> <span class="form-text" style="font-size: 12px;"></span>
-								</div>
-							</div>
+						            </select>
+						        </div>
+						    </div>
 						</form>
 					</div>
 					<div class="card-footer">
-						<button type="button" class="btn btn-primary my-2 my-sm-0"
-							id="editInfoBtn">
-							<i class="fa-solid fa-hourglass-half"></i> 変更
+						<button type="button" class="btn btn-primary my-2 my-sm-0" id="editInfoBtn">
+							<i class="fa fa-hourglass-half"></i> 変更
 						</button>
-						<button type="button" class="btn btn-secondary my-2 my-sm-0"
-							id="restoreBtn">
-							<i class="fa-solid fa-trash-can"></i> 廃棄
+						<button type="button" class="btn btn-secondary my-2 my-sm-0" id="restoreBtn">
+							<i class="fa fa-trash"></i> 廃棄
 						</button>
 					</div>
 				</div>
