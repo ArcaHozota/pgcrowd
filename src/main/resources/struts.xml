@@ -42,5 +42,5 @@
 	<constant name="struts.devMode" value="false" />
 	<!-- 自定义异常处理器 -->
 	<constant name="struts.dispatcher.errorHandler"
-		value="jp.co.sony.ppogah.listener.PgCrowd2ExceptionHandler" />
+		value="jp.co.sony.ppogah.listener.PgCrowdExceptionHandler" />
 </struts>
