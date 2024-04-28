@@ -9,8 +9,10 @@
 			<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
 				<nav aria-label="breadcrumb">
 				    <ol class="breadcrumb">
-				        <li class="breadcrumb-item"><a href="#" style="text-decoration: none;">メインメニュー</a></li>
-				        <li class="breadcrumb-item"><a href="#" style="text-decoration: none;">データリスト</a></li>
+				        <li class="breadcrumb-item"><a href="#" style="text-decoration: none;" 
+				        	id="toMainmenu2">メインメニュー</a></li>
+				        <li class="breadcrumb-item"><a href="#" style="text-decoration: none;" 
+				        	id="toPages">データリスト</a></li>
 				        <li class="breadcrumb-item active" aria-current="page">データ追加</li>
 				    </ol>
 				</nav>
