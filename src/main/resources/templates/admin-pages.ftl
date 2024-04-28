@@ -7,8 +7,8 @@
 		<div class="row">
 			<#include "include-sidebar.ftl">
 			<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
-				<div class="card border-darkgreen mb-3">
-					<div class="card-header text-bg-darkgreen mb-3">
+				<div class="card border-tunagray mb-3">
+					<div class="card-header text-bg-tunagray mb-3">
 						<h5 class="card-title" style="padding-top: 8px;">
 							<i class="fa fa-bars"></i> 社員情報メンテナンス
 						</h5>
@@ -28,7 +28,7 @@
 							</form>
 							<div class="col-md-2 offset-md-5">
 								<button class="btn btn-success my-2 my-sm-0" id="addInfoBtn">
-									<i class="fa fa-id-card-o" aria-hidden="true"></i> 社員情報追加
+									<i class="fa fa-id-card-o"></i> 社員情報追加
 								</button>
 							</div>
 						</div>

@@ -30,8 +30,8 @@ function buildTableBody(result) {
 	$("#tableBody").empty();
 	let index = result.data.records;
 	$.each(index, (index, item) => {
-		let idTd = $("<th scope='row' class='text-center table-light' style='width:150px;vertical-align:middle;'></th>").append(item.id);
-		let nameTd = $("<td class='text-center table-light' style='width:100px;vertical-align:middle;'></td>").append(item.name);
+		let idTd = $("<th scope='row' class='text-center' style='width:150px;vertical-align:middle;'></th>").append(item.id);
+		let nameTd = $("<td class='text-center' style='width:100px;vertical-align:middle;'></td>").append(item.name);
 		let fuyoBtn = $("<button></button>").addClass("btn btn-success btn-sm fuyo-btn").append($("<i class='fa fa-pencil-square-o'></i>")).append("権限付与");
 		fuyoBtn.attr("fuyoId", item.id);
 		let editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit-btn").append($("<i class='fa fa-pencil'></i>")).append("編集");
@@ -39,7 +39,7 @@ function buildTableBody(result) {
 		let deleteBtn = $("<button></button>").addClass("btn btn-danger btn-sm delete-btn")
 			.append($("<i class='fa fa-trash'></i>")).append("削除");
 		deleteBtn.attr("deleteId", item.id);
-		let btnTd = $("<td class='text-center table-light' style='width:100px;vertical-align:middle;'></td>").append(fuyoBtn).append(" ").append(editBtn).append(" ").append(deleteBtn);
+		let btnTd = $("<td class='text-center' style='width:100px;vertical-align:middle;'></td>").append(fuyoBtn).append(" ").append(editBtn).append(" ").append(deleteBtn);
 		$("<tr></tr>").append(idTd).append(nameTd).append(btnTd).appendTo("#tableBody");
 	});
 }

@@ -7,8 +7,8 @@
 		<div class="row">
 			<#include "include-sidebar.ftl">
 			<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
-				<div class="card border-naples mb-3">
-					<div class="card-header text-bg-naples mb-3">
+				<div class="card border-tunagray mb-3">
+					<div class="card-header text-bg-tunagray mb-3">
 						<h5 class="card-title" style="padding-top: 8px;">
 							<i class="fa fa-bars"></i> 役割情報メンテナンス
 						</h5>
@@ -28,7 +28,7 @@
 							</form>
 							<div class="col-md-2 offset-md-5">
 								<button class="btn btn-warning my-2 my-sm-0" id="addRoleBtn">
-									<i class="fa fa-id-badge" aria-hidden="true"></i> 役割情報追加
+									<i class="fa fa-id-badge"></i> 役割情報追加
 								</button>
 							</div>
 						</div>
@@ -70,11 +70,11 @@
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-						<i class="fa-solid fa-xmark"></i> 閉じる
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">
+						<i class="fa fa-times"></i> 閉じる
 					</button>
 					<button type="button" class="btn btn-primary" id="roleInfoSaveBtn">
-						<i class="fa-solid fa-inbox"></i> 保存
+						<i class="fa fa-inbox"></i> 保存
 					</button>
 				</div>
 			</div>
@@ -98,11 +98,11 @@
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-						<i class="fa-solid fa-xmark"></i> 閉じる
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">
+						<i class="fa fa-times"></i> 閉じる
 					</button>
 					<button type="button" class="btn btn-success" id="roleInfoChangeBtn">
-						<i class="fa-solid fa-leaf"></i> 更新
+						<i class="fa fa-leaf"></i> 更新
 					</button>
 				</div>
 			</div>
@@ -118,11 +118,11 @@
 					<ul id="authTree" class="ztree"></ul>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-						<i class="fa-solid fa-xmark"></i> 閉じる
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">
+						<i class="fa fa-times"></i> 閉じる
 					</button>
 					<button type="button" class="btn btn-success" id="authChangeBtn">
-						<i class="fa-solid fa-signature"></i> 変更
+						<i class="fa fa-google-wallet"></i> 変更
 					</button>
 				</div>
 			</div>

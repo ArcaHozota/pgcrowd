@@ -7,8 +7,8 @@
 		<div class="row">
 			<#include "include-sidebar.ftl">
 			<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
-				<div class="card border-burgundy mb-3">
-					<div class="card-header text-bg-burgundy mb-3">
+				<div class="card border-darkgreen mb-3">
+					<div class="card-header text-bg-darkgreen mb-3">
 						<h5 class="card-title" style="padding-top: 8px;">
 							<i class="fa-solid fa-bars-staggered"></i> メニューメンテナンス
 						</h5>

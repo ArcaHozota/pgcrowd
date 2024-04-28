@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="ja-JP">
 <body>
+	<style>
+		.bg-dark {
+			background-color: #000000 !important;
+		}
+	</style>
 	<#assign principalAdmin = Session.SPRING_SECURITY_CONTEXT.authentication.principal
 	        userAdminName = principalAdmin.getOriginalAdmin().getUsername()
 	        personalId = principalAdmin.getOriginalAdmin().getId()>
@@ -23,7 +28,7 @@
 						<a class="nav-link dropdown-toggle btn btn-success me-2" href="#" id="navbarDropdown"
 							role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
 							style="height: 37.6px;">
-							<i class="fa fa-user-circle"></i> ${userAdminName}
+							<i class="fa fa-user-circle-o"></i> ${userAdminName}
 						</a>
 						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 							<a class="dropdown-item" href="#" id="toPersonal">
@@ -35,7 +40,7 @@
 							</a>
 							<div class="dropdown-divider"></div>
 							<a id="logoutLink" class="dropdown-item" href="#">
-								<i class="fa fa-sign-out-alt"></i> ログアウト
+								<i class="fa fa-sign-out"></i> ログアウト
 							</a>
 						</div>
 					</li>
