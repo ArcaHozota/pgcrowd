@@ -31,20 +31,20 @@ function buildTableBody(result) {
 	let index = result.data.records;
 	$.each(index, (index, item) => {
 		let patternedPop = Number(item.population).toLocaleString('en-US');
-		let idTd = $("<th scope='row' class='text-center table-light' style='width:150px;vertical-align:middle;'></th>").append(item.id);
-		let nameTd = $("<td scope='row' class='text-center table-light' style='width:70px;vertical-align:middle;'></td>").append(item.name);
-		let pronunciationTd = $("<td scope='row' class='text-center table-light' style='width:100px;vertical-align:middle;'></td>").append(item.pronunciation);
-		let districtTd = $("<td scope='row' class='text-center table-light' style='width:70px;vertical-align:middle;'></td>").append(item.districtName);
-		let populationTd = $("<td scope='row' class='text-center table-light' style='width:50px;vertical-align:middle;'></td>").append(patternedPop);
+		let idTd = $("<th scope='row' class='text-center' style='width:150px;vertical-align:middle;'></th>").append(item.id);
+		let nameTd = $("<td class='text-center' style='width:70px;vertical-align:middle;'></td>").append(item.name);
+		let pronunciationTd = $("<td class='text-center' style='width:100px;vertical-align:middle;'></td>").append(item.pronunciation);
+		let districtTd = $("<td class='text-center' style='width:70px;vertical-align:middle;'></td>").append(item.districtName);
+		let populationTd = $("<td class='text-center' style='width:50px;vertical-align:middle;'></td>").append(patternedPop);
 		let flagImg = $("<img>").attr('src', '/pgcrowd/svgImages/getCityFlags?flags=' + item.cityFlag + '.svg').attr('alt', '').height(27).width(40);
-		let flagTd = $("<td scope='row' class='text-center table-light city-flag-td' role='button' style='width:50px;vertical-align:middle;'></td>").append(flagImg);
+		let flagTd = $("<td class='text-center city-flag-td' role='button' style='width:50px;vertical-align:middle;'></td>").append(flagImg);
 		let editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit-btn").attr('data-bs-toggle', 'modal')
 			.attr('data-bs-target', '#cityEditModal').append($("<i class='fa-solid fa-pencil'></i>")).append("編集");
 		editBtn.attr("editId", item.id);
 		let deleteBtn = $("<button></button>").addClass("btn btn-danger btn-sm delete-btn")
 			.append($("<i class='fa-solid fa-trash'></i>")).append("削除");
 		deleteBtn.attr("deleteId", item.id);
-		let btnTd = $("<td class='text-center table-light' style='width:100px;vertical-align:middle;'></td>").append(editBtn).append(" ").append(deleteBtn);
+		let btnTd = $("<td class='text-center' style='width:100px;vertical-align:middle;'></td>").append(editBtn).append(" ").append(deleteBtn);
 		$("<tr></tr>").append(idTd).append(nameTd).append(pronunciationTd).append(districtTd).append(populationTd).append(flagTd).append(btnTd).appendTo("#tableBody");
 	});
 }
