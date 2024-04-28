@@ -74,7 +74,7 @@
 							<i class="fa fa-user-plus"></i> 追加
 						</button>
 						<button type="button" class="btn btn-secondary my-2 my-sm-0" id="resetBtn">
-							<i class="fa fa-refresh"></i> リセット
+							<i class="fa fa-undo"></i> リセット
 						</button>
 					</div>
 				</div>

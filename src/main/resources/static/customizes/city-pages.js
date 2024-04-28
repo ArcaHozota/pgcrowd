@@ -39,10 +39,10 @@ function buildTableBody(result) {
 		let flagImg = $("<img>").attr('src', '/pgcrowd/svgImages/getCityFlags?flags=' + item.cityFlag + '.svg').attr('alt', '').height(27).width(40);
 		let flagTd = $("<td class='text-center city-flag-td' role='button' style='width:50px;vertical-align:middle;'></td>").append(flagImg);
 		let editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit-btn").attr('data-bs-toggle', 'modal')
-			.attr('data-bs-target', '#cityEditModal').append($("<i class='fa-solid fa-pencil'></i>")).append("編集");
+			.attr('data-bs-target', '#cityEditModal').append($("<i class='fa fa-pencil'></i>")).append("編集");
 		editBtn.attr("editId", item.id);
 		let deleteBtn = $("<button></button>").addClass("btn btn-danger btn-sm delete-btn")
-			.append($("<i class='fa-solid fa-trash'></i>")).append("削除");
+			.append($("<i class='fa fa-trash'></i>")).append("削除");
 		deleteBtn.attr("deleteId", item.id);
 		let btnTd = $("<td class='text-center' style='width:100px;vertical-align:middle;'></td>").append(editBtn).append(" ").append(deleteBtn);
 		$("<tr></tr>").append(idTd).append(nameTd).append(pronunciationTd).append(districtTd).append(populationTd).append(flagTd).append(btnTd).appendTo("#tableBody");
