@@ -3,47 +3,47 @@ $(document).ready(function() {
 	let treeData = [
 		{
 			text: "社員管理",
-			icon: "fa-solid fa-user-group",
+			icon: "fa fa-users",
 			expanded: true,
 			nodes: [
 				{
 					id: "employeeAddTree",
 					text: "社員情報追加",
-					icon: "fa-solid fa-user-plus"
+					icon: "fa fa-user-plus"
 				},
 				{
 					id: "employeeQueryTree",
 					text: "社員情報一覧",
-					icon: "fa-solid fa-users"
+					icon: "fa fa-id-card-o"
 				}
 			]
 		},
 		{
 			text: "役割管理",
-			icon: "fa-solid fa-user-shield",
+			icon: "fa fa-user-circle-o",
 			expanded: true,
 			nodes: [
 				{
 					id: "roleQueryTree",
 					text: "役割情報一覧",
-					icon: "fa-solid fa-id-card"
+					icon: "fa fa-id-badge"
 				}
 			]
 		},
 		{
 			text: "分類管理",
-			icon: "fa-solid fa-list",
+			icon: "fa fa-list",
 			expanded: true,
 			nodes: [
 				{
 					id: "districtQueryTree",
 					text: "地域一覧",
-					icon: "fa-solid fa-earth-americas"
+					icon: "fa fa-globe"
 				},
 				{
 					id: "cityQueryTree",
 					text: "都市一覧",
-					icon: "fa-solid fa-tree-city"
+					icon: "fa fa-building"
 				}
 			]
 		}

@@ -28,7 +28,7 @@
 						<a class="nav-link dropdown-toggle btn btn-success me-2" href="#" id="navbarDropdown"
 							role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
 							style="height: 37.6px;">
-							<i class="fa fa-user-circle-o"></i> ${userAdminName}
+							<i class="fa fa-user"></i> ${userAdminName}
 						</a>
 						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 							<a class="dropdown-item" href="#" id="toPersonal">

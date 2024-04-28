@@ -18,7 +18,7 @@ $(function() {
 				{
 					id: "toRole",
 					text: "役割管理",
-					icon: "fa fa-user-circle"
+					icon: "fa fa-user-circle-o"
 				},
 				{
 					id: "toMenu",
