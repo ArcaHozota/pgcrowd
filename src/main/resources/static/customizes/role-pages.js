@@ -1,6 +1,6 @@
 let pageNum, totalRecords, totalPages, keyword;
 $(document).ready(function() {
-	$("#toRole").css('color', '#7F0020');
+	$("#toRole").css('color', '#005300');
 	toSelectedPg(1, keyword);
 	$("#toRole").addClass('animate__animated animate__flipInY');
 });

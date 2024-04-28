@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$("#toMainmenu").css('color', '#7F0020');
+	$("#toMainmenu").css('color', '#005300');
 	$("#adminKanriMainmenu").find('img').attr('src', '/pgcrowd/svgImages/getIcons?icons=castilia.svg');
 	$("#roleKanriMainmenu").find('img').attr('src', '/pgcrowd/svgImages/getIcons?icons=burgundy.svg');
 	$("#categoryKanriMainmenu").find('img').attr('src', '/pgcrowd/svgImages/getIcons?icons=bourbon.svg');

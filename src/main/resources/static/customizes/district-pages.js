@@ -1,6 +1,6 @@
 let pageNum, totalRecords, totalPages, keyword;
 $(document).ready(function() {
-	$("#toDistrict").css('color', '#7F0020');
+	$("#toDistrict").css('color', '#005300');
 	toSelectedPg(1, keyword);
 	$("#toDistrict").addClass('animate__animated animate__flipInY');
 });

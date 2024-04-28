@@ -1,7 +1,7 @@
 let pageNum = $("#pageNumContainer").val();
 let totalRecords, totalPages, keyword;
 $(document).ready(function() {
-	$("#toAdmin").css('color', '#7F0020');
+	$("#toAdmin").css('color', '#005300');
 	if (pageNum === '') {
 		pageNum = undefined;
 	}
