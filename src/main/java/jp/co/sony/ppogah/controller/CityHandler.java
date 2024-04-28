@@ -21,7 +21,7 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-import jp.co.sony.ppogah.common.PgCrowd2URLConstants;
+import jp.co.sony.ppogah.common.PgCrowdURLConstants;
 import jp.co.sony.ppogah.dto.CityDto;
 import jp.co.sony.ppogah.dto.DistrictDto;
 import jp.co.sony.ppogah.service.ICityService;
@@ -39,7 +39,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@Namespace(PgCrowd2URLConstants.URL_CITY_NAMESPACE)
+@Namespace(PgCrowdURLConstants.URL_CITY_NAMESPACE)
 @Results({ @Result(name = SUCCESS, location = "/templates/city-pages.ftl"),
 		@Result(name = ERROR, location = "/templates/system-error.ftl"),
 		@Result(name = NONE, type = "json", params = { "root", "responsedJsondata" }),
@@ -112,7 +112,7 @@ public class CityHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
-	@Action(PgCrowd2URLConstants.URL_CHECK_NAME)
+	@Action(PgCrowdURLConstants.URL_CHECK_NAME)
 	public String checkDuplicated() {
 		final String nameVal = ActionContext.getContext().getServletRequest().getParameter("nameVal");
 		final String districtId2 = ActionContext.getContext().getServletRequest().getParameter("districtId");
@@ -128,7 +128,7 @@ public class CityHandler extends ActionSupport {
 	 * @return String
 	 */
 	@PreAuthorize("hasAuthority('city%edition')")
-	@Action(PgCrowd2URLConstants.URL_CHECK_EDITION)
+	@Action(PgCrowdURLConstants.URL_CHECK_EDITION)
 	public String checkEdition() {
 		this.setResponsedJsondata(ResultDto.successWithoutData());
 		return NONE;
@@ -155,7 +155,7 @@ public class CityHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
-	@Action(PgCrowd2URLConstants.URL_DISTRICT_LIST)
+	@Action(PgCrowdURLConstants.URL_DISTRICT_LIST)
 	public String getDistricts() {
 		final String cityId = ActionContext.getContext().getServletRequest().getParameter("cityId");
 		final List<DistrictDto> districtsByCityId = this.iDistrictService.getDistrictsByCityId(cityId);
@@ -169,7 +169,7 @@ public class CityHandler extends ActionSupport {
 	 * @return String
 	 */
 	@PreAuthorize("hasAuthority('city%edition')")
-	@Action(PgCrowd2URLConstants.URL_INFO_DELETE)
+	@Action(PgCrowdURLConstants.URL_INFO_DELETE)
 	public String infoDelete() {
 		final String cityId = ActionContext.getContext().getServletRequest().getParameter("cityId");
 		final ResultDto<String> remove = this.iCityService.remove(Long.parseLong(cityId));
@@ -183,7 +183,7 @@ public class CityHandler extends ActionSupport {
 	 * @return String
 	 */
 	@PreAuthorize("hasAuthority('city%edition')")
-	@Action(value = PgCrowd2URLConstants.URL_INFO_INSERT, interceptorRefs = { @InterceptorRef("json") })
+	@Action(value = PgCrowdURLConstants.URL_INFO_INSERT, interceptorRefs = { @InterceptorRef("json") })
 	public String infoSave() {
 		final CityDto cityDto2 = this.getCityDto();
 		this.iCityService.save(cityDto2);
@@ -197,7 +197,7 @@ public class CityHandler extends ActionSupport {
 	 * @return String
 	 */
 	@PreAuthorize("hasAuthority('city%edition')")
-	@Action(value = PgCrowd2URLConstants.URL_INFO_UPDATE, interceptorRefs = { @InterceptorRef("json") })
+	@Action(value = PgCrowdURLConstants.URL_INFO_UPDATE, interceptorRefs = { @InterceptorRef("json") })
 	public String infoUpdate() {
 		final CityDto cityDto2 = this.getCityDto();
 		final ResultDto<String> update = this.iCityService.update(cityDto2);
@@ -211,7 +211,7 @@ public class CityHandler extends ActionSupport {
 	 * @return String
 	 */
 	@PreAuthorize("hasAuthority('city%retrieve')")
-	@Action(PgCrowd2URLConstants.URL_PAGINATION)
+	@Action(PgCrowdURLConstants.URL_PAGINATION)
 	public String pagination() {
 		final String pageNum = ActionContext.getContext().getServletRequest().getParameter("pageNum");
 		final String keyword = ActionContext.getContext().getServletRequest().getParameter("keyword");

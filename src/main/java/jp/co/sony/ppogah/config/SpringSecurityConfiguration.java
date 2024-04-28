@@ -21,9 +21,9 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import jp.co.sony.ppogah.common.PgCrowd2Constants;
-import jp.co.sony.ppogah.common.PgCrowd2URLConstants;
-import jp.co.sony.ppogah.listener.PgCrowd2UserDetailsService;
+import jp.co.sony.ppogah.common.PgCrowdConstants;
+import jp.co.sony.ppogah.common.PgCrowdURLConstants;
+import jp.co.sony.ppogah.listener.PgCrowdUserDetailsService;
 import jp.co.sony.ppogah.utils.CommonProjectUtils;
 import lombok.extern.log4j.Log4j2;
 
@@ -43,7 +43,7 @@ public class SpringSecurityConfiguration {
 	 * ログインサービス
 	 */
 	@Resource
-	private PgCrowd2UserDetailsService pgCrowd2UserDetailsService;
+	private PgCrowdUserDetailsService pgCrowd2UserDetailsService;
 
 	@Bean
 	@Order(1)
@@ -54,7 +54,7 @@ public class SpringSecurityConfiguration {
 	@Bean
 	@Order(0)
 	protected DaoAuthenticationProvider daoAuthenticationProvider() {
-		final PgCrowd2DaoAuthenticationProvider provider = new PgCrowd2DaoAuthenticationProvider();
+		final PgCrowdDaoAuthenticationProvider provider = new PgCrowdDaoAuthenticationProvider();
 		provider.setUserDetailsService(this.pgCrowd2UserDetailsService);
 		provider.setPasswordEncoder(new BCryptPasswordEncoder(BCryptVersion.$2Y, 7));
 		return provider;
@@ -63,18 +63,18 @@ public class SpringSecurityConfiguration {
 	@Bean
 	@Order(2)
 	protected SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
-		http.authorizeRequests(requests -> requests.antMatchers(PgCrowd2URLConstants.URL_STATIC_RESOURCE,
-				PgCrowd2URLConstants.URL_EMPLOYEE_NAMESPACE.concat("/").concat(PgCrowd2URLConstants.URL_TO_REGISTER),
-				PgCrowd2URLConstants.URL_EMPLOYEE_NAMESPACE.concat("/").concat(PgCrowd2URLConstants.URL_REGISTER))
+		http.authorizeRequests(requests -> requests.antMatchers(PgCrowdURLConstants.URL_STATIC_RESOURCE,
+				PgCrowdURLConstants.URL_EMPLOYEE_NAMESPACE.concat("/").concat(PgCrowdURLConstants.URL_TO_REGISTER),
+				PgCrowdURLConstants.URL_EMPLOYEE_NAMESPACE.concat("/").concat(PgCrowdURLConstants.URL_REGISTER))
 				.permitAll().anyRequest().authenticated())
 				.csrf(csrf -> csrf
 						.ignoringRequestMatchers(
-								new AntPathRequestMatcher(PgCrowd2URLConstants.URL_STATIC_RESOURCE,
+								new AntPathRequestMatcher(PgCrowdURLConstants.URL_STATIC_RESOURCE,
 										RequestMethod.GET.toString()),
-								new AntPathRequestMatcher(PgCrowd2URLConstants.URL_EMPLOYEE_NAMESPACE.concat("/")
-										.concat(PgCrowd2URLConstants.URL_LOGIN), RequestMethod.POST.toString()),
-								new AntPathRequestMatcher(PgCrowd2URLConstants.URL_EMPLOYEE_NAMESPACE.concat("/")
-										.concat(PgCrowd2URLConstants.URL_LOG_OUT), RequestMethod.POST.toString()))
+								new AntPathRequestMatcher(PgCrowdURLConstants.URL_EMPLOYEE_NAMESPACE.concat("/")
+										.concat(PgCrowdURLConstants.URL_LOGIN), RequestMethod.POST.toString()),
+								new AntPathRequestMatcher(PgCrowdURLConstants.URL_EMPLOYEE_NAMESPACE.concat("/")
+										.concat(PgCrowdURLConstants.URL_LOG_OUT), RequestMethod.POST.toString()))
 						.csrfTokenRepository(new CookieCsrfTokenRepository()))
 				.exceptionHandling(
 						handling -> handling.authenticationEntryPoint((request, response, authenticationException) -> {
@@ -83,23 +83,23 @@ public class SpringSecurityConfiguration {
 							CommonProjectUtils.renderString(response, responseResult);
 						}))
 				.formLogin(login -> login
-						.loginPage(PgCrowd2URLConstants.URL_EMPLOYEE_NAMESPACE.concat("/")
-								.concat(PgCrowd2URLConstants.URL_TO_LOGIN))
-						.loginProcessingUrl(PgCrowd2URLConstants.URL_EMPLOYEE_NAMESPACE.concat("/")
-								.concat(PgCrowd2URLConstants.URL_LOGIN))
-						.defaultSuccessUrl(PgCrowd2URLConstants.URL_CATEGORY_NAMESPACE.concat("/")
-								.concat(PgCrowd2URLConstants.URL_TO_MAINMENU))
+						.loginPage(PgCrowdURLConstants.URL_EMPLOYEE_NAMESPACE.concat("/")
+								.concat(PgCrowdURLConstants.URL_TO_LOGIN))
+						.loginProcessingUrl(PgCrowdURLConstants.URL_EMPLOYEE_NAMESPACE.concat("/")
+								.concat(PgCrowdURLConstants.URL_LOGIN))
+						.defaultSuccessUrl(PgCrowdURLConstants.URL_CATEGORY_NAMESPACE.concat("/")
+								.concat(PgCrowdURLConstants.URL_TO_MAINMENU))
 						.permitAll().usernameParameter("loginAcct").passwordParameter("userPswd"))
 				.logout(logout -> logout
-						.logoutUrl(PgCrowd2URLConstants.URL_EMPLOYEE_NAMESPACE.concat("/")
-								.concat(PgCrowd2URLConstants.URL_LOG_OUT))
-						.logoutSuccessUrl(PgCrowd2URLConstants.URL_EMPLOYEE_NAMESPACE.concat("/")
-								.concat(PgCrowd2URLConstants.URL_TO_LOGIN)))
+						.logoutUrl(PgCrowdURLConstants.URL_EMPLOYEE_NAMESPACE.concat("/")
+								.concat(PgCrowdURLConstants.URL_LOG_OUT))
+						.logoutSuccessUrl(PgCrowdURLConstants.URL_EMPLOYEE_NAMESPACE.concat("/")
+								.concat(PgCrowdURLConstants.URL_TO_LOGIN)))
 				.headers(headers -> headers
 						.contentSecurityPolicy("script-src 'nonce-Ytvk0lE3pg1BL713YR9i89Kn' 'strict-dynamic'"))
 				.rememberMe(remember -> remember.key(UUID.randomUUID().toString())
-						.tokenValiditySeconds(PgCrowd2Constants.DEFAULT_TOKEN_EXPIRED));
-		log.info(PgCrowd2Constants.MESSAGE_SPRING_SECURITY);
+						.tokenValiditySeconds(PgCrowdConstants.DEFAULT_TOKEN_EXPIRED));
+		log.info(PgCrowdConstants.MESSAGE_SPRING_SECURITY);
 		return http.build();
 	}
 }

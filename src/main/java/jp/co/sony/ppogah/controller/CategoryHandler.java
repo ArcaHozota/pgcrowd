@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import jp.co.sony.ppogah.common.PgCrowd2URLConstants;
+import jp.co.sony.ppogah.common.PgCrowdURLConstants;
 import jp.co.sony.ppogah.utils.ResultDto;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,7 +27,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@Namespace(PgCrowd2URLConstants.URL_CATEGORY_NAMESPACE)
+@Namespace(PgCrowdURLConstants.URL_CATEGORY_NAMESPACE)
 @Results({ @Result(name = SUCCESS, location = "/templates/categorykanri.ftl"),
 		@Result(name = ERROR, location = "/templates/system-error.ftl"),
 		@Result(name = NONE, type = "json", params = { "root", "responsedJsondata" }),
@@ -48,7 +48,7 @@ public class CategoryHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
-	@Action(PgCrowd2URLConstants.URL_INIT_TEMPLATE)
+	@Action(PgCrowdURLConstants.URL_INIT_TEMPLATE)
 	public String initial() {
 		return SUCCESS;
 	}
@@ -58,7 +58,7 @@ public class CategoryHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
-	@Action(value = PgCrowd2URLConstants.URL_MENU_INITIAL, results = {
+	@Action(value = PgCrowdURLConstants.URL_MENU_INITIAL, results = {
 			@Result(name = SUCCESS, location = "/templates/menukanri.ftl") })
 	public String menuInitial() {
 		return SUCCESS;
@@ -69,7 +69,7 @@ public class CategoryHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
-	@Action(value = PgCrowd2URLConstants.URL_TO_CITIES, results = {
+	@Action(value = PgCrowdURLConstants.URL_TO_CITIES, results = {
 			@Result(name = SUCCESS, location = "/templates/city-pages.ftl") })
 	public String toCities() {
 		return SUCCESS;
@@ -80,7 +80,7 @@ public class CategoryHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
-	@Action(value = PgCrowd2URLConstants.URL_TO_DISTRICTS, results = {
+	@Action(value = PgCrowdURLConstants.URL_TO_DISTRICTS, results = {
 			@Result(name = SUCCESS, location = "/templates/district-pages.ftl") })
 	public String toDistricts() {
 		return SUCCESS;
@@ -91,7 +91,7 @@ public class CategoryHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
-	@Action(value = PgCrowd2URLConstants.URL_TO_MAINMENU, results = {
+	@Action(value = PgCrowdURLConstants.URL_TO_MAINMENU, results = {
 			@Result(name = SUCCESS, location = "/templates/mainmenu.ftl") })
 	public String toMainmenu() {
 		return SUCCESS;

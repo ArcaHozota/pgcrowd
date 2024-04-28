@@ -22,7 +22,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder.BCryptVe
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import jp.co.sony.ppogah.common.PgCrowd2Constants;
+import jp.co.sony.ppogah.common.PgCrowdConstants;
 import jp.co.sony.ppogah.dto.EmployeeDto;
 import jp.co.sony.ppogah.entity.Employee;
 import jp.co.sony.ppogah.entity.EmployeeRole;
@@ -79,21 +79,21 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		employee.setLoginAccount(loginAccount);
 		final Example<Employee> example = Example.of(employee, ExampleMatcher.matching());
 		return this.employeeRepository.findOne(example).isPresent()
-				? ResultDto.failed(PgCrowd2Constants.MESSAGE_STRING_DUPLICATED)
+				? ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_DUPLICATED)
 				: ResultDto.successWithoutData();
 	}
 
 	@Override
 	public EmployeeDto getEmployeeById(final String id) {
 		final Employee employee = this.employeeRepository.findById(Long.parseLong(id)).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowd2Constants.MESSAGE_STRING_FATAL_ERROR);
+			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
 		final EmployeeRole employeeRole = this.employeeRoleRepository.findById(Long.parseLong(id))
 				.orElseGet(EmployeeRole::new);
 		final EmployeeDto employeeDto = new EmployeeDto();
 		SecondBeanUtils.copyNullableProperties(employee, employeeDto);
 		employeeDto.setId(employee.getId().toString());
-		employeeDto.setPassword(PgCrowd2Constants.DEFAULT_ROLE_NAME);
+		employeeDto.setPassword(PgCrowdConstants.DEFAULT_ROLE_NAME);
 		employeeDto.setDateOfBirth(this.formatter.format(employee.getDateOfBirth()));
 		employeeDto.setRoleId(employeeRole.getRoleId().toString());
 		return employeeDto;
@@ -103,13 +103,13 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	public Pagination<EmployeeDto> getEmployeesByKeyword(final Integer pageNum, final String keyword, final Long userId,
 			final String authChkFlag) {
 		final Specification<Employee> status = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("deleteFlg"), PgCrowd2Constants.LOGIC_DELETE_INITIAL);
+				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
 		if (Boolean.FALSE.equals(Boolean.valueOf(authChkFlag))) {
 			final Specification<Employee> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
 					.equal(root.get("id"), userId);
 			final Specification<Employee> specification = Specification.where(status).and(where1);
 			final Employee employee = this.employeeRepository.findOne(specification).orElseThrow(() -> {
-				throw new PgCrowdException(PgCrowd2Constants.MESSAGE_STRING_FATAL_ERROR);
+				throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
 			});
 			final EmployeeDto employeeDto = new EmployeeDto();
 			SecondBeanUtils.copyNullableProperties(employee, employeeDto);
@@ -117,9 +117,9 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 			employeeDto.setDateOfBirth(this.formatter.format(employee.getDateOfBirth()));
 			final List<EmployeeDto> employeeDtos = new ArrayList<>();
 			employeeDtos.add(employeeDto);
-			return Pagination.of(employeeDtos, employeeDtos.size(), pageNum, PgCrowd2Constants.DEFAULT_PAGE_SIZE);
+			return Pagination.of(employeeDtos, employeeDtos.size(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 		}
-		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowd2Constants.DEFAULT_PAGE_SIZE,
+		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowdConstants.DEFAULT_PAGE_SIZE,
 				Sort.by(Direction.ASC, "id"));
 		if (CommonProjectUtils.isEmpty(keyword)) {
 			final Specification<Employee> specification = Specification.where(status);
@@ -131,7 +131,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 				employeeDto.setDateOfBirth(this.formatter.format(item.getDateOfBirth()));
 				return employeeDto;
 			}).collect(Collectors.toList());
-			return Pagination.of(employeeDtos, pages.getTotalElements(), pageNum, PgCrowd2Constants.DEFAULT_PAGE_SIZE);
+			return Pagination.of(employeeDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 		}
 		final String searchStr = CommonProjectUtils.getDetailKeyword(keyword);
 		final Specification<Employee> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
@@ -150,7 +150,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 			employeeDto.setDateOfBirth(this.formatter.format(item.getDateOfBirth()));
 			return employeeDto;
 		}).collect(Collectors.toList());
-		return Pagination.of(employeeDtos, pages.getTotalElements(), pageNum, PgCrowd2Constants.DEFAULT_PAGE_SIZE);
+		return Pagination.of(employeeDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 	}
 
 	private String getRandomStr() {
@@ -178,7 +178,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
 		employee.setId(SnowflakeUtils.snowflakeId());
 		employee.setLoginAccount(this.getRandomStr());
-		employee.setDeleteFlg(PgCrowd2Constants.LOGIC_DELETE_INITIAL);
+		employee.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
 		employee.setCreatedTime(LocalDateTime.now());
 		employee.setDateOfBirth(LocalDate.parse(employeeDto.getDateOfBirth(), this.formatter));
 		this.employeeRepository.saveAndFlush(employee);
@@ -188,9 +188,9 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	@Override
 	public void remove(final Long userId) {
 		final Employee employee = this.employeeRepository.findById(userId).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowd2Constants.MESSAGE_STRING_PROHIBITED);
+			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
 		});
-		employee.setDeleteFlg(PgCrowd2Constants.LOGIC_DELETE_FLG);
+		employee.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_FLG);
 		this.employeeRepository.saveAndFlush(employee);
 		this.employeeRoleRepository.deleteById(userId);
 	}
@@ -200,7 +200,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		final Employee employee = new Employee();
 		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
 		employee.setId(SnowflakeUtils.snowflakeId());
-		employee.setDeleteFlg(PgCrowd2Constants.LOGIC_DELETE_INITIAL);
+		employee.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
 		employee.setPassword(this.passwordEncoder.encode(employeeDto.getPassword()));
 		employee.setCreatedTime(LocalDateTime.now());
 		employee.setDateOfBirth(LocalDate.parse(employeeDto.getDateOfBirth(), this.formatter));
@@ -218,7 +218,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	public ResultDto<String> update(final EmployeeDto employeeDto) {
 		final Employee employee = this.employeeRepository.findById(Long.parseLong(employeeDto.getId()))
 				.orElseThrow(() -> {
-					throw new PgCrowdException(PgCrowd2Constants.MESSAGE_STRING_FATAL_ERROR);
+					throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
 				});
 		final Employee originalEntity = new Employee();
 		SecondBeanUtils.copyNullableProperties(employee, originalEntity);
@@ -231,7 +231,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		employee.setDateOfBirth(LocalDate.parse(employeeDto.getDateOfBirth(), this.formatter));
 		if (originalEntity.equals(employee)
 				&& Objects.equals(employeeRole.getRoleId(), Long.parseLong(employeeDto.getRoleId()))) {
-			return ResultDto.failed(PgCrowd2Constants.MESSAGE_STRING_NOCHANGE);
+			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_NOCHANGE);
 		}
 		employeeRole.setRoleId(Long.parseLong(employeeDto.getRoleId()));
 		this.employeeRoleRepository.saveAndFlush(employeeRole);

@@ -23,8 +23,8 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-import jp.co.sony.ppogah.common.PgCrowd2Constants;
-import jp.co.sony.ppogah.common.PgCrowd2URLConstants;
+import jp.co.sony.ppogah.common.PgCrowdConstants;
+import jp.co.sony.ppogah.common.PgCrowdURLConstants;
 import jp.co.sony.ppogah.dto.EmployeeDto;
 import jp.co.sony.ppogah.dto.RoleDto;
 import jp.co.sony.ppogah.service.IEmployeeService;
@@ -43,7 +43,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@Namespace(PgCrowd2URLConstants.URL_EMPLOYEE_NAMESPACE)
+@Namespace(PgCrowdURLConstants.URL_EMPLOYEE_NAMESPACE)
 @Results({ @Result(name = SUCCESS, location = "/templates/admin-pages.ftl"),
 		@Result(name = ERROR, location = "/templates/system-error.ftl"),
 		@Result(name = NONE, type = "json", params = { "root", "responsedJsondata" }),
@@ -133,7 +133,7 @@ public class EmployeeHandler extends ActionSupport {
 	 * @return String
 	 */
 	@PreAuthorize("hasAuthority('employee%delete')")
-	@Action(PgCrowd2URLConstants.URL_INFO_DELETE)
+	@Action(PgCrowdURLConstants.URL_INFO_DELETE)
 	public String infoDelete() {
 		final String userId = ActionContext.getContext().getServletRequest().getParameter("userId");
 		this.iEmployeeService.remove(Long.parseLong(userId));
@@ -146,7 +146,7 @@ public class EmployeeHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
-	@Action(PgCrowd2URLConstants.URL_INFO_RESTORE)
+	@Action(PgCrowdURLConstants.URL_INFO_RESTORE)
 	public String infoRestore() {
 		final String editId = ActionContext.getContext().getServletRequest().getParameter("editId");
 		final EmployeeDto employeeDto2 = this.iEmployeeService.getEmployeeById(editId);
@@ -160,7 +160,7 @@ public class EmployeeHandler extends ActionSupport {
 	 * @return String
 	 */
 	@PreAuthorize("hasAuthority('employee%edition')")
-	@Action(value = PgCrowd2URLConstants.URL_INFO_INSERT, interceptorRefs = { @InterceptorRef("json") })
+	@Action(value = PgCrowdURLConstants.URL_INFO_INSERT, interceptorRefs = { @InterceptorRef("json") })
 	public String infoSave() {
 		final EmployeeDto employeeDto2 = this.getEmployeeDto();
 		this.iEmployeeService.save(employeeDto2);
@@ -174,7 +174,7 @@ public class EmployeeHandler extends ActionSupport {
 	 * @return String
 	 */
 	@PreAuthorize("hasAuthority('employee%edition')")
-	@Action(value = PgCrowd2URLConstants.URL_INFO_UPDATE, interceptorRefs = { @InterceptorRef("json") })
+	@Action(value = PgCrowdURLConstants.URL_INFO_UPDATE, interceptorRefs = { @InterceptorRef("json") })
 	public String infoUpdate() {
 		final EmployeeDto employeeDto2 = this.getEmployeeDto();
 		final ResultDto<String> updateInfo = this.iEmployeeService.update(employeeDto2);
@@ -187,7 +187,7 @@ public class EmployeeHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
-	@Action(PgCrowd2URLConstants.URL_TO_LOGIN)
+	@Action(PgCrowdURLConstants.URL_TO_LOGIN)
 	public String initial() {
 		return LOGIN;
 	}
@@ -198,7 +198,7 @@ public class EmployeeHandler extends ActionSupport {
 	 * @return String
 	 */
 	@PreAuthorize("hasAuthority('employee%retrieve')")
-	@Action(PgCrowd2URLConstants.URL_PAGINATION)
+	@Action(PgCrowdURLConstants.URL_PAGINATION)
 	public String pagination() {
 		final HttpServletRequest servletRequest = ActionContext.getContext().getServletRequest();
 		final String pageNum = servletRequest.getParameter("pageNum");
@@ -217,11 +217,11 @@ public class EmployeeHandler extends ActionSupport {
 	 * @return String
 	 */
 	@PreAuthorize("hasAuthority('employee%edition')")
-	@Action(value = PgCrowd2URLConstants.URL_TO_ADDITION, results = {
+	@Action(value = PgCrowdURLConstants.URL_TO_ADDITION, results = {
 			@Result(name = SUCCESS, location = "/templates/admin-addinfo.ftl") })
 	public String toAddition() {
 		final List<RoleDto> roleDtos = this.iRoleService.getRolesByEmployeeId(null);
-		ActionContext.getContext().put(PgCrowd2Constants.ATTRNAME_EMPLOYEE_ROLES, roleDtos);
+		ActionContext.getContext().put(PgCrowdConstants.ATTRNAME_EMPLOYEE_ROLES, roleDtos);
 		return SUCCESS;
 	}
 
@@ -231,7 +231,7 @@ public class EmployeeHandler extends ActionSupport {
 	 * @return String
 	 */
 	@PreAuthorize("hasAuthority('employee%retrieve')")
-	@Action(value = PgCrowd2URLConstants.URL_TO_EDITION, results = {
+	@Action(value = PgCrowdURLConstants.URL_TO_EDITION, results = {
 			@Result(name = SUCCESS, location = "/templates/admin-editinfo.ftl") })
 	public String toEdition() {
 		final HttpServletRequest servletRequest = ActionContext.getContext().getServletRequest();
@@ -247,13 +247,13 @@ public class EmployeeHandler extends ActionSupport {
 			final RoleDto roleDto = this.iRoleService.getRoleById(Long.parseLong(employeeDto2.getRoleId()));
 			final List<RoleDto> defaultRoleDtos = new ArrayList<>();
 			defaultRoleDtos.add(roleDto);
-			actionContext.put(PgCrowd2Constants.ATTRNAME_EMPLOYEE_ROLES, defaultRoleDtos);
+			actionContext.put(PgCrowdConstants.ATTRNAME_EMPLOYEE_ROLES, defaultRoleDtos);
 		} else {
 			final List<RoleDto> roleDtos = this.iRoleService.getRolesByEmployeeId(editId);
-			actionContext.put(PgCrowd2Constants.ATTRNAME_EMPLOYEE_ROLES, roleDtos);
+			actionContext.put(PgCrowdConstants.ATTRNAME_EMPLOYEE_ROLES, roleDtos);
 		}
-		actionContext.put(PgCrowd2Constants.ATTRNAME_EDITED_INFO, employeeDto2);
-		actionContext.put(PgCrowd2Constants.ATTRNAME_PAGE_NUMBER, pageNum);
+		actionContext.put(PgCrowdConstants.ATTRNAME_EDITED_INFO, employeeDto2);
+		actionContext.put(PgCrowdConstants.ATTRNAME_PAGE_NUMBER, pageNum);
 		return SUCCESS;
 	}
 
@@ -263,13 +263,13 @@ public class EmployeeHandler extends ActionSupport {
 	 * @return String
 	 */
 	@PreAuthorize("hasAuthority('employee%retrieve')")
-	@Action(PgCrowd2URLConstants.URL_TO_PAGES)
+	@Action(PgCrowdURLConstants.URL_TO_PAGES)
 	public String toPages() {
 		String pageNum = ActionContext.getContext().getServletRequest().getParameter("pageNum");
 		if (!CommonProjectUtils.isDigital(pageNum)) {
 			pageNum = String.valueOf(1L);
 		}
-		ActionContext.getContext().put(PgCrowd2Constants.ATTRNAME_PAGE_NUMBER, pageNum);
+		ActionContext.getContext().put(PgCrowdConstants.ATTRNAME_PAGE_NUMBER, pageNum);
 		return SUCCESS;
 	}
 
@@ -278,7 +278,7 @@ public class EmployeeHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
-	@Action(PgCrowd2URLConstants.URL_REGISTER)
+	@Action(PgCrowdURLConstants.URL_REGISTER)
 	public String toroku() {
 		final HttpServletRequest servletRequest = ActionContext.getContext().getServletRequest();
 		final String inputEmail = servletRequest.getParameter("email");
@@ -291,9 +291,9 @@ public class EmployeeHandler extends ActionSupport {
 		final Boolean toroku = this.iEmployeeService.register(employeeDto2);
 		final ActionContext actionContext = ActionContext.getContext();
 		if (Boolean.FALSE.equals(toroku)) {
-			actionContext.put("torokuMsg", PgCrowd2Constants.MESSAGE_TOROKU_FAILURE);
+			actionContext.put("torokuMsg", PgCrowdConstants.MESSAGE_TOROKU_FAILURE);
 		} else {
-			actionContext.put("torokuMsg", PgCrowd2Constants.MESSAGE_TOROKU_SUCCESS);
+			actionContext.put("torokuMsg", PgCrowdConstants.MESSAGE_TOROKU_SUCCESS);
 		}
 		actionContext.put("registeredEmail", inputEmail);
 		return LOGIN;
@@ -304,7 +304,7 @@ public class EmployeeHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
-	@Action(value = PgCrowd2URLConstants.URL_TO_REGISTER, results = {
+	@Action(value = PgCrowdURLConstants.URL_TO_REGISTER, results = {
 			@Result(name = SUCCESS, location = "/templates/admin-toroku.ftl") })
 	public String toSignUp() {
 		return SUCCESS;

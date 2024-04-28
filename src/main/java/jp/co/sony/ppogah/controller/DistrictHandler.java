@@ -19,7 +19,7 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-import jp.co.sony.ppogah.common.PgCrowd2URLConstants;
+import jp.co.sony.ppogah.common.PgCrowdURLConstants;
 import jp.co.sony.ppogah.dto.DistrictDto;
 import jp.co.sony.ppogah.service.IDistrictService;
 import jp.co.sony.ppogah.utils.Pagination;
@@ -35,7 +35,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@Namespace(PgCrowd2URLConstants.URL_DISTRICT_NAMESPACE)
+@Namespace(PgCrowdURLConstants.URL_DISTRICT_NAMESPACE)
 @Results({ @Result(name = SUCCESS, location = "/templates/district-pages.ftl"),
 		@Result(name = ERROR, location = "/templates/system-error.ftl"),
 		@Result(name = NONE, type = "json", params = { "root", "responsedJsondata" }),
@@ -103,7 +103,7 @@ public class DistrictHandler extends ActionSupport {
 	 * @return String
 	 */
 	@PreAuthorize("hasAuthority('district%edition')")
-	@Action(PgCrowd2URLConstants.URL_CHECK_EDITION)
+	@Action(PgCrowdURLConstants.URL_CHECK_EDITION)
 	public String checkEdition() {
 		this.setResponsedJsondata(ResultDto.successWithoutData());
 		return NONE;
@@ -131,7 +131,7 @@ public class DistrictHandler extends ActionSupport {
 	 * @return String
 	 */
 	@PreAuthorize("hasAuthority('district%edition')")
-	@Action(value = PgCrowd2URLConstants.URL_INFO_UPDATE, interceptorRefs = { @InterceptorRef("json") })
+	@Action(value = PgCrowdURLConstants.URL_INFO_UPDATE, interceptorRefs = { @InterceptorRef("json") })
 	public String infoUpdate() {
 		final DistrictDto districtDto2 = this.getDistrictDto();
 		final ResultDto<String> update = this.iDistrictService.update(districtDto2);
@@ -145,7 +145,7 @@ public class DistrictHandler extends ActionSupport {
 	 * @return String
 	 */
 	@PreAuthorize("hasAuthority('district%retrieve')")
-	@Action(PgCrowd2URLConstants.URL_PAGINATION)
+	@Action(PgCrowdURLConstants.URL_PAGINATION)
 	public String pagination() {
 		final String pageNum = ActionContext.getContext().getServletRequest().getParameter("pageNum");
 		final String keyword = ActionContext.getContext().getServletRequest().getParameter("keyword");

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
  * @since 1.00beta
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class PgCrowd2URLConstants {
+public final class PgCrowdURLConstants {
 
 	public static final String URL_CATEGORY_NAMESPACE = "/pgcrowd/category";
 

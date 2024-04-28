@@ -23,7 +23,7 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-import jp.co.sony.ppogah.common.PgCrowd2URLConstants;
+import jp.co.sony.ppogah.common.PgCrowdURLConstants;
 import jp.co.sony.ppogah.dto.AuthorityDto;
 import jp.co.sony.ppogah.dto.RoleDto;
 import jp.co.sony.ppogah.service.IRoleService;
@@ -40,7 +40,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@Namespace(PgCrowd2URLConstants.URL_ROLE_NAMESPACE)
+@Namespace(PgCrowdURLConstants.URL_ROLE_NAMESPACE)
 @Results({ @Result(name = SUCCESS, location = "/templates/role-pages.ftl"),
 		@Result(name = ERROR, location = "/templates/system-error.ftl"),
 		@Result(name = NONE, type = "json", params = { "root", "responsedJsondata" }),
@@ -92,7 +92,7 @@ public class RoleHandler extends ActionSupport {
 	 *
 	 * @return String
 	 */
-	@Action(PgCrowd2URLConstants.URL_CHECK_NAME)
+	@Action(PgCrowdURLConstants.URL_CHECK_NAME)
 	public String checkDuplicated() {
 		final String roleName = ActionContext.getContext().getServletRequest().getParameter("roleName");
 		final ResultDto<String> checkDuplicated = this.iRoleService.checkDuplicated(roleName);
@@ -106,7 +106,7 @@ public class RoleHandler extends ActionSupport {
 	 * @return String
 	 */
 	@PreAuthorize("hasAuthority('role%edition')")
-	@Action(PgCrowd2URLConstants.URL_CHECK_EDITION)
+	@Action(PgCrowdURLConstants.URL_CHECK_EDITION)
 	public String checkEdition() {
 		this.setResponsedJsondata(ResultDto.successWithoutData());
 		return NONE;
@@ -118,7 +118,7 @@ public class RoleHandler extends ActionSupport {
 	 * @return String
 	 */
 	@PreAuthorize("hasAuthority('role%edition')")
-	@Action(value = PgCrowd2URLConstants.URL_DO_ASSIGNMENT, interceptorRefs = { @InterceptorRef("json") })
+	@Action(value = PgCrowdURLConstants.URL_DO_ASSIGNMENT, interceptorRefs = { @InterceptorRef("json") })
 	public String doAssignment() {
 		final List<String> authIds2 = this.getAuthIds();
 		final List<String> roleIds2 = this.getRoleIds();
@@ -136,7 +136,7 @@ public class RoleHandler extends ActionSupport {
 	 * @return String
 	 */
 	@PreAuthorize("hasAuthority('role%edition')")
-	@Action(PgCrowd2URLConstants.URL_AUTH_ASSIGNED)
+	@Action(PgCrowdURLConstants.URL_AUTH_ASSIGNED)
 	public String getAssignedAuth() {
 		final String fuyoId = ActionContext.getContext().getServletRequest().getParameter("fuyoId");
 		final List<String> authIdsById = this.iRoleService.getAuthIdsById(Long.parseLong(fuyoId));
@@ -150,7 +150,7 @@ public class RoleHandler extends ActionSupport {
 	 * @return String
 	 */
 	@PreAuthorize("hasAuthority('role%edition')")
-	@Action(PgCrowd2URLConstants.URL_AUTH_LIST)
+	@Action(PgCrowdURLConstants.URL_AUTH_LIST)
 	public String getAuthlist() {
 		final List<AuthorityDto> authList = this.iRoleService.getAuthList();
 		this.setResponsedJsondata(ResultDto.successWithData(authList));
@@ -174,7 +174,7 @@ public class RoleHandler extends ActionSupport {
 	 * @return String
 	 */
 	@PreAuthorize("hasAuthority('role%delete')")
-	@Action(PgCrowd2URLConstants.URL_INFO_DELETE)
+	@Action(PgCrowdURLConstants.URL_INFO_DELETE)
 	public String infoDelete() {
 		final String roleId = ActionContext.getContext().getServletRequest().getParameter("roleId");
 		final ResultDto<String> remove = this.iRoleService.remove(Long.parseLong(roleId));
@@ -188,7 +188,7 @@ public class RoleHandler extends ActionSupport {
 	 * @return String
 	 */
 	@PreAuthorize("hasAuthority('role%edition')")
-	@Action(value = PgCrowd2URLConstants.URL_INFO_INSERT, interceptorRefs = { @InterceptorRef("json") })
+	@Action(value = PgCrowdURLConstants.URL_INFO_INSERT, interceptorRefs = { @InterceptorRef("json") })
 	public String infoSave() {
 		final RoleDto roleDto2 = this.getRoleDto();
 		this.iRoleService.save(roleDto2);
@@ -202,7 +202,7 @@ public class RoleHandler extends ActionSupport {
 	 * @return String
 	 */
 	@PreAuthorize("hasAuthority('role%edition')")
-	@Action(value = PgCrowd2URLConstants.URL_INFO_UPDATE, interceptorRefs = { @InterceptorRef("json") })
+	@Action(value = PgCrowdURLConstants.URL_INFO_UPDATE, interceptorRefs = { @InterceptorRef("json") })
 	public String infoUpdate() {
 		final RoleDto roleDto2 = this.getRoleDto();
 		final ResultDto<String> update = this.iRoleService.update(roleDto2);
@@ -216,7 +216,7 @@ public class RoleHandler extends ActionSupport {
 	 * @return String
 	 */
 	@PreAuthorize("hasAuthority('role%retrieve')")
-	@Action(PgCrowd2URLConstants.URL_PAGINATION)
+	@Action(PgCrowdURLConstants.URL_PAGINATION)
 	public String pagination() {
 		final String pageNum = ActionContext.getContext().getServletRequest().getParameter("pageNum");
 		final String keyword = ActionContext.getContext().getServletRequest().getParameter("keyword");
@@ -231,7 +231,7 @@ public class RoleHandler extends ActionSupport {
 	 * @return String
 	 */
 	@PreAuthorize("hasAuthority('role%retrieve')")
-	@Action(PgCrowd2URLConstants.URL_TO_PAGES)
+	@Action(PgCrowdURLConstants.URL_TO_PAGES)
 	public String toPages() {
 		return SUCCESS;
 	}
