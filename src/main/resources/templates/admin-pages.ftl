@@ -28,7 +28,7 @@
 							</form>
 							<div class="col-md-2 offset-md-5">
 								<button class="btn btn-success my-2 my-sm-0" id="addInfoBtn">
-									<i class="fa fa-id-card-o"></i> 社員情報追加
+									<i class="fa fa-id-card"></i> 社員情報追加
 								</button>
 							</div>
 						</div>

@@ -25,58 +25,52 @@
 					</div>
 					<div class="card-body">
 						<form role="form" id="inputForm">
-							<div class="form-group row">
-								<label for="loginAccountInput"
-									class="col-sm-3 col-form-label text-end">ログインアカウント</label>
-								<div class="col-sm-7" style="height: 60px;">
-									<input type="text" class="form-control" id="loginAccountInput"
-										placeholder="ログインアカウントを入力してください"> <span
-										class="form-text" style="font-size: 12px;"></span>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="usernameInput"
-									class="col-sm-3 col-form-label text-end">ユーザ名</label>
-								<div class="col-sm-7" style="height: 60px;">
-									<input type="text" class="form-control" id="usernameInput"
-										placeholder="ユーザ名を入力してください"> <span class="form-text"
-										style="font-size: 12px;"></span>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="passwordInput"
-									class="col-sm-3 col-form-label text-end">パスワード</label>
-								<div class="col-sm-7" style="height: 60px;">
-									<input type="text" class="form-control" id="passwordInput"
-										placeholder="パスワードを入力してください"> <span class="form-text"
-										style="font-size: 12px;"></span>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="emailInput" class="col-sm-3 col-form-label text-end">メールアドレス</label>
-								<div class="col-sm-7" style="height: 60px;">
-									<input type="email" class="form-control" id="emailInput"
-										placeholder="メールアドレスを入力してください"> <span
-										class="form-text" style="font-size: 12px;"></span>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="dateInput" class="col-sm-3 col-form-label text-end">生年月日</label>
-								<div class="col-sm-7" style="height: 60px;">
-									<input type="date" class="form-control" id="dateInput">
-									<span class="form-text" style="font-size: 12px;"></span>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="roleInput" class="col-sm-3 col-form-label text-end">役割</label>
-								<div class="col-sm-7" style="height: 45px;">
-									<select id="roleInput" class="form-select">
-										<#list employeeRoles as employeeRole>
+						    <div class="form-group row">
+						        <label for="loginAccountInput" class="col-sm-3 col-form-label text-right">ログインアカウント</label>
+						        <div class="col-sm-7" style="height: 6vh;">
+						            <input type="text" class="form-control" id="loginAccountInput" placeholder="ログインアカウントを入力してください">
+						            <span class="text-muted" style="font-size: 12px;"></span>
+						        </div>
+						    </div>
+						    <div class="form-group row">
+						        <label for="usernameInput" class="col-sm-3 col-form-label text-right">ユーザ名</label>
+						        <div class="col-sm-7" style="height: 6vh;">
+						            <input type="text" class="form-control" id="usernameInput" placeholder="ユーザ名を入力してください">
+						            <span class="text-muted" style="font-size: 12px;"></span>
+						        </div>
+						    </div>
+						    <div class="form-group row">
+						        <label for="passwordInput" class="col-sm-3 col-form-label text-right">パスワード</label>
+						        <div class="col-sm-7" style="height: 6vh;">
+						            <input type="text" class="form-control" id="passwordInput" placeholder="パスワードを入力してください">
+						            <span class="text-muted" style="font-size: 12px;"></span>
+						        </div>
+						    </div>
+						    <div class="form-group row">
+						        <label for="emailInput" class="col-sm-3 col-form-label text-right">メールアドレス</label>
+						        <div class="col-sm-7" style="height: 6vh;">
+						            <input type="email" class="form-control" id="emailInput" placeholder="メールアドレスを入力してください">
+						            <span class="text-muted" style="font-size: 12px;"></span>
+						        </div>
+						    </div>
+						    <div class="form-group row">
+						        <label for="dateInput" class="col-sm-3 col-form-label text-right">生年月日</label>
+						        <div class="col-sm-7" style="height: 6vh;">
+						            <input type="date" class="form-control" id="dateInput">
+						            <span class="text-muted" style="font-size: 12px;"></span>
+						        </div>
+						    </div>
+						    <div class="form-group row">
+						        <label for="roleInput" class="col-sm-3 col-form-label text-right">役割</label>
+						        <div class="col-sm-7" style="height: 6vh;">
+						            <select id="roleInput" class="custom-select">
+						                <#list employeeRoles as employeeRole>
 											<option value="${employeeRole.id}">${employeeRole.name}</option>
 										</#list>
-									</select> <span class="form-text" style="font-size: 12px;"></span>
-								</div>
-							</div>
+						            </select>
+						            <span class="text-muted" style="font-size: 12px;"></span>
+						        </div>
+						    </div>
 						</form>
 					</div>
 					<div class="card-footer">

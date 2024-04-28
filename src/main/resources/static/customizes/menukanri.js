@@ -14,7 +14,7 @@ $(document).ready(function() {
 				{
 					id: "employeeQueryTree",
 					text: "社員情報一覧",
-					icon: "fa fa-id-card-o"
+					icon: "fa fa-id-card"
 				}
 			]
 		},

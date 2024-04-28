@@ -1,5 +1,9 @@
 let pageNum = $("#pageNumContainer").val();
 let totalRecords;
+$(document).ready(function() {
+	$("#toAdmin").css('color', '#005300');
+	$("#toAdmin").addClass('animate__animated animate__flipInY');
+});
 $("#loginAccountInput").change(function() {
 	$.ajax({
 		url: '/pgcrowd/employee/check',
