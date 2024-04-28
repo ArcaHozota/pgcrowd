@@ -44,19 +44,7 @@ function buildTableBody(result) {
 	});
 }
 $("#addRoleBtn").on('click', function() {
-	let ajaxResult = $.ajax({
-		url: '/pgcrowd/role/checkEdition',
-		type: 'GET',
-		async: false
-	});
-	if (ajaxResult.status !== 200) {
-		layer.msg(ajaxResult.responseJSON.message);
-		return;
-	}
-	formReset("#roleAddModal form");
-	$('#roleAddModal').modal({
-		backdrop: 'static'
-	});
+	normalAddbtnFunction('/pgcrowd/role/checkEdition', "#roleAddModal");
 });
 $("#nameInput").on('change', function() {
 	$.ajax({
@@ -122,31 +110,9 @@ $("#roleInfoChangeBtn").on('click', function() {
 	}
 });
 $("#tableBody").on('click', '.delete-btn', function() {
-	let ajaxResult = $.ajax({
-		url: '/pgcrowd/role/infoDelete?roleId=0L',
-		type: 'GET',
-		async: false
-	});
-	if (ajaxResult.status !== 200) {
-		layer.msg(ajaxResult.responseJSON.message);
-		return;
-	}
-	let roleName = $(this).parents("tr").find("td:eq(0)").text().trim();
 	let roleId = $(this).attr("deleteId");
-	swal.fire({
-		title: 'メッセージ',
-		text: 'この「' + roleName + '」という役割情報を削除する、よろしいでしょうか。',
-		icon: 'question',
-		showCloseButton: true,
-		confirmButtonText: 'はい',
-		confirmButtonColor: '#7F0020'
-	}).then((result) => {
-		if (result.isConfirmed) {
-			pgcrowdAjaxModify('/pgcrowd/role/infoDelete?roleId=' + roleId, 'DELETE', null, normalDeleteSuccessFunction);
-		} else {
-			$(this).close();
-		}
-	});
+	let roleName = $(this).parents("tr").find("td:eq(0)").text().trim();
+	normalDeletebtnFunction('/pgcrowd/role/infoDelete?roleId=', 'この「' + roleName + '」という役割情報を削除する、よろしいでしょうか。', roleId);
 });
 $("#tableBody").on('click', '.fuyo-btn', function() {
 	let ajaxReturn = $.ajax({

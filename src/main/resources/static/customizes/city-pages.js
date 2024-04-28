@@ -49,20 +49,7 @@ function buildTableBody(result) {
 	});
 }
 $("#addCityBtn").on('click', function() {
-	let ajaxResult = $.ajax({
-		url: '/pgcrowd/city/checkEdition',
-		type: 'GET',
-		async: false
-	});
-	if (ajaxResult.status !== 200) {
-		layer.msg(ajaxResult.responseJSON.message);
-		return;
-	}
-	formReset("#cityAddModal form");
-	getDistricts("#districtInput", null);
-	$("#cityAddModal").modal({
-		backdrop: 'static'
-	});
+	normalAddbtnFunction('/pgcrowd/city/checkEdition', "#cityAddModal");
 });
 $("#nameInput").on('change', function() {
 	checkCityName(this, "#districtInput");
@@ -157,31 +144,9 @@ $("#cityInfoChangeBtn").on('click', function() {
 	}
 });
 $("#tableBody").on('click', '.delete-btn', function() {
-	let ajaxResult = $.ajax({
-		url: '/pgcrowd/city/checkEdition',
-		type: 'GET',
-		async: false
-	});
-	if (ajaxResult.status !== 200) {
-		layer.msg(ajaxResult.responseJSON.message);
-		return;
-	}
-	let cityName = $(this).parents("tr").find("td:eq(0)").text().trim();
 	let cityId = $(this).attr("deleteId");
-	swal.fire({
-		title: 'メッセージ',
-		text: 'この「' + cityName + '」という都市の情報を削除する、よろしいでしょうか。',
-		icon: 'question',
-		showCloseButton: true,
-		confirmButtonText: 'はい',
-		confirmButtonColor: '#7F0020'
-	}).then((result) => {
-		if (result.isConfirmed) {
-			pgcrowdAjaxModify('/pgcrowd/city/infoDelete?cityId=' + cityId, 'DELETE', null, normalDeleteSuccessFunction);
-		} else {
-			$(this).close();
-		}
-	});
+	let cityName = $(this).parents("tr").find("td:eq(0)").text().trim();
+	normalDeletebtnFunction('/pgcrowd/city/infoDelete?cityId=', 'この「' + cityName + '」という都市の情報を削除する、よろしいでしょうか。', cityId);
 });
 $("#tableBody").on('click', '.city-flag-td', function() {
 	let nameVal = $(this).parent().find("td:eq(0)").text();

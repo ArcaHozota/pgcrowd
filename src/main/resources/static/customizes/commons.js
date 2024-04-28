@@ -273,3 +273,44 @@ function normalDeleteSuccessFunction(result) {
 		layer.msg(result.message);
 	}
 }
+function normalAddbtnFunction(checkUrl, modalName) {
+	let ajaxResult = $.ajax({
+		url: checkUrl,
+		type: 'GET',
+		async: false
+	});
+	if (ajaxResult.status !== 200) {
+		layer.msg(ajaxResult.responseJSON.message);
+		return;
+	}
+	let modalForm = $(modalName).find('form');
+	formReset(modalForm);
+	$(modalName).modal({
+		backdrop: 'static'
+	});
+}
+function normalDeletebtnFunction(url, message, deleteId) {
+	let ajaxResult = $.ajax({
+		url: url + '0L',
+		type: 'GET',
+		async: false
+	});
+	if (ajaxResult.status !== 200) {
+		layer.msg(ajaxResult.responseJSON.message);
+		return;
+	}
+	swal.fire({
+		title: 'メッセージ',
+		text: message,
+		icon: 'question',
+		showCloseButton: true,
+		confirmButtonText: 'はい',
+		confirmButtonColor: '#7F0020'
+	}).then((result) => {
+		if (result.isConfirmed) {
+			pgcrowdAjaxModify(url + deleteId, 'DELETE', null, normalDeleteSuccessFunction);
+		} else {
+			$(this).close();
+		}
+	});
+}

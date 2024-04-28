@@ -51,31 +51,9 @@ function buildTableBody(result) {
 	});
 }
 $("#tableBody").on('click', '.delete-btn', function() {
-	let ajaxResult = $.ajax({
-		url: '/pgcrowd/employee/infoDelete?userId=0L',
-		type: 'GET',
-		async: false
-	});
-	if (ajaxResult.status !== 200) {
-		layer.msg(ajaxResult.responseJSON.message);
-		return;
-	}
-	let userName = $(this).parents("tr").find("td:eq(0)").text().trim();
 	let userId = $(this).attr("deleteId");
-	swal.fire({
-		title: 'メッセージ',
-		text: 'この「' + userName + '」という社員の情報を削除するとよろしいでしょうか。',
-		icon: 'question',
-		showCloseButton: true,
-		confirmButtonText: 'はい',
-		confirmButtonColor: '#7F0020'
-	}).then((result) => {
-		if (result.isConfirmed) {
-			pgcrowdAjaxModify('/pgcrowd/employee/infoDelete?userId=' + userId, 'DELETE', null, normalDeleteSuccessFunction);
-		} else {
-			$(this).close();
-		}
-	});
+	let userName = $(this).parents("tr").find("td:eq(0)").text().trim();
+	normalDeletebtnFunction('/pgcrowd/employee/infoDelete?userId=', 'この「' + userName + '」という社員の情報を削除するとよろしいでしょうか。', userId);
 });
 $("#addInfoBtn").on('click', function(e) {
 	e.preventDefault();
