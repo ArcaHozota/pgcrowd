@@ -69,8 +69,7 @@
 	                    <div class="form-group row">
 	                        <label for="shutoEdit" class="col-sm-3 col-form-label text-right">州都</label>
 	                        <div class="col-sm-9" style="height: 5.7vh;">
-	                            <input type="text" class="form-control" id="shutoEdit" placeholder="州都"> 
-	                            <span class="text-muted" style="font-size: 10px;"></span>
+	                            <p type="text" class="form-control" id="shutoEdit"></p>
 	                        </div>
 	                    </div>
 	                    <div class="form-group row">
@@ -83,8 +82,7 @@
 	                    <div class="form-group row">
 	                        <label for="populationEdit" class="col-sm-3 col-form-label text-right">人口数量</label>
 	                        <div class="col-sm-9" style="height: 5.7vh;">
-	                            <input type="text" class="form-control" id="populationEdit" placeholder="人口数量"> 
-	                            <span class="text-muted" style="font-size: 10px;"></span>
+	                            <p type="text" class="form-control" id="populationEdit"></p>
 	                        </div>
 	                    </div>
 	                </form>
