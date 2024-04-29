@@ -88,6 +88,17 @@ $("#editInfoBtn").on('click', function() {
 	});
 	normalPgcrowdSaveUpdateFunction(inputArrays, "#editForm", '/pgcrowd/employee/infoUpdate', 'PUT', putData, employeePutSuccessFunction);
 });
+$("#roleEdit").on('change', function() {
+	let ajaxResult = $.ajax({
+		url: '/pgcrowd/role/infoDelete?roleId=0L',
+		type: 'GET',
+		async: false
+	});
+	if (ajaxResult.status !== 200) {
+		showValidationMsg(this, "error", ajaxResult.responseJSON.message);
+		return;
+	}
+});
 function employeePostSuccessFunction() {
 	window.location.replace('/pgcrowd/employee/toPages?pageNum=' + totalRecords);
 }
