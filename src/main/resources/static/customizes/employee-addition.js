@@ -4,7 +4,7 @@ $(document).ready(function() {
 	$("#toAdmin").css('color', '#005300');
 	$("#toAdmin").addClass('animate__animated animate__flipInY');
 });
-$("#loginAccountInput").change(function() {
+$("#loginAccountInput").on("change", function() {
 	$.ajax({
 		url: '/pgcrowd/employee/check',
 		data: 'loginAcct=' + this.value,
@@ -19,7 +19,7 @@ $("#loginAccountInput").change(function() {
 		}
 	});
 });
-$("#passwordInput").change(function() {
+$("#passwordInput").on("change", function() {
 	let inputPassword = this.value;
 	let regularPassword = /^[a-zA-Z\d]{8,23}$/;
 	if (!regularPassword.test(inputPassword)) {
@@ -28,7 +28,7 @@ $("#passwordInput").change(function() {
 		showValidationMsg(this, "success", "√");
 	}
 });
-$("#emailInput").change(function() {
+$("#emailInput").on("change", function() {
 	let inputEmail = this.value;
 	let regularEmail = /^^[a-zA-Z\d._%+-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/;
 	if (!regularEmail.test(inputEmail)) {
@@ -49,7 +49,7 @@ $("#saveInfoBtn").on('click', function() {
 	});
 	normalPgcrowdSaveUpdateFunction(inputArrays, "#inputForm", '/pgcrowd/employee/infoSave', 'POST', postData, employeePostSuccessFunction);
 });
-$("#passwordEdit").change(function() {
+$("#passwordEdit").on("change", function() {
 	let editPassword = this.value;
 	let regularPassword = /^[a-zA-Z\d]{8,23}$/;
 	if (!regularPassword.test(editPassword)) {
@@ -58,7 +58,7 @@ $("#passwordEdit").change(function() {
 		showValidationMsg(this, "success", "√");
 	}
 });
-$("#emailEdit").change(function() {
+$("#emailEdit").on("change", function() {
 	let editEmail = this.value;
 	let regularEmail = /^^[a-zA-Z\d._%+-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/;
 	if (!regularEmail.test(editEmail)) {
