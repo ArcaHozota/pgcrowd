@@ -323,6 +323,34 @@ public final class CommonProjectUtils {
 	}
 
 	/**
+	 * 二つのロング数はイコールすることを判断する
+	 *
+	 * @param long1 ロング1
+	 * @param long2 ロング2
+	 * @return true: イコール, false: イコールしない
+	 */
+	public static boolean isEqual(@Nullable final Long long1, @Nullable final Long long2) {
+		if (((long1 == null) && (long2 == null)) || (long1.longValue() == long2.longValue())) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * 二つのオブジェクトはイコールすることを判断する
+	 *
+	 * @param obj1 オブジェクト1
+	 * @param obj2 オブジェクト2
+	 * @return true: イコール, false: イコールしない
+	 */
+	public static boolean isEqual(@Nullable final Object obj1, @Nullable final Object obj2) {
+		if ((obj1 != null) && obj1.equals(obj2)) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * 二つのストリングはイコールすることを判断する
 	 *
 	 * @param str1 ストリング1
@@ -347,6 +375,28 @@ public final class CommonProjectUtils {
 	 */
 	public static boolean isNotEmpty(@Nullable final String str) {
 		return !CommonProjectUtils.isEmpty(str);
+	}
+
+	/**
+	 * 二つのロング数はイコールしないことを判断する
+	 *
+	 * @param long1 ロング1
+	 * @param long2 ロング2
+	 * @return true: イコールしない, false: イコール
+	 */
+	public static boolean isNotEqual(@Nullable final Long long1, @Nullable final Long long2) {
+		return !CommonProjectUtils.isEqual(long1, long2);
+	}
+
+	/**
+	 * 二つのオブジェクトはイコールしないことを判断する
+	 *
+	 * @param obj1 オブジェクト1
+	 * @param obj2 オブジェクト2
+	 * @return true: イコールしない, false: イコール
+	 */
+	public static boolean isNotEqual(@Nullable final Object obj1, @Nullable final Object obj2) {
+		return !CommonProjectUtils.isEqual(obj1, obj2);
 	}
 
 	/**

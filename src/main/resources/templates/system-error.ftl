@@ -2,6 +2,11 @@
 <html lang="ja-JP">
 <#include "include-header.ftl">
 <body>
+	<style>
+		.bg-dark {
+			background-color: #000000 !important;
+		}
+	</style>
 	<div>
 		<nav class="navbar navbar-dark bg-dark fixed-top" role="navigation">
 			<div class="container-fluid">
