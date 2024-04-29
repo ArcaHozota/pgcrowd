@@ -90,7 +90,7 @@ $("#editInfoBtn").on('click', function() {
 });
 $("#roleEdit").on('change', function() {
 	let ajaxResult = $.ajax({
-		url: '/pgcrowd/role/infoDelete?roleId=0L',
+		url: '/pgcrowd/employee/infoDelete?userId=0L',
 		type: 'GET',
 		async: false
 	});

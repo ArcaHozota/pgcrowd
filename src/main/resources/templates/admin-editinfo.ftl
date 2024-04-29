@@ -72,6 +72,7 @@
 											<option value="${employeeRole.id}">${employeeRole.name}</option>
 										</#list>
 						            </select>
+						            <span class="text-muted" style="font-size: 10px;"></span>
 						        </div>
 						    </div>
 						</form>
