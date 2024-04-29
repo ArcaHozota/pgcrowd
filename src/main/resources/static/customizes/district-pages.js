@@ -72,25 +72,18 @@ $("#tableBody").on('click', '.edit-btn', function() {
 });
 $("#districtInfoChangeBtn").on('click', function() {
 	let inputArrays = ["#nameEdit", "#chihoEdit"];
-	let listArray = pgcrowdInputContextGet(inputArrays);
-	if (listArray.includes("")) {
-		pgcrowdNullInputboxDiscern(inputArrays);
-	} else if ($("#districtEditModal form").find('*').hasClass('is-invalid')) {
-		layer.msg('入力情報不正。');
-	} else {
-		let putData = JSON.stringify({
-			'id': this.value,
-			'name': $("#nameEdit").val().trim(),
-			'chiho': $("#chihoEdit").val().trim()
-		});
-		pgcrowdAjaxModify('/pgcrowd/district/infoUpdate', 'PUT', putData, putSuccessFunction);
-	}
+	let putData = JSON.stringify({
+		'id': this.value,
+		'name': $("#nameEdit").val().trim(),
+		'chiho': $("#chihoEdit").val().trim()
+	});
+	normalPgcrowdSaveUpdateFunction(inputArrays, "#districtEditModal form", '/pgcrowd/district/infoUpdate', 'PUT', putData, districtPutSuccessFunction);
 });
 $("#tableBody").on('click', '.district-flg-td', function() {
 	let nameVal = $(this).parent().find("td:eq(0)").text();
 	window.open('https://ja.wikipedia.org/wiki/' + nameVal);
 });
-function putSuccessFunction(result) {
+function districtPutSuccessFunction(result) {
 	if (result.status === 'SUCCESS') {
 		$("#districtEditModal").modal('hide');
 		layer.msg('更新済み');
