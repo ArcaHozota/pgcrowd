@@ -125,6 +125,10 @@ $("#restoreBtn").on('click', function() {
 			$("#passwordEdit").val(restoredInfo.password);
 			$("#emailEdit").val(restoredInfo.email);
 			$("#dateEdit").val(restoredInfo.dateOfBirth);
+			$.each(restoredInfo.roleDtos, (index, item) => {
+				let optionElement = $("<option></option>").attr('value', item.id).text(item.name);
+				optionElement.appendTo(element);
+			});
 		}
 	});
 });

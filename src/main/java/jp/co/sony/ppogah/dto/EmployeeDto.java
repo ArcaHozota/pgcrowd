@@ -1,6 +1,7 @@
 package jp.co.sony.ppogah.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 import lombok.Data;
 
@@ -49,4 +50,9 @@ public final class EmployeeDto implements Serializable {
 	 * 役割ID
 	 */
 	private String roleId;
+
+	/**
+	 * 役割リスト
+	 */
+	private List<RoleDto> roleDtos;
 }
