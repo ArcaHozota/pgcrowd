@@ -113,18 +113,5 @@ $("#resetBtn").on('click', function() {
 	formReset($("#inputForm"));
 });
 $("#restoreBtn").on('click', function() {
-	let editId = $("#editIdContainer").val();
 	formReset($("#editForm"));
-	$.ajax({
-		url: '/pgcrowd/employee/infoRestore',
-		data: 'editId=' + editId,
-		type: 'GET',
-		success: function(result) {
-			let restoredInfo = result.data;
-			$("#usernameEdit").val(restoredInfo.username);
-			$("#passwordEdit").val(restoredInfo.password);
-			$("#emailEdit").val(restoredInfo.email);
-			$("#dateEdit").val(restoredInfo.dateOfBirth);
-		}
-	});
 });
