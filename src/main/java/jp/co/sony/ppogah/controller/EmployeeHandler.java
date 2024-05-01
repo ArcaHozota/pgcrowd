@@ -142,19 +142,6 @@ public class EmployeeHandler extends ActionSupport {
 	}
 
 	/**
-	 * 情報をリセットする
-	 *
-	 * @return String
-	 */
-	@Action(PgCrowdURLConstants.URL_INFO_RESTORE)
-	public String infoRestore() {
-		final String editId = ActionContext.getContext().getServletRequest().getParameter("editId");
-		final EmployeeDto employeeDto2 = this.iEmployeeService.getEmployeeById(editId);
-		this.setResponsedJsondata(ResultDto.successWithData(employeeDto2));
-		return NONE;
-	}
-
-	/**
 	 * 社員情報を保存する
 	 *
 	 * @return String
