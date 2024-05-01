@@ -24,16 +24,20 @@
 		background-color: #000000 !important;
 	}
 	
-	.effect-shine {
-		transition: 500ms;
-	}
-	
 	.effect-shine:hover {
-		color: #fff;
-		text-shadow: 0 0 5px #03e9f4,
-		            0 0 25px #03e9f4,
-		            0 0 50px #03e9f4,
-		            0 0 100px #03e9f4;
+		mask-image: linear-gradient(-75deg, rgba(0, 0, 0, 0.6) 30%, #000 50%, rgba(0, 0, 0, 0.6) 70%);
+		mask-size: 200%;
+		animation: shine 2500ms infinite;
+	}
+
+	@keyframes shine {
+		from {
+			-webkit-mask-position: 150%;
+		}
+
+		to {
+			-webkit-mask-position: -50%;
+		}
 	}
 </style>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2@11" nonce="Ytvk0lE3pg1BL713YR9i89Kn"></script>

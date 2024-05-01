@@ -62,7 +62,7 @@ $(document).ready(function() {
 		data: treeData,
 		expandIcon: 'fa fa-angle-down fa-fw',
 		collapseIcon: 'fa fa-angle-right fa-fw',
-		indent: 1.25,
+		indent: 1.5,
 		parentsMarginLeft: '1.25rem',
 		openNodeLinkOnNewTab: true
 	});
