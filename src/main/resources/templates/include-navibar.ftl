@@ -1,17 +1,12 @@
 <!DOCTYPE html>
 <html lang="ja-JP">
 <body>
-	<style>
-		.bg-dark {
-			background-color: #000000 !important;
-		}
-	</style>
 	<#assign principalAdmin = Session.SPRING_SECURITY_CONTEXT.authentication.principal
 	        userAdminName = principalAdmin.getOriginalAdmin().getUsername()
 	        personalId = principalAdmin.getOriginalAdmin().getId()>
 	<nav class="navbar navbar-expand-lg bg-body-tertiary navbar-dark bg-dark fixed-top">
 		<div class="container-fluid">
-			<a class="navbar-brand" style="font-size: 24px; font-weight: 900;" 
+			<a class="navbar-brand effect-shine" style="font-size: 24px; font-weight: 900;" 
 				href="/pgcrowd/category/toMainmenu">PGアプリケーション</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContents"
 				aria-controls="navbarSupportedContents" aria-expanded="false" aria-label="Toggle navigation">

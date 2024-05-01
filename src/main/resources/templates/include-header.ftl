@@ -16,13 +16,24 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico">
 <style type="text/css">
-	.tree li {
-		list-style-type: none;
-		cursor: pointer;
-	}
-	
 	a {
 		text-decoration: none;
+	}
+	
+	.bg-dark {
+		background-color: #000000 !important;
+	}
+	
+	.effect-shine {
+		transition: 500ms;
+	}
+	
+	.effect-shine:hover {
+		color: #fff;
+		text-shadow: 0 0 5px #03e9f4,
+		            0 0 25px #03e9f4,
+		            0 0 50px #03e9f4,
+		            0 0 100px #03e9f4;
 	}
 </style>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2@11" nonce="Ytvk0lE3pg1BL713YR9i89Kn"></script>
