@@ -83,7 +83,7 @@ $("#districtInfoChangeBtn").on('click', function() {
 			'name': $("#nameEdit").val().trim(),
 			'chiho': $("#chihoEdit").val().trim()
 		});
-		pgcrowdAjaxModify('/pgcrowd/district/infoUpdate', 'PUT', putData, putSuccessFunction);
+		pgcrowdAjaxModify('/pgcrowd/district/infoUpdate', 'PUT', putData, districtPutSuccessFunction);
 	}
 });
 $("#tableBody").on('click', '.district-flg-td', function() {

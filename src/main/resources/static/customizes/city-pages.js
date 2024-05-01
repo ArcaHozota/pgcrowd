@@ -141,7 +141,7 @@ $("#cityInfoChangeBtn").on('click', function() {
 			'districtId': $("#districtEdit").val(),
 			'population': Number($("#populationEdit").val().trim().replace(/,/g, ''))
 		});
-		pgcrowdAjaxModify('/pgcrowd/city/infoUpdate', 'PUT', putData, putSuccessFunction);
+		pgcrowdAjaxModify('/pgcrowd/city/infoUpdate', 'PUT', putData, cityPutSuccessFunction);
 	}
 });
 $("#tableBody").on('click', '.delete-btn', function() {

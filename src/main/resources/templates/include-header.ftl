@@ -29,11 +29,25 @@
 	}
 	
 	.effect-shine:hover {
-		color: #fff;
-		text-shadow: 0 0 5px #03e9f4,
-		            0 0 25px #03e9f4,
-		            0 0 50px #03e9f4,
-		            0 0 100px #03e9f4;
+		animation: shine 1500ms infinite alternate;
+	}
+	
+	@keyframes shine {
+		from {
+			color: #fff;
+			text-shadow: 0 0 5px #03e9f4,
+			            0 0 25px #03e9f4,
+			            0 0 50px #03e9f4,
+			            0 0 100px #03e9f4;
+		}
+
+		to {
+			color: #fff;
+			text-shadow: 0 0 2px #03e9f4,
+			            0 0 5px #03e9f4,
+			            0 0 7px #03e9f4,
+			            0 0 10px #03e9f4;
+		}
 	}
 </style>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2@11" nonce="Ytvk0lE3pg1BL713YR9i89Kn"></script>

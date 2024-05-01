@@ -53,7 +53,7 @@ $("#saveInfoBtn").on('click', function() {
 			'dateOfBirth': $("#dateInput").val(),
 			'roleId': $("#roleInput").val()
 		});
-		pgcrowdAjaxModify('/pgcrowd/employee/infoSave', 'POST', postData, postSuccessFunction);
+		pgcrowdAjaxModify('/pgcrowd/employee/infoSave', 'POST', postData, employeePostSuccessFunction);
 	}
 });
 $("#passwordEdit").on("change", function() {
@@ -99,7 +99,7 @@ $("#editInfoBtn").on('click', function() {
 			'dateOfBirth': $("#dateEdit").val(),
 			'roleId': roleId
 		});
-		pgcrowdAjaxModify('/pgcrowd/employee/infoUpdate', 'PUT', putData, putSuccessFunction);
+		pgcrowdAjaxModify('/pgcrowd/employee/infoUpdate', 'PUT', putData, employeePutSuccessFunction);
 	}
 });
 $("#roleEdit").on('change', function() {
