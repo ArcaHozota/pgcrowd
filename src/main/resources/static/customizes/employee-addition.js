@@ -110,6 +110,8 @@ function employeePutSuccessFunction(result) {
 	}
 }
 $("#resetBtn").on('click', function() {
-	formReset($("#inputForm"));
-	formReset($("#editForm"));
+	formReset("#inputForm");
+});
+$("#restoreBtn").on('click', function() {
+	formReset("#editForm");
 });
