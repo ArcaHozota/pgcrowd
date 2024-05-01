@@ -81,7 +81,7 @@
 						<button type="button" class="btn btn-primary my-2 my-sm-0" id="editInfoBtn">
 							<i class="fa fa-hourglass-half"></i> 変更
 						</button>
-						<button type="button" class="btn btn-secondary my-2 my-sm-0" id="restoreBtn">
+						<button type="button" class="btn btn-secondary my-2 my-sm-0" id="resetBtn">
 							<i class="fa fa-trash"></i> 廃棄
 						</button>
 					</div>

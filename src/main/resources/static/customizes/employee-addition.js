@@ -112,6 +112,3 @@ function employeePutSuccessFunction(result) {
 $("#resetBtn").on('click', function() {
 	formReset($("#inputForm"));
 });
-$("#restoreBtn").on('click', function() {
-	formReset($("#editForm"));
-});
