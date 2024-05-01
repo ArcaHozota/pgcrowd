@@ -10,7 +10,6 @@ import javax.annotation.Resource;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -40,7 +39,6 @@ import lombok.Setter;
 		@Result(name = ERROR, location = "/templates/system-error.ftl"),
 		@Result(name = NONE, type = "json", params = { "root", "responsedJsondata" }),
 		@Result(name = LOGIN, location = "/templates/admin-login.ftl") })
-@ParentPackage("json-default")
 @Controller
 public class DistrictHandler extends ActionSupport {
 

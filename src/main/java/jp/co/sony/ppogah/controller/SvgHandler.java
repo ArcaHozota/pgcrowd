@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.action.ServletResponseAware;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.core.io.DefaultResourceLoader;
@@ -44,7 +43,6 @@ import lombok.Setter;
 		@Result(name = ERROR, location = "/templates/system-error.ftl"),
 		@Result(name = NONE, type = "json", params = { "root", "responsedJsondata" }),
 		@Result(name = LOGIN, location = "/templates/admin-login.ftl") })
-@ParentPackage("json-default")
 @Controller
 public class SvgHandler extends ActionSupport implements ServletResponseAware {
 
