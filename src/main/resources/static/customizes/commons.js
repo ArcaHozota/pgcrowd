@@ -319,7 +319,7 @@ function normalPgcrowdSaveUpdateFunction(inputArrays, inputForm, postPutUrl, pos
 	if (listArray.includes("")) {
 		pgcrowdNullInputboxDiscern(inputArrays);
 	} else if ($(inputForm).find('*').hasClass('is-invalid')) {
-		layer.msg('入力情報不正。');
+		layer.msg('入力情報不正');
 	} else {
 		pgcrowdAjaxModify(postPutUrl, postPutMethod, postPutData, successFunction);
 	}
