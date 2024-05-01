@@ -49,6 +49,7 @@ function buildTableBody(result) {
 	});
 }
 $("#addCityBtn").on('click', function() {
+	getDistricts("#districtInput", null);
 	normalAddbtnFunction('/pgcrowd/city/checkEdition', "#cityAddModal");
 });
 $("#nameInput").on('change', function() {

@@ -40,5 +40,4 @@ spring:
       {datetimeFormat: yyyy-MM-dd HH:mm:ss, templateUpdateDelay: 0s}
 logging:
   level:
-    org.eclipse.jetty.server: DEBUG
     com.opensymphony.xwork2: DEBUG

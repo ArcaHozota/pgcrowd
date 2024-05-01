@@ -54,8 +54,6 @@ public final class PgCrowdURLConstants {
 
 	public static final String URL_INFO_DELETE = "infoDelete";
 
-	public static final String URL_INFO_RESTORE = "infoRestore";
-
 	public static final String URL_INFO_INSERT = "infoSave";
 
 	public static final String URL_INFO_UPDATE = "infoUpdate";

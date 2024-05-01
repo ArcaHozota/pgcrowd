@@ -11,7 +11,8 @@
 	        personalId = principalAdmin.getOriginalAdmin().getId()>
 	<nav class="navbar navbar-expand-lg bg-body-tertiary navbar-dark bg-dark fixed-top">
 		<div class="container-fluid">
-			<a class="navbar-brand" style="font-size: 24px;" href="/pgcrowd/category/toMainmenu">PGアプリケーション</a>
+			<a class="navbar-brand" style="font-size: 24px; font-weight: 900;" 
+				href="/pgcrowd/category/toMainmenu">PGアプリケーション</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContents"
 				aria-controls="navbarSupportedContents" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
