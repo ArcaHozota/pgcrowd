@@ -71,14 +71,21 @@ $("#districtInput").on('change', function() {
 });
 $("#cityInfoSaveBtn").on('click', function() {
 	let inputArrays = ["#nameInput", "#poInput", "#populationInput", "#cityFlagInput"];
-	let postData = JSON.stringify({
-		'name': $("#nameInput").val().trim(),
-		'pronunciation': $("#poInput").val().trim(),
-		'districtId': $("#districtInput").val(),
-		'population': Number($("#populationInput").val().trim().replace(/,/g, '')),
-		'cityFlag': $("#cityFlagInput").val().trim()
-	});
-	normalPgcrowdSaveUpdateFunction(inputArrays, "#cityAddModal form", '/pgcrowd/city/infoSave', 'POST', postData, normalPostSuccessFunction("#cityAddModal"));
+	let listArray = pgcrowdInputContextGet(inputArrays);
+	if (listArray.includes("")) {
+		pgcrowdNullInputboxDiscern(inputArrays);
+	} else if ($("#cityAddModal form").find('*').hasClass('is-invalid')) {
+		layer.msg('入力情報不正');
+	} else {
+		let postData = JSON.stringify({
+			'name': $("#nameInput").val().trim(),
+			'pronunciation': $("#poInput").val().trim(),
+			'districtId': $("#districtInput").val(),
+			'population': Number($("#populationInput").val().trim().replace(/,/g, '')),
+			'cityFlag': $("#cityFlagInput").val().trim()
+		});
+		pgcrowdAjaxModify('/pgcrowd/city/infoSave', 'POST', postData, normalPostSuccessFunction("#cityAddModal"));
+	}
 });
 $("#tableBody").on('click', '.edit-btn', function() {
 	let ajaxResult = $.ajax({
@@ -121,14 +128,21 @@ $("#districtEdit").on('change', function() {
 });
 $("#cityInfoChangeBtn").on('click', function() {
 	let inputArrays = ["#nameEdit", "#poEdit", "#populationEdit"];
-	let putData = JSON.stringify({
-		'id': this.value,
-		'name': $("#nameEdit").val().trim(),
-		'pronunciation': $("#poEdit").val().trim(),
-		'districtId': $("#districtEdit").val(),
-		'population': Number($("#populationEdit").val().trim().replace(/,/g, ''))
-	});
-	normalPgcrowdSaveUpdateFunction(inputArrays, "#cityEditModal form", '/pgcrowd/city/infoUpdate', 'PUT', putData, cityPutSuccessFunction);
+	let listArray = pgcrowdInputContextGet(inputArrays);
+	if (listArray.includes("")) {
+		pgcrowdNullInputboxDiscern(inputArrays);
+	} else if ($("#cityEditModal form").find('*').hasClass('is-invalid')) {
+		layer.msg('入力情報不正');
+	} else {
+		let putData = JSON.stringify({
+			'id': this.value,
+			'name': $("#nameEdit").val().trim(),
+			'pronunciation': $("#poEdit").val().trim(),
+			'districtId': $("#districtEdit").val(),
+			'population': Number($("#populationEdit").val().trim().replace(/,/g, ''))
+		});
+		pgcrowdAjaxModify('/pgcrowd/city/infoUpdate', 'PUT', putData, putSuccessFunction);
+	}
 });
 $("#tableBody").on('click', '.delete-btn', function() {
 	let cityId = $(this).attr("deleteId");

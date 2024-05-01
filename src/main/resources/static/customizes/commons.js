@@ -314,13 +314,3 @@ function normalDeletebtnFunction(url, message, deleteId) {
 		}
 	});
 }
-function normalPgcrowdSaveUpdateFunction(inputArrays, inputForm, postPutUrl, postPutMethod, postPutData, successFunction) {
-	let listArray = pgcrowdInputContextGet(inputArrays);
-	if (listArray.includes("")) {
-		pgcrowdNullInputboxDiscern(inputArrays);
-	} else if ($(inputForm).find('*').hasClass('is-invalid')) {
-		layer.msg('入力情報不正');
-	} else {
-		pgcrowdAjaxModify(postPutUrl, postPutMethod, postPutData, successFunction);
-	}
-}

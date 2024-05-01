@@ -39,15 +39,22 @@ $("#emailInput").on("change", function() {
 });
 $("#saveInfoBtn").on('click', function() {
 	let inputArrays = ["#loginAccountInput", "#usernameInput", "#passwordInput", "#emailInput"];
-	let postData = JSON.stringify({
-		'loginAccount': $("#loginAccountInput").val().trim(),
-		'username': $("#usernameInput").val().trim(),
-		'password': $("#passwordInput").val().trim(),
-		'email': $("#emailInput").val().trim(),
-		'dateOfBirth': $("#dateInput").val(),
-		'roleId': $("#roleInput").val()
-	});
-	normalPgcrowdSaveUpdateFunction(inputArrays, "#inputForm", '/pgcrowd/employee/infoSave', 'POST', postData, employeePostSuccessFunction);
+	let listArray = pgcrowdInputContextGet(inputArrays);
+	if (listArray.includes("")) {
+		pgcrowdNullInputboxDiscern(inputArrays);
+	} else if ($("#inputForm").find('*').hasClass('is-invalid')) {
+		layer.msg('入力情報不正');
+	} else {
+		let postData = JSON.stringify({
+			'loginAccount': $("#loginAccountInput").val().trim(),
+			'username': $("#usernameInput").val().trim(),
+			'password': $("#passwordInput").val().trim(),
+			'email': $("#emailInput").val().trim(),
+			'dateOfBirth': $("#dateInput").val(),
+			'roleId': $("#roleInput").val()
+		});
+		pgcrowdAjaxModify('/pgcrowd/employee/infoSave', 'POST', postData, postSuccessFunction);
+	}
 });
 $("#passwordEdit").on("change", function() {
 	let editPassword = this.value;
@@ -69,24 +76,31 @@ $("#emailEdit").on("change", function() {
 });
 $("#editInfoBtn").on('click', function() {
 	let inputArrays = ["#usernameEdit", "#passwordEdit", "#emailEdit"];
-	let rawPassword = $("#passwordEdit").val().trim();
-	if (rawPassword === "---------------------------") {
-		rawPassword = null;
+	let listArray = pgcrowdInputContextGet(inputArrays);
+	if (listArray.includes("")) {
+		pgcrowdNullInputboxDiscern(inputArrays);
+	} else if ($("#editForm").find('*').hasClass('is-invalid')) {
+		layer.msg('入力情報不正');
+	} else {
+		let rawPassword = $("#passwordEdit").val().trim();
+		if (rawPassword === "---------------------------") {
+			rawPassword = null;
+		}
+		let roleId = $("#roleEdit").attr('value');
+		if (roleId === null || roleId === undefined) {
+			roleId = $("#roleEdit option:selected").val();
+		}
+		let putData = JSON.stringify({
+			'id': $("#editIdContainer").val(),
+			'loginAccount': $("#loginAccountEdit").text(),
+			'username': $("#usernameEdit").val().trim(),
+			'password': rawPassword,
+			'email': $("#emailEdit").val().trim(),
+			'dateOfBirth': $("#dateEdit").val(),
+			'roleId': roleId
+		});
+		pgcrowdAjaxModify('/pgcrowd/employee/infoUpdate', 'PUT', putData, putSuccessFunction);
 	}
-	let roleId = $("#roleEdit").attr('value');
-	if (roleId === null || roleId === undefined) {
-		roleId = $("#roleEdit option:selected").val();
-	}
-	let putData = JSON.stringify({
-		'id': $("#editIdContainer").val(),
-		'loginAccount': $("#loginAccountEdit").text(),
-		'username': $("#usernameEdit").val().trim(),
-		'password': rawPassword,
-		'email': $("#emailEdit").val().trim(),
-		'dateOfBirth': $("#dateEdit").val(),
-		'roleId': roleId
-	});
-	normalPgcrowdSaveUpdateFunction(inputArrays, "#editForm", '/pgcrowd/employee/infoUpdate', 'PUT', putData, employeePutSuccessFunction);
 });
 $("#roleEdit").on('change', function() {
 	let ajaxResult = $.ajax({
