@@ -11,7 +11,7 @@ spring:
     name: pgcrowd
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://52.199.163.241:5432/pgcrowd2
+    url: jdbc:postgresql://52.199.163.241:5432/pgcrowd
     username: postgres
     password: postgres
     hikari:

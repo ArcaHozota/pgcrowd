@@ -24,7 +24,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-@Table(name = "auth")
+@Table(name = "authorities")
 @EqualsAndHashCode(callSuper = false)
 public final class Authority implements Serializable {
 

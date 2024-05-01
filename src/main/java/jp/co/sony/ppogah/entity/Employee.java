@@ -26,7 +26,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-@Table(name = "employee")
+@Table(name = "employees")
 @EqualsAndHashCode(callSuper = false)
 public final class Employee implements Serializable {
 
