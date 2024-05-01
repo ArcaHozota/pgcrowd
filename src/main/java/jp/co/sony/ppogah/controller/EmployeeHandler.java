@@ -150,8 +150,6 @@ public class EmployeeHandler extends ActionSupport {
 	public String infoRestore() {
 		final String editId = ActionContext.getContext().getServletRequest().getParameter("editId");
 		final EmployeeDto employeeDto2 = this.iEmployeeService.getEmployeeById(editId);
-		final List<RoleDto> rolesByEmployeeId = this.iRoleService.getRolesByEmployeeId(editId);
-		employeeDto2.setRoleDtos(rolesByEmployeeId);
 		this.setResponsedJsondata(ResultDto.successWithData(employeeDto2));
 		return NONE;
 	}
