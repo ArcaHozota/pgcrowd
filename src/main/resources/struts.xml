@@ -6,7 +6,10 @@
 	<!-- 基础包名 -->
 	<package name="basePackage"
 		extends="struts-default,json-default" strict-method-invocation="true">
-		<global-allowed-methods>initial,menuInitial,toCities,toDistricts,toMainmenu,checkDuplicated,checkEdition,getDistricts,pagination,infoDelete,infoUpdate,infoSave,toAddition,toEdition,toPages,toroku,toSignUp,doAssignment,getAuthlist,getAssignedAuth,getSvgImage,getSvgImageDistrict,getSvgImageCity</global-allowed-methods>
+		<global-allowed-methods>initial,menuInitial,toCities,toDistricts,toMainmenu,checkDuplicated,checkEdition,
+			getDistricts,pagination,infoDelete,infoUpdate,infoSave,toAddition,toEdition,toPages,toroku,toSignUp,
+			doAssignment,getAuthlist,getAssignedAuth,getSvgImage,getSvgImageDistrict,
+			getSvgImageCity</global-allowed-methods>
 	</package>
 	<constant
 		name="struts.convention.package.locators.basePackage"
