@@ -26,9 +26,11 @@ import jp.co.sony.ppogah.common.PgCrowdConstants;
 import jp.co.sony.ppogah.dto.EmployeeDto;
 import jp.co.sony.ppogah.entity.Employee;
 import jp.co.sony.ppogah.entity.EmployeeRole;
+import jp.co.sony.ppogah.entity.Role;
 import jp.co.sony.ppogah.exception.PgCrowdException;
 import jp.co.sony.ppogah.repository.EmployeeRepository;
 import jp.co.sony.ppogah.repository.EmployeeRoleRepository;
+import jp.co.sony.ppogah.repository.RoleRepository;
 import jp.co.sony.ppogah.service.IEmployeeService;
 import jp.co.sony.ppogah.utils.CommonProjectUtils;
 import jp.co.sony.ppogah.utils.Pagination;
@@ -62,6 +64,11 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	 * 社員役割連携リポジトリ
 	 */
 	private final EmployeeRoleRepository employeeRoleRepository;
+
+	/**
+	 * 役割管理リポジトリ
+	 */
+	private final RoleRepository roleRepository;
 
 	/**
 	 * 日時フォマーター
@@ -153,6 +160,11 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		return Pagination.of(employeeDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 	}
 
+	/**
+	 * デフォルトのアカウントを取得する
+	 *
+	 * @return String
+	 */
 	private String getRandomStr() {
 		final String stry = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		final char[] cr1 = stry.toCharArray();
@@ -169,8 +181,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	public Boolean register(final EmployeeDto employeeDto) {
 		final Specification<Employee> where = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("email"),
 				employeeDto.getEmail());
-		final Specification<Employee> specification = Specification.where(where);
-		final Optional<Employee> findOne = this.employeeRepository.findOne(specification);
+		final Optional<Employee> findOne = this.employeeRepository.findOne(where);
 		if (findOne.isPresent()) {
 			return Boolean.FALSE;
 		}
@@ -182,6 +193,15 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		employee.setCreatedTime(LocalDateTime.now());
 		employee.setDateOfBirth(LocalDate.parse(employeeDto.getDateOfBirth(), this.formatter));
 		this.employeeRepository.saveAndFlush(employee);
+		final Specification<Role> where2 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("name"),
+				"正社員");
+		final Role role = this.roleRepository.findOne(where2).orElseThrow(() -> {
+			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
+		});
+		final EmployeeRole employeeRole = new EmployeeRole();
+		employeeRole.setEmployeeId(employee.getId());
+		employeeRole.setRoleId(role.getId());
+		this.employeeRoleRepository.saveAndFlush(employeeRole);
 		return Boolean.TRUE;
 	}
 
