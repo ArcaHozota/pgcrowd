@@ -39,6 +39,13 @@ $(document).ready(function() {
 		layer.msg(message2);
 	}
 });
+$("#emailIpt").on("change", function() {
+	let inputEmail = this.value;
+	let regularEmail = /^^[a-zA-Z\d._%+-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/;
+	if (!regularEmail.test(inputEmail)) {
+		layer.msg("入力したメールアドレスが正しくありません。");
+	}
+});
 $("#loginBtn").on('click', function() {
 	let account = $("#accountIpt").val().trim();
 	let password = $("#passwordIpt").val().trim();
