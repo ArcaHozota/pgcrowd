@@ -1,4 +1,23 @@
 $(document).ready(function() {
+	// 获取要操作的元素
+	let torokuTitle = document.querySelector('.toroku-title');
+	let loginTitle = document.querySelector('.login-title');
+	let torokuBox = document.querySelector('.toroku-box');
+	let loginBox = document.querySelector('.login-box');
+	// 绑定标题点击事件
+	$(torokuTitle).on("click", function() {
+		// 判断是否收起，收起才可以点击
+		if (torokuBox.classList.contains('slide-up')) {
+			$(loginBox).addClass('slide-up');
+			$(torokuBox).removeClass('slide-up');
+		}
+	});
+	$(loginTitle).on("click", function() {
+		if (loginBox.classList.contains('slide-up')) {
+			$(torokuBox).addClass('slide-up');
+			$(loginBox).removeClass('slide-up');
+		}
+	});
 	let flag = 0;
 	$("#eyeIcons2").on('click', function() {
 		if (flag === 0) {

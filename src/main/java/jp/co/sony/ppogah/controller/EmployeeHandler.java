@@ -46,7 +46,7 @@ import lombok.Setter;
 @Results({ @Result(name = SUCCESS, location = "/templates/admin-pages.ftl"),
 		@Result(name = ERROR, location = "/templates/system-error.ftl"),
 		@Result(name = NONE, type = "json", params = { "root", "responsedJsondata" }),
-		@Result(name = LOGIN, location = "/templates/admin-login.ftl") })
+		@Result(name = LOGIN, location = "/templates/logintoroku.ftl") })
 @Controller
 public class EmployeeHandler extends ActionSupport {
 
