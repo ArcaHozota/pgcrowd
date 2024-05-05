@@ -50,9 +50,9 @@
 	                <span>アカウント無し？</span>登録
 	            </h2>
 	            <form class="input-box" action="/pgcrowd/employee/toroku" method="post" id="torokuForm">
-	                <input type="text" placeholder="メール">
-	                <input type="password" placeholder="パスワード">
-	                <input type="password" placeholder="パス再入力">
+	                <input type="email" name="email" id="emailIpt" placeholder="メール">
+	                <input type="password" name="password" id="passwordIpt1" placeholder="パスワード">
+	                <input type="password" id="passwordIpt2" placeholder="パス再入力">
 	            </form>
 	            <button type="button" id="torokuBtn">登録</button>
             </div>

@@ -19,19 +19,6 @@ $(document).ready(function() {
 		}
 	});
 	let flag = 0;
-	$("#eyeIcons2").on('click', function() {
-		if (flag === 0) {
-			$("#passwordIpt1").attr('type', 'text');
-			$("#passwordIpt2").attr('type', 'text');
-			$(this).attr('name', 'eye-off-outline');
-			flag = 1;
-		} else {
-			$("#passwordIpt1").attr('type', 'password');
-			$("#passwordIpt2").attr('type', 'password');
-			$(this).attr('name', 'eye-outline');
-			flag = 0;
-		}
-	});
 	$("#eyeIcons").on('click', function() {
 		if (flag === 0) {
 			$("#passwordIpt").attr('type', 'text');
@@ -66,7 +53,7 @@ $("#loginBtn").on('click', function() {
 	}
 });
 $("#torokuBtn").on('click', function() {
-	let inputArrays = ["#emailIpt", "#passwordIpt1", "#passwordIpt2", "#dateOfBirthIpt"];
+	let inputArrays = ["#emailIpt", "#passwordIpt1", "#passwordIpt2"];
 	for (const element of inputArrays) {
 		if ($(element).val().trim() === "") {
 			layer.msg('入力しなかった情報があります。');
