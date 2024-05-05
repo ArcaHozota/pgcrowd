@@ -33,7 +33,7 @@
         	<h2 class="login-title">
                 <span>すでにアカウント持ち？</span>ログイン
             </h2>
-            <div class="input-box" action="/pgcrowd/employee/doLogin" method="post" role="form" id="loginForm">
+            <form class="input-box" action="/pgcrowd/employee/doLogin" method="post" id="loginForm">
             	<#if registeredEmail?exists>
 					<input type="text" value="${registeredEmail}" name="loginAcct"
 						id="accountIpt" placeholder="アカウント">
@@ -41,7 +41,7 @@
 					<input type="text" name="loginAcct" id="accountIpt" placeholder="アカウント">
 				</#if>
                 <input type="password" name="userPswd" id="passwordIpt" placeholder="パスワード">
-            </div>
+            </form>
             <button type="button" id="loginBtn">ログイン</button>
         </div>
         <div class="toroku-box slide-up">
@@ -49,11 +49,11 @@
                 <h2 class="toroku-title">
 	                <span>アカウント無し？</span>登録
 	            </h2>
-	            <div class="input-box" action="/pgcrowd/employee/toroku" method="post" role="form" id="torokuForm">
+	            <form class="input-box" action="/pgcrowd/employee/toroku" method="post" id="torokuForm">
 	                <input type="text" placeholder="メール">
 	                <input type="password" placeholder="パスワード">
 	                <input type="password" placeholder="パス再入力">
-	            </div>
+	            </form>
 	            <button type="button" id="torokuBtn">登録</button>
             </div>
         </div>
