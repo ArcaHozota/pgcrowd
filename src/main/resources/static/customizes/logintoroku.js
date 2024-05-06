@@ -1,21 +1,16 @@
 $(document).ready(function() {
-	// 获取要操作的元素
-	let torokuTitle = document.querySelector('.toroku-title');
-	let loginTitle = document.querySelector('.login-title');
-	let torokuBox = document.querySelector('.toroku-box');
-	let loginBox = document.querySelector('.login-box');
 	// 绑定标题点击事件
-	$(torokuTitle).on("click", function() {
+	$("#torokuBox").find('.toroku-title').on("click", function() {
 		// 判断是否收起，收起才可以点击
-		if (torokuBox.classList.contains('slide-up')) {
-			$(loginBox).addClass('slide-up');
-			$(torokuBox).removeClass('slide-up');
+		if ($(this).hasClass('slide-up')) {
+			$("#loginBox").addClass('slide-up');
+			$(this).removeClass('slide-up');
 		}
 	});
-	$(loginTitle).on("click", function() {
-		if (loginBox.classList.contains('slide-up')) {
-			$(torokuBox).addClass('slide-up');
-			$(loginBox).removeClass('slide-up');
+	$("#loginBox").find('.login-title').on("click", function() {
+		if ($(this).hasClass('slide-up')) {
+			$("#torokuBox").addClass('slide-up');
+			$(this).removeClass('slide-up');
 		}
 	});
 	let flag = 0;

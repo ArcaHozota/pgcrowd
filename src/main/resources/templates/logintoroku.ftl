@@ -20,16 +20,28 @@
 	input[type=password]::-o-clear {
 		display: none;
 	}
+	
+	.input-box #eyeIcons {
+		position: absolute;
+		cursor: pointer;
+		color: #000;
+		font-size: 1.2em;
+		top: 150px;
+		right: 15px;
+	}
 </style>
 <script type="text/javascript" src="/static/jquery/jquery-3.7.1.min.js" nonce="Ytvk0lE3pg1BL713YR9i89Kn"></script>
 <script type="text/javascript" src="/static/layer/layer.js" nonce="Ytvk0lE3pg1BL713YR9i89Kn"></script>
 </head>
 <body>
     <div class="container">
-    	<#if torokuMsg?exists!''>
+    	<#if session['SPRING_SECURITY_LAST_EXCEPTION']?exists!''>
+			<input type="hidden" value="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}" id="errorMsgContainer">
+		</#if>
+		<#if torokuMsg?exists!''>
 			<input type="hidden" value="${torokuMsg}" id="torokuMsgContainer">
 		</#if>
-        <div class="login-box">
+        <div class="login-box" id="loginBox">
         	<h2 class="login-title">
                 <span>すでにアカウント持ち？</span>ログイン
             </h2>
@@ -40,11 +52,12 @@
 					<#else>
 					<input type="text" name="loginAcct" id="accountIpt" placeholder="アカウント">
 				</#if>
+				<ion-icon name="eye-outline" id="eyeIcons"></ion-icon>
                 <input type="password" name="userPswd" id="passwordIpt" placeholder="パスワード">
             </form>
             <button type="button" id="loginBtn">ログイン</button>
         </div>
-        <div class="toroku-box slide-up">
+        <div class="toroku-box slide-up" id="torokuBox">
             <div class="center">
                 <h2 class="toroku-title">
 	                <span>アカウント無し？</span>登録
@@ -57,6 +70,8 @@
 	            <button type="button" id="torokuBtn">登録</button>
             </div>
         </div>
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" nonce="Ytvk0lE3pg1BL713YR9i89Kn"></script>
+		<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     </div>
     <script type="text/javascript" src="/static/customizes/logintoroku.js" nonce="Ytvk0lE3pg1BL713YR9i89Kn"></script>
 </body>
