@@ -25,9 +25,9 @@
 		position: absolute;
 		cursor: pointer;
 		color: #000;
-		font-size: 1.2em;
 		top: 150px;
 		right: 15px;
+		font-size: 1.2em;
 	}
 </style>
 <script type="text/javascript" src="/static/jquery/jquery-3.7.1.min.js" nonce="Ytvk0lE3pg1BL713YR9i89Kn"></script>
@@ -35,8 +35,10 @@
 </head>
 <body>
     <div class="container">
-    	<#if Session.SPRING_SECURITY_LAST_EXCEPTION??!''>
+    	<#if Session?? && Session.SPRING_SECURITY_LAST_EXCEPTION??>
 		    <input type="hidden" value="${Session.SPRING_SECURITY_LAST_EXCEPTION.message}" id="errorMsgContainer">
+		<#else>
+			<input type="hidden" id="errorMsgContainer">
 		</#if>
 		<#if torokuMsg?exists!''>
 			<input type="hidden" value="${torokuMsg}" id="torokuMsgContainer">
