@@ -52,7 +52,9 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
 	implementation "org.apache.commons:commons-lang3:${commonsLangVersion}"
     // https://mvnrepository.com/artifact/org.apache.struts/struts2-core
-    implementation "org.apache.struts:struts2-core:${strutsVersion}"
+    implementation ("org.apache.struts:struts2-core:${strutsVersion}") {
+        exclude group: 'org.apache.commons', module: 'commons-lang3'
+    }
     // https://mvnrepository.com/artifact/org.apache.struts/struts2-convention-plugin
     implementation "org.apache.struts:struts2-convention-plugin:${strutsVersion}"
     // https://mvnrepository.com/artifact/org.apache.struts/struts2-spring-plugin
