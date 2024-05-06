@@ -35,8 +35,10 @@
 </head>
 <body>
     <div class="container">
-    	<#if session['SPRING_SECURITY_LAST_EXCEPTION']?exists!''>
-			<input type="hidden" value="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}" id="errorMsgContainer">
+    	<#if session?? && session["SPRING_SECURITY_LAST_EXCEPTION"]??>
+    		<input type="hidden" value="${session["SPRING_SECURITY_LAST_EXCEPTION"].message}" id="errorMsgContainer">
+		<#else>
+		    <input type="hidden" id="errorMsgContainer">
 		</#if>
 		<#if torokuMsg?exists!''>
 			<input type="hidden" value="${torokuMsg}" id="torokuMsgContainer">
