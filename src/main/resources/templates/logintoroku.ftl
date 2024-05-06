@@ -35,8 +35,8 @@
 </head>
 <body>
     <div class="container">
-    	<#if session?? && session["SPRING_SECURITY_LAST_EXCEPTION"]??>
-    		<input type="hidden" value="${session["SPRING_SECURITY_LAST_EXCEPTION"].message}" id="errorMsgContainer">
+    	<#if Session.SPRING_SECURITY_LAST_EXCEPTION??>
+		    <input type="hidden" value="${Session.SPRING_SECURITY_LAST_EXCEPTION.message}" id="errorMsgContainer">
 		<#else>
 		    <input type="hidden" id="errorMsgContainer">
 		</#if>
@@ -51,7 +51,7 @@
             	<#if registeredEmail?exists>
 					<input type="text" value="${registeredEmail}" name="loginAcct"
 						id="accountIpt" placeholder="アカウント">
-					<#else>
+				<#else>
 					<input type="text" name="loginAcct" id="accountIpt" placeholder="アカウント">
 				</#if>
 				<ion-icon name="eye-outline" id="eyeIcons"></ion-icon>

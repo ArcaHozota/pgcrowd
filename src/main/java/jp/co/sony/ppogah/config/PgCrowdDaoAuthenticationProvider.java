@@ -23,14 +23,14 @@ public final class PgCrowdDaoAuthenticationProvider extends DaoAuthenticationPro
 	protected void additionalAuthenticationChecks(final UserDetails userDetails,
 			final UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
 		if (authentication.getCredentials() == null) {
-			this.logger.debug("Failed to authenticate since no credentials provided");
+			this.logger.warn("Failed to authenticate since no credentials provided");
 			throw new BadCredentialsException(
 					this.messages.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials",
 							PgCrowdConstants.MESSAGE_SPRINGSECURITY_REQUIRED_AUTH));
 		}
 		final String presentedPassword = authentication.getCredentials().toString();
 		if (!this.getPasswordEncoder().matches(presentedPassword, userDetails.getPassword())) {
-			this.logger.debug("Failed to authenticate since password does not match stored value");
+			this.logger.warn("Failed to authenticate since password does not match stored value");
 			throw new BadCredentialsException(
 					this.messages.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials",
 							PgCrowdConstants.MESSAGE_SPRINGSECURITY_LOGINERROR4));
