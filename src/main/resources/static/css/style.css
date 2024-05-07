@@ -17,7 +17,7 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background: url("../image/background.jpg") no-repeat;
+	background: url('../image/background.jpg') no-repeat;
 	background-size: cover;
 	background-position: center;
 }
@@ -36,11 +36,11 @@ form:focus-within {
 }
 
 .container::after {
-	content: "";
+	content: '';
 	position: absolute;
 	inset: 0;
 	opacity: 0.8;
-	background: url("../image/background.jpg") no-repeat;
+	background: url('../image/background.jpg') no-repeat;
 	background-size: cover;
 	background-position: center;
 }
