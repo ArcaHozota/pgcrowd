@@ -63,10 +63,12 @@ public class SpringSecurityConfiguration {
 	@Bean
 	@Order(2)
 	protected SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
-		http.authorizeRequests(requests -> requests.antMatchers(PgCrowdURLConstants.URL_STATIC_RESOURCE,
-				PgCrowdURLConstants.URL_EMPLOYEE_NAMESPACE.concat("/").concat(PgCrowdURLConstants.URL_TO_REGISTER),
-				PgCrowdURLConstants.URL_EMPLOYEE_NAMESPACE.concat("/").concat(PgCrowdURLConstants.URL_REGISTER))
-				.permitAll().anyRequest().authenticated())
+		http.authorizeRequests(
+				requests -> requests
+						.antMatchers(PgCrowdURLConstants.URL_STATIC_RESOURCE,
+								PgCrowdURLConstants.URL_EMPLOYEE_NAMESPACE.concat("/")
+										.concat(PgCrowdURLConstants.URL_REGISTER))
+						.permitAll().anyRequest().authenticated())
 				.csrf(csrf -> csrf
 						.ignoringRequestMatchers(
 								new AntPathRequestMatcher(PgCrowdURLConstants.URL_STATIC_RESOURCE,

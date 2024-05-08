@@ -283,15 +283,4 @@ public class EmployeeHandler extends ActionSupport {
 		actionContext.put("registeredEmail", inputEmail);
 		return LOGIN;
 	}
-
-	/**
-	 * 登録画面へ移動する
-	 *
-	 * @return String
-	 */
-	@Action(value = PgCrowdURLConstants.URL_TO_REGISTER, results = {
-			@Result(name = SUCCESS, location = "/templates/admin-toroku.ftl") })
-	public String toSignUp() {
-		return SUCCESS;
-	}
 }
