@@ -38,8 +38,6 @@ public final class PgCrowdURLConstants {
 
 	public static final String URL_LOGIN = "doLogin";
 
-	public static final String URL_TO_REGISTER = "toSignUp";
-
 	public static final String URL_REGISTER = "toroku";
 
 	public static final String URL_TO_MAINMENU = "toMainmenu";
