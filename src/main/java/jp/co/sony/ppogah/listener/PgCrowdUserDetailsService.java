@@ -8,7 +8,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import jp.co.sony.ppogah.common.PgCrowdConstants;
+import jp.co.sony.ppogah.dto.EmployeeDto;
 import jp.co.sony.ppogah.entity.Employee;
 import jp.co.sony.ppogah.entity.EmployeeRole;
 import jp.co.sony.ppogah.entity.Role;
@@ -25,6 +25,7 @@ import jp.co.sony.ppogah.repository.EmployeeRepository;
 import jp.co.sony.ppogah.repository.EmployeeRoleRepository;
 import jp.co.sony.ppogah.repository.RoleAuthRepository;
 import jp.co.sony.ppogah.repository.RoleRepository;
+import jp.co.sony.ppogah.utils.SecondBeanUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -78,6 +79,9 @@ public class PgCrowdUserDetailsService implements UserDetailsService {
 			throw new DisabledException(PgCrowdConstants.MESSAGE_SPRINGSECURITY_LOGINERROR1);
 		}
 		final Employee employee = optionalEmployee.get();
+		final EmployeeDto employeeDto = new EmployeeDto();
+		SecondBeanUtils.copyNullableProperties(employee, employeeDto);
+		employeeDto.setId(employee.getId().toString());
 		final Optional<EmployeeRole> optionalEmployeeRole = this.employeeRoleRepository.findById(employee.getId());
 		if (optionalEmployeeRole.isEmpty()) {
 			throw new InsufficientAuthenticationException(PgCrowdConstants.MESSAGE_SPRINGSECURITY_LOGINERROR2);
@@ -98,9 +102,9 @@ public class PgCrowdUserDetailsService implements UserDetailsService {
 			throw new AuthenticationCredentialsNotFoundException(PgCrowdConstants.MESSAGE_SPRINGSECURITY_LOGINERROR3);
 		}
 		final List<Long> authIds = roleAuths.stream().map(RoleAuth::getAuthId).collect(Collectors.toList());
-		final List<GrantedAuthority> authorities = this.authorityRepository.findAllById(authIds).stream()
+		final List<SimpleGrantedAuthority> authorities = this.authorityRepository.findAllById(authIds).stream()
 				.map(item -> new SimpleGrantedAuthority(item.getName())).collect(Collectors.toList());
-		return new SecurityAdmin(employee, authorities);
+		return new SecurityAdmin(employeeDto, authorities);
 	}
 
 }

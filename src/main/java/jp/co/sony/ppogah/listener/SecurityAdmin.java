@@ -2,11 +2,10 @@ package jp.co.sony.ppogah.listener;
 
 import java.util.Collection;
 
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-import jp.co.sony.ppogah.entity.Employee;
-import jp.co.sony.ppogah.utils.CommonProjectUtils;
+import jp.co.sony.ppogah.dto.EmployeeDto;
 import lombok.EqualsAndHashCode;
 
 /**
@@ -20,15 +19,28 @@ public final class SecurityAdmin extends User {
 
 	private static final long serialVersionUID = 3827955098466369880L;
 
-	private final Employee originalAdmin;
+	/**
+	 * 社員管理DTO
+	 */
+	private final EmployeeDto originalAdmin;
 
-	SecurityAdmin(final Employee admin, final Collection<GrantedAuthority> authorities) {
+	/**
+	 * コンストラクタ
+	 *
+	 * @param admin       社員管理DTO
+	 * @param authorities 権限リスト
+	 */
+	SecurityAdmin(final EmployeeDto admin, final Collection<SimpleGrantedAuthority> authorities) {
 		super(admin.getLoginAccount(), admin.getPassword(), true, true, true, true, authorities);
 		this.originalAdmin = admin;
-		this.originalAdmin.setPassword(CommonProjectUtils.EMPTY_STRING);
 	}
 
-	public Employee getOriginalAdmin() {
+	/**
+	 * getter for originalAdmin
+	 *
+	 * @return EmployeeDto
+	 */
+	public EmployeeDto getOriginalAdmin() {
 		return this.originalAdmin;
 	}
 }
