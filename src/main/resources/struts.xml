@@ -4,7 +4,7 @@
         "https://struts.apache.org/dtds/struts-6.0.dtd">
 <struts>
 	<!-- 基础包名 -->
-	<package name="basePackage"
+	<package name="pgcrowdBasicPackage"
 		extends="struts-default,json-default" strict-method-invocation="true">
 		<global-allowed-methods>initial,menuInitial,toCities,toDistricts,toMainmenu,checkDuplicated,checkEdition,
 			getDistricts,pagination,infoDelete,infoUpdate,infoSave,toAddition,toEdition,toPages,toroku,
@@ -33,7 +33,7 @@
 		value="true" />
 	<!--设置Action的默认继承包 -->
 	<constant name="struts.convention.default.parent.package"
-		value="basePackage" />
+		value="pgcrowdBasicPackage" />
 	<!--设置Convention插件文件协议类型 -->
 	<constant name="struts.convention.action.fileProtocols"
 		value="jar,wsjar" />
