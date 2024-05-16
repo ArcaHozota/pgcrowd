@@ -83,7 +83,7 @@ public class CityHandler extends ActionSupport {
 	/**
 	 * 都道府県ID
 	 */
-	private Long districtId;
+	private String districtId;
 
 	/**
 	 * 読み方
@@ -104,6 +104,18 @@ public class CityHandler extends ActionSupport {
 	 * 市町村旗
 	 */
 	private String cityFlag;
+
+	/**
+	 * 削除権限チェック
+	 *
+	 * @return String
+	 */
+	@PreAuthorize("hasAuthority('city%edition')")
+	@Action(PgCrowdURLConstants.URL_CHECK_DELETE)
+	public String checkDelete() {
+		this.setResponsedJsondata(ResultDto.successWithoutData());
+		return NONE;
+	}
 
 	/**
 	 * 名称重複チェック
@@ -169,7 +181,7 @@ public class CityHandler extends ActionSupport {
 	@PreAuthorize("hasAuthority('city%edition')")
 	@Action(PgCrowdURLConstants.URL_INFO_DELETE)
 	public String infoDelete() {
-		final String cityId = ActionContext.getContext().getServletRequest().getParameter("cityId");
+		final String cityId = ActionContext.getContext().getServletRequest().getParameter("id");
 		final ResultDto<String> remove = this.iCityService.remove(Long.parseLong(cityId));
 		this.setResponsedJsondata(remove);
 		return NONE;

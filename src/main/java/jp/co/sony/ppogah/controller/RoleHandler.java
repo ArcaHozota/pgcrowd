@@ -86,6 +86,18 @@ public class RoleHandler extends ActionSupport {
 	private List<String> roleIds;
 
 	/**
+	 * 削除権限チェック
+	 *
+	 * @return String
+	 */
+	@PreAuthorize("hasAuthority('role%delete')")
+	@Action(PgCrowdURLConstants.URL_CHECK_DELETE)
+	public String checkDelete() {
+		this.setResponsedJsondata(ResultDto.successWithoutData());
+		return NONE;
+	}
+
+	/**
 	 * 名称重複チェック
 	 *
 	 * @return String
@@ -174,7 +186,7 @@ public class RoleHandler extends ActionSupport {
 	@PreAuthorize("hasAuthority('role%delete')")
 	@Action(PgCrowdURLConstants.URL_INFO_DELETE)
 	public String infoDelete() {
-		final String roleId = ActionContext.getContext().getServletRequest().getParameter("roleId");
+		final String roleId = ActionContext.getContext().getServletRequest().getParameter("id");
 		final ResultDto<String> remove = this.iRoleService.remove(Long.parseLong(roleId));
 		this.setResponsedJsondata(remove);
 		return NONE;

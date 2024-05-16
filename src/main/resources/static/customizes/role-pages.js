@@ -112,7 +112,7 @@ $("#roleInfoChangeBtn").on('click', function() {
 $("#tableBody").on('click', '.delete-btn', function() {
 	let roleId = $(this).attr("deleteId");
 	let roleName = $(this).parents("tr").find("td:eq(0)").text().trim();
-	normalDeletebtnFunction('/pgcrowd/role/infoDelete?roleId=', 'この「' + roleName + '」という役割情報を削除する、よろしいでしょうか。', roleId);
+	normalDeletebtnFunction('/pgcrowd/role/', 'この「' + roleName + '」という役割情報を削除する、よろしいでしょうか。', roleId);
 });
 $("#tableBody").on('click', '.fuyo-btn', function() {
 	let ajaxResult = $.ajax({
