@@ -5,6 +5,8 @@ import static com.opensymphony.xwork2.Action.LOGIN;
 import static com.opensymphony.xwork2.Action.NONE;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -30,7 +32,7 @@ import lombok.Setter;
  * 地域管理ハンドラ
  *
  * @author ArkamaHozota
- * @since 1.10
+ * @since 1.00beta
  */
 @Getter
 @Setter
@@ -104,6 +106,19 @@ public class DistrictHandler extends ActionSupport {
 	@Action(PgCrowdURLConstants.URL_CHECK_EDITION)
 	public String checkEdition() {
 		this.setResponsedJsondata(ResultDto.successWithoutData());
+		return NONE;
+	}
+
+	/**
+	 * 情報一覧画面初期表示する
+	 *
+	 * @return String
+	 */
+	@Action(PgCrowdURLConstants.URL_CHIHO_LIST)
+	public String getChihos() {
+		final String chiho = ActionContext.getContext().getServletRequest().getParameter("chihoName");
+		final List<String> chihos = this.iDistrictService.getDistrictChihos(chiho);
+		this.setResponsedJsondata(ResultDto.successWithData(chihos));
 		return NONE;
 	}
 
