@@ -8,6 +8,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -47,10 +49,10 @@ public class District implements Serializable {
 	private String name;
 
 	/**
-	 * 地方名称
+	 * 地方ID
 	 */
 	@Column(nullable = false)
-	private String chiho;
+	private Long chihoId;
 
 	/**
 	 * 都道府県旗
@@ -74,4 +76,11 @@ public class District implements Serializable {
 	 */
 	@OneToMany(mappedBy = "district", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<City> cities;
+
+	/**
+	 * 地域地方関連
+	 */
+	@ManyToOne
+	@JoinColumn(name = "chihoId", insertable = false, updatable = false)
+	private Chiho chiho;
 }
