@@ -5,6 +5,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -20,11 +22,11 @@ import jp.co.sony.ppogah.exception.PgCrowdException;
 import jp.co.sony.ppogah.repository.CityRepository;
 import jp.co.sony.ppogah.repository.DistrictRepository;
 import jp.co.sony.ppogah.service.ICityService;
+import jp.co.sony.ppogah.utils.CommonProjectUtils;
 import jp.co.sony.ppogah.utils.Pagination;
 import jp.co.sony.ppogah.utils.ResultDto;
 import jp.co.sony.ppogah.utils.SecondBeanUtils;
 import jp.co.sony.ppogah.utils.SnowflakeUtils;
-import jp.co.sony.ppogah.utils.CommonProjectUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -50,11 +52,15 @@ public final class CityServiceImpl implements ICityService {
 
 	@Override
 	public ResultDto<String> checkDuplicated(final String name, final Long districtId) {
-		final District district = this.districtRepository.findById(districtId).orElseThrow(() -> {
+		final District aDistrict = new District();
+		aDistrict.setId(districtId);
+		aDistrict.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
+		final Example<District> example = Example.of(aDistrict, ExampleMatcher.matching());
+		final District district = this.districtRepository.findOne(example).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
-		final List<String> list = district.getCities().stream().map(City::getName).collect(Collectors.toList());
-		if (list.contains(name)) {
+		final List<String> cityNameList = district.getCities().stream().map(City::getName).collect(Collectors.toList());
+		if (cityNameList.contains(name)) {
 			return ResultDto.failed(PgCrowdConstants.MESSAGE_CITY_NAME_DUPLICATED);
 		}
 		return ResultDto.successWithoutData();

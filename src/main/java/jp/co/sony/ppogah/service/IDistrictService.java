@@ -15,6 +15,14 @@ import jp.co.sony.ppogah.utils.ResultDto;
 public interface IDistrictService {
 
 	/**
+	 * 地方リストを取得する
+	 *
+	 * @param chiho 地方名称
+	 * @return List<String>
+	 */
+	List<String> getDistrictChihos(String chiho);
+
+	/**
 	 * 都市IDによって地域一覧を取得する
 	 *
 	 * @param cityId 都市ID
