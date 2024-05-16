@@ -40,7 +40,7 @@ public class Shuto implements Serializable {
 	 * 名称
 	 */
 	@Column(nullable = false)
-	private String name;
+	private String shutoName;
 
 	/**
 	 * 読み方
