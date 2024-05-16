@@ -115,12 +115,12 @@ $("#tableBody").on('click', '.delete-btn', function() {
 	normalDeletebtnFunction('/pgcrowd/role/infoDelete?roleId=', 'この「' + roleName + '」という役割情報を削除する、よろしいでしょうか。', roleId);
 });
 $("#tableBody").on('click', '.fuyo-btn', function() {
-	let ajaxReturn = $.ajax({
+	let ajaxResult = $.ajax({
 		url: '/pgcrowd/role/getAuthlist',
 		type: 'GET',
 		async: false
 	});
-	if (ajaxReturn.status !== 200) {
+	if (ajaxResult.status !== 200) {
 		layer.msg(ajaxResult.responseJSON.message);
 		return;
 	}
@@ -152,17 +152,17 @@ $("#tableBody").on('click', '.fuyo-btn', function() {
 			'onNodeCreated': zTreeOnNodeCreated
 		}
 	};
-	let authlist = ajaxReturn.responseJSON.data;
+	let authlist = ajaxResult.responseJSON.data;
 	$.fn.zTree.init($("#authTree"), setting, authlist);
 	let zTreeObj = $.fn.zTree.getZTreeObj("authTree");
 	zTreeObj.expandAll(true);
-	ajaxReturn = $.ajax({
+	ajaxResult = $.ajax({
 		url: '/pgcrowd/role/getAssignedAuth',
 		data: 'fuyoId=' + fuyoId,
 		type: 'GET',
 		async: false
 	});
-	let authIdList = ajaxReturn.responseJSON.data;
+	let authIdList = ajaxResult.responseJSON.data;
 	for (const element of authIdList) {
 		let authId = element;
 		let treeNode = zTreeObj.getNodeByParam('id', authId);
