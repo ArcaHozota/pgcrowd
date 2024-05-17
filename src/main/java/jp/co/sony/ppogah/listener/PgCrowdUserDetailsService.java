@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.DisabledException;
@@ -66,14 +68,11 @@ public class PgCrowdUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-		final Specification<Employee> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
-		final Specification<Employee> where2 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("loginAccount"), username);
-		final Specification<Employee> where3 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("email"), username);
-		final Specification<Employee> specification1 = Specification.where(where1)
-				.and(Specification.where(where2).or(where3));
+		final Specification<Employee> specification1 = (root, query, criteriaBuilder) -> {
+			criteriaBuilder.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
+			return criteriaBuilder.and(criteriaBuilder.or(criteriaBuilder.equal(root.get("loginAccount"), username),
+					criteriaBuilder.equal(root.get("email"), username)));
+		};
 		final Optional<Employee> optionalEmployee = this.employeeRepository.findOne(specification1);
 		if (optionalEmployee.isEmpty()) {
 			throw new DisabledException(PgCrowdConstants.MESSAGE_SPRINGSECURITY_LOGINERROR1);
@@ -86,18 +85,18 @@ public class PgCrowdUserDetailsService implements UserDetailsService {
 		if (optionalEmployeeRole.isEmpty()) {
 			throw new InsufficientAuthenticationException(PgCrowdConstants.MESSAGE_SPRINGSECURITY_LOGINERROR2);
 		}
-		final Specification<Role> where4 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
-		final Specification<Role> where5 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("id"),
-				optionalEmployeeRole.get().getRoleId());
-		final Specification<Role> specification2 = Specification.where(where4).and(where5);
+		final Specification<Role> specification2 = (root, query, criteriaBuilder) -> {
+			criteriaBuilder.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
+			return criteriaBuilder.and(criteriaBuilder.equal(root.get("id"), optionalEmployeeRole.get().getRoleId()));
+		};
 		final Optional<Role> optionalRole = this.roleRepository.findOne(specification2);
 		if (optionalRole.isEmpty()) {
 			throw new InsufficientAuthenticationException(PgCrowdConstants.MESSAGE_SPRINGSECURITY_LOGINERROR2);
 		}
-		final Specification<RoleAuth> where6 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("roleId"), optionalRole.get().getId());
-		final List<RoleAuth> roleAuths = this.roleAuthRepository.findAll(where6);
+		final RoleAuth aRoleAuth = new RoleAuth();
+		aRoleAuth.setRoleId(optionalRole.get().getId());
+		final Example<RoleAuth> example = Example.of(aRoleAuth, ExampleMatcher.matching());
+		final List<RoleAuth> roleAuths = this.roleAuthRepository.findAll(example);
 		if (roleAuths.isEmpty()) {
 			throw new AuthenticationCredentialsNotFoundException(PgCrowdConstants.MESSAGE_SPRINGSECURITY_LOGINERROR3);
 		}
