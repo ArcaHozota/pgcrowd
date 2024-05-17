@@ -70,11 +70,11 @@ public final class CityServiceImpl implements ICityService {
 	public Pagination<CityDto> getCitiesByKeyword(final Integer pageNum, final String keyword) {
 		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowdConstants.DEFAULT_PAGE_SIZE,
 				Sort.by(Direction.ASC, "id"));
-		final Specification<City> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
-		final Specification<City> specification = Specification.where(where1);
+		final City aCity = new City();
+		aCity.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
+		final Example<City> example = Example.of(aCity, ExampleMatcher.matching());
 		if (CommonProjectUtils.isEmpty(keyword)) {
-			final Page<City> pages = this.cityRepository.findAll(specification, pageRequest);
+			final Page<City> pages = this.cityRepository.findAll(example, pageRequest);
 			final List<CityDto> cityDtos = pages.stream().map(item -> {
 				final CityDto cityDto = new CityDto();
 				SecondBeanUtils.copyNullableProperties(item, cityDto);
@@ -85,22 +85,13 @@ public final class CityServiceImpl implements ICityService {
 			return Pagination.of(cityDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 		}
 		final String searchStr = CommonProjectUtils.getDetailKeyword(keyword);
-		final Specification<District> where2 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
-		final Specification<District> where3 = (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("name"),
-				searchStr);
-		final Specification<District> specification2 = Specification.where(where2).and(where3);
-		final List<Long> districtIds = this.districtRepository.findAll(specification2).stream().map(District::getId)
-				.collect(Collectors.toList());
-		final Specification<City> where4 = (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("name"),
-				searchStr);
-		final Specification<City> where5 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.like(root.get("pronunciation"), searchStr);
-		final Specification<City> where6 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.and(root.get("districtId").in(districtIds));
-		final Specification<City> specification3 = Specification.where(where1)
-				.and(Specification.where(where4).or(where5).or(where6));
-		final Page<City> pages = this.cityRepository.findAll(specification3, pageRequest);
+		final Specification<City> specification = (root, query, criteriaBuilder) -> {
+			criteriaBuilder.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
+			return criteriaBuilder.and(criteriaBuilder.or(criteriaBuilder.like(root.get("name"), searchStr),
+					criteriaBuilder.like(root.get("pronunciation"), searchStr),
+					criteriaBuilder.like(root.get("district").get("name"), searchStr)));
+		};
+		final Page<City> pages = this.cityRepository.findAll(specification, pageRequest);
 		final List<CityDto> cityDtos = pages.stream().map(item -> {
 			final CityDto cityDto = new CityDto();
 			SecondBeanUtils.copyNullableProperties(item, cityDto);
@@ -113,7 +104,11 @@ public final class CityServiceImpl implements ICityService {
 
 	@Override
 	public ResultDto<String> remove(final Long id) {
-		final City city = this.cityRepository.findById(id).orElseThrow(() -> {
+		final City aCity = new City();
+		aCity.setId(id);
+		aCity.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
+		final Example<City> example = Example.of(aCity, ExampleMatcher.matching());
+		final City city = this.cityRepository.findOne(example).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
 		if (Objects.equals(id, city.getDistrict().getShutoId())) {
