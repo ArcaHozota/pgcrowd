@@ -95,7 +95,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 			districtDtos.add(selecteDistrictDto);
 		}
 		districtDtos.addAll(districtDtos1);
-		return districtDtos;
+		return districtDtos.stream().distinct().collect(Collectors.toList());
 	}
 
 	@Override

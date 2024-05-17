@@ -136,6 +136,7 @@ public final class CityServiceImpl implements ICityService {
 		final City originalEntity = new City();
 		SecondBeanUtils.copyNullableProperties(city, originalEntity);
 		SecondBeanUtils.copyNullableProperties(cityDto, city);
+		city.setDistrictId(Long.parseLong(cityDto.getDistrictId()));
 		if (originalEntity.equals(city)) {
 			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_NOCHANGE);
 		}
