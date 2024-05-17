@@ -78,9 +78,8 @@ public final class DistrictServiceImpl implements IDistrictService {
 		final Example<City> example = Example.of(aCity, ExampleMatcher.matching());
 		final List<CityDto> cities = this.cityRepository.findAll(example).stream().map(item -> {
 			final CityDto cityDto = new CityDto();
-			SecondBeanUtils.copyNullableProperties(item, cityDto);
 			cityDto.setId(item.getId().toString());
-			cityDto.setDistrictId(item.getDistrictId().toString());
+			cityDto.setName(item.getName());
 			return cityDto;
 		}).collect(Collectors.toList());
 		final CityDto cityDto = cities.stream()
