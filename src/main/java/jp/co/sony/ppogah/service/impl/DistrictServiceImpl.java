@@ -147,7 +147,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 		});
 		SecondBeanUtils.copyNullableProperties(district, originalEntity);
 		final Chiho chiho = new Chiho();
-		chiho.setName(districtDto.getName());
+		chiho.setName(districtDto.getChiho());
 		final Example<Chiho> example2 = Example.of(chiho, ExampleMatcher.matching());
 		final Chiho chiho2 = this.chihoRepository.findOne(example2).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
