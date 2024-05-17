@@ -92,7 +92,11 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
 	public EmployeeDto getEmployeeById(final String id) {
-		final Employee employee = this.employeeRepository.findById(Long.parseLong(id)).orElseThrow(() -> {
+		final Employee aEmployee = new Employee();
+		aEmployee.setId(Long.parseLong(id));
+		aEmployee.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
+		final Example<Employee> example = Example.of(aEmployee, ExampleMatcher.matching());
+		final Employee employee = this.employeeRepository.findOne(example).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
 		final EmployeeRole employeeRole = this.employeeRoleRepository.findById(Long.parseLong(id))
@@ -129,8 +133,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowdConstants.DEFAULT_PAGE_SIZE,
 				Sort.by(Direction.ASC, "id"));
 		if (CommonProjectUtils.isEmpty(keyword)) {
-			final Specification<Employee> specification = Specification.where(status);
-			final Page<Employee> pages = this.employeeRepository.findAll(specification, pageRequest);
+			final Page<Employee> pages = this.employeeRepository.findAll(status, pageRequest);
 			final List<EmployeeDto> employeeDtos = pages.stream().map(item -> {
 				final EmployeeDto employeeDto = new EmployeeDto();
 				SecondBeanUtils.copyNullableProperties(item, employeeDto);
@@ -141,14 +144,12 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 			return Pagination.of(employeeDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 		}
 		final String searchStr = CommonProjectUtils.getDetailKeyword(keyword);
-		final Specification<Employee> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.like(root.get("loginAccount"), searchStr);
-		final Specification<Employee> where2 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.like(root.get("username"), searchStr);
-		final Specification<Employee> where3 = (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("email"),
-				searchStr);
-		final Specification<Employee> specification = Specification.where(status)
-				.and(Specification.where(where1).or(where2).or(where3));
+		final Specification<Employee> specification = (root, query, criteriaBuilder) -> {
+			criteriaBuilder.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
+			return criteriaBuilder.or(criteriaBuilder.like(root.get("loginAccount"), searchStr),
+					criteriaBuilder.like(root.get("username"), searchStr),
+					criteriaBuilder.like(root.get("email"), searchStr));
+		};
 		final Page<Employee> pages = this.employeeRepository.findAll(specification, pageRequest);
 		final List<EmployeeDto> employeeDtos = pages.stream().map(item -> {
 			final EmployeeDto employeeDto = new EmployeeDto();
@@ -179,13 +180,13 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
 	public Boolean register(final EmployeeDto employeeDto) {
-		final Specification<Employee> where = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("email"),
-				employeeDto.getEmail());
-		final Optional<Employee> findOne = this.employeeRepository.findOne(where);
+		final Employee employee = new Employee();
+		employee.setEmail(employeeDto.getEmail());
+		final Example<Employee> example = Example.of(employee, ExampleMatcher.matching());
+		final Optional<Employee> findOne = this.employeeRepository.findOne(example);
 		if (findOne.isPresent()) {
 			return Boolean.FALSE;
 		}
-		final Employee employee = new Employee();
 		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
 		employee.setId(SnowflakeUtils.snowflakeId());
 		employee.setLoginAccount(this.getRandomStr());
@@ -193,9 +194,11 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		employee.setCreatedTime(LocalDateTime.now());
 		employee.setDateOfBirth(LocalDate.parse(employeeDto.getDateOfBirth(), this.formatter));
 		this.employeeRepository.saveAndFlush(employee);
-		final Specification<Role> where2 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("name"),
-				"正社員");
-		final Role role = this.roleRepository.findOne(where2).orElseThrow(() -> {
+		final Role aRole = new Role();
+		aRole.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
+		aRole.setName("正社員");
+		final Example<Role> example2 = Example.of(aRole, ExampleMatcher.matching());
+		final Role role = this.roleRepository.findOne(example2).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
 		final EmployeeRole employeeRole = new EmployeeRole();
@@ -207,7 +210,11 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
 	public void remove(final Long userId) {
-		final Employee employee = this.employeeRepository.findById(userId).orElseThrow(() -> {
+		final Employee aEmployee = new Employee();
+		aEmployee.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
+		aEmployee.setId(userId);
+		final Example<Employee> example = Example.of(aEmployee, ExampleMatcher.matching());
+		final Employee employee = this.employeeRepository.findOne(example).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_PROHIBITED);
 		});
 		employee.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_FLG);

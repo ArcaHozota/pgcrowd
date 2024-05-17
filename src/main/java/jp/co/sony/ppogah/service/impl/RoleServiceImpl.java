@@ -110,10 +110,10 @@ public final class RoleServiceImpl implements IRoleService {
 		}
 		this.roleExRepository.deleteAll(list1);
 		final List<RoleAuth> list = authIds.stream().map(item -> {
-			final RoleAuth roleEx = new RoleAuth();
-			roleEx.setAuthId(item);
-			roleEx.setRoleId(roleId);
-			return roleEx;
+			final RoleAuth roleAuth = new RoleAuth();
+			roleAuth.setAuthId(item);
+			roleAuth.setRoleId(roleId);
+			return roleAuth;
 		}).collect(Collectors.toList());
 		try {
 			this.roleExRepository.saveAll(list);
