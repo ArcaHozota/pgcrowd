@@ -16,6 +16,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import jp.co.sony.ppogah.common.PgCrowdConstants;
+import jp.co.sony.ppogah.dto.CityDto;
 import jp.co.sony.ppogah.dto.DistrictDto;
 import jp.co.sony.ppogah.entity.Chiho;
 import jp.co.sony.ppogah.entity.City;
@@ -66,6 +67,27 @@ public final class DistrictServiceImpl implements IDistrictService {
 		chihos.add(chihoName);
 		chihos.addAll(chihoList);
 		return chihos;
+	}
+
+	@Override
+	public List<CityDto> getDistrictCities(final DistrictDto districtDto) {
+		final List<CityDto> cityDtos = new ArrayList<>();
+		final City aCity = new City();
+		aCity.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
+		aCity.setDistrictId(Long.parseLong(districtDto.getId()));
+		final Example<City> example = Example.of(aCity, ExampleMatcher.matching());
+		final List<CityDto> cities = this.cityRepository.findAll(example).stream().map(item -> {
+			final CityDto cityDto = new CityDto();
+			cityDto.setId(item.getId().toString());
+			cityDto.setName(item.getName());
+			return cityDto;
+		}).collect(Collectors.toList());
+		final CityDto cityDto = cityDtos.stream()
+				.filter(a -> CommonProjectUtils.isEqual(a.getName(), districtDto.getShutoName()))
+				.collect(Collectors.toList()).get(0);
+		cityDtos.add(cityDto);
+		cityDtos.addAll(cities);
+		return cityDtos.stream().distinct().collect(Collectors.toList());
 	}
 
 	@Override
