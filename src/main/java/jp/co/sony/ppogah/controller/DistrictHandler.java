@@ -21,6 +21,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import jp.co.sony.ppogah.common.PgCrowdURLConstants;
+import jp.co.sony.ppogah.dto.CityDto;
 import jp.co.sony.ppogah.dto.DistrictDto;
 import jp.co.sony.ppogah.service.IDistrictService;
 import jp.co.sony.ppogah.utils.Pagination;
@@ -110,7 +111,7 @@ public class DistrictHandler extends ActionSupport {
 	}
 
 	/**
-	 * 情報一覧画面初期表示する
+	 * 地方情報を取得する
 	 *
 	 * @return String
 	 */
@@ -136,6 +137,20 @@ public class DistrictHandler extends ActionSupport {
 		this.districtDto.setPopulation(this.getPopulation());
 		this.districtDto.setDistrictFlag(this.getDistrictFlag());
 		return this.districtDto;
+	}
+
+	/**
+	 * 地域都市一覧を取得する
+	 *
+	 * @return String
+	 */
+	@PreAuthorize("hasAuthority('district%retrieve')")
+	@Action(value = PgCrowdURLConstants.URL_SHUTO_LIST, interceptorRefs = { @InterceptorRef("json") })
+	public String getShutos() {
+		final DistrictDto districtDto2 = this.getDistrictDto();
+		final List<CityDto> shutos = this.iDistrictService.getDistrictCities(districtDto2);
+		this.setResponsedJsondata(ResultDto.successWithData(shutos));
+		return NONE;
 	}
 
 	/**
