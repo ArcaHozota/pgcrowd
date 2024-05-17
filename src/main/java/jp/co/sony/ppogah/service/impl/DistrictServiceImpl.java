@@ -21,10 +21,12 @@ import jp.co.sony.ppogah.dto.DistrictDto;
 import jp.co.sony.ppogah.entity.Chiho;
 import jp.co.sony.ppogah.entity.City;
 import jp.co.sony.ppogah.entity.District;
+import jp.co.sony.ppogah.entity.Shuto;
 import jp.co.sony.ppogah.exception.PgCrowdException;
 import jp.co.sony.ppogah.repository.ChihoRepository;
 import jp.co.sony.ppogah.repository.CityRepository;
 import jp.co.sony.ppogah.repository.DistrictRepository;
+import jp.co.sony.ppogah.repository.ShutoRepository;
 import jp.co.sony.ppogah.service.IDistrictService;
 import jp.co.sony.ppogah.utils.CommonProjectUtils;
 import jp.co.sony.ppogah.utils.Pagination;
@@ -58,12 +60,18 @@ public final class DistrictServiceImpl implements IDistrictService {
 	 */
 	private final CityRepository cityRepository;
 
+	/**
+	 * 州都管理リポジトリ
+	 */
+	private final ShutoRepository shutoRepository;
+
 	@Override
 	public List<String> getDistrictChihos(final String chihoName) {
 		final List<String> chihos = new ArrayList<>();
-		final List<String> chihoList = this.chihoRepository.findAll(Sort.by(Direction.ASC, "id")).stream()
-				.map(Chiho::getName).filter(a -> CommonProjectUtils.isNotEqual(a, chihoName))
-				.collect(Collectors.toList());
+		final Specification<Chiho> specification = (root, query, criteriaBuilder) -> criteriaBuilder
+				.notEqual(root.get("name"), chihoName);
+		final List<String> chihoList = this.chihoRepository.findAll(specification, Sort.by(Direction.ASC, "id"))
+				.stream().map(Chiho::getName).collect(Collectors.toList());
 		chihos.add(chihoName);
 		chihos.addAll(chihoList);
 		return chihos;
@@ -124,9 +132,8 @@ public final class DistrictServiceImpl implements IDistrictService {
 	public Pagination<DistrictDto> getDistrictsByKeyword(final Integer pageNum, final String keyword) {
 		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowdConstants.DEFAULT_PAGE_SIZE,
 				Sort.by(Direction.ASC, "id"));
-		final Specification<District> where1 = (root, query, criteriaBuilder) -> criteriaBuilder
+		final Specification<District> specification = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
-		final Specification<District> specification = Specification.where(where1);
 		if (CommonProjectUtils.isEmpty(keyword)) {
 			final Page<District> pages = this.districtRepository.findAll(specification, pageRequest);
 			final List<DistrictDto> districtDtos = pages.stream().map(item -> {
@@ -144,7 +151,16 @@ public final class DistrictServiceImpl implements IDistrictService {
 			return Pagination.of(districtDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 		}
 		final String searchStr = CommonProjectUtils.getDetailKeyword(keyword);
-		final Page<District> pages = this.districtRepository.findByShutoLike(searchStr, pageRequest);
+		final Specification<Shuto> specification1 = (root, query, criteriaBuilder) -> criteriaBuilder
+				.like(root.get("shutoName"), searchStr);
+		final List<Long> shutoIds = this.shutoRepository.findAll(specification1).stream().map(Shuto::getId)
+				.collect(Collectors.toList());
+		final Specification<District> specification2 = (root, query, criteriaBuilder) -> {
+			criteriaBuilder.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
+			return criteriaBuilder.or(criteriaBuilder.like(root.get("name"), searchStr),
+					criteriaBuilder.like(root.get("chiho").get("name"), searchStr), root.get("shutoId").in(shutoIds));
+		};
+		final Page<District> pages = this.districtRepository.findAll(specification2, pageRequest);
 		final List<DistrictDto> districtDtos = pages.stream().map(item -> {
 			final DistrictDto districtDto = new DistrictDto();
 			SecondBeanUtils.copyNullableProperties(item, districtDto);
