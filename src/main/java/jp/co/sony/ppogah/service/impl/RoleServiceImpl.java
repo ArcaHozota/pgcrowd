@@ -9,6 +9,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -53,11 +55,6 @@ public final class RoleServiceImpl implements IRoleService {
 	private static final String DELETE_FLG = "deleteFlg";
 
 	/**
-	 * 役割ID
-	 */
-	private static final String ROLE_ID = "roleId";
-
-	/**
 	 * 役割名称
 	 */
 	private static final String ROLE_NAME = "name";
@@ -84,12 +81,11 @@ public final class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public ResultDto<String> checkDuplicated(final String name) {
-		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(DELETE_FLG),
-				PgCrowdConstants.LOGIC_DELETE_INITIAL);
-		final Specification<Role> where2 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(ROLE_NAME),
-				name);
-		final Specification<Role> specification = Specification.where(where1).and(where2);
-		return this.roleRepository.findOne(specification).isPresent()
+		final Role aRole = new Role();
+		aRole.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
+		aRole.setName(name);
+		final Example<Role> example = Example.of(aRole, ExampleMatcher.matching());
+		return this.roleRepository.findOne(example).isPresent()
 				? ResultDto.failed(PgCrowdConstants.MESSAGE_ROLE_NAME_DUPLICATED)
 				: ResultDto.successWithoutData();
 	}
@@ -98,14 +94,14 @@ public final class RoleServiceImpl implements IRoleService {
 	public ResultDto<String> doAssignment(final Map<String, List<String>> paramMap) {
 		final Long[] idArray = { 1L, 5L, 9L, 12L };
 		final Long roleId = Long.parseLong(paramMap.get("roleIds").get(0));
-		final Specification<RoleAuth> where = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(ROLE_ID),
-				roleId);
-		final Specification<RoleAuth> specification = Specification.where(where);
-		final List<RoleAuth> list1 = this.roleExRepository.findAll(specification);
+		final RoleAuth aRoleAuth = new RoleAuth();
+		aRoleAuth.setRoleId(roleId);
+		final Example<RoleAuth> example = Example.of(aRoleAuth, ExampleMatcher.matching());
+		final List<RoleAuth> list1 = this.roleExRepository.findAll(example);
 		final List<Long> list2 = list1.stream().map(RoleAuth::getAuthId).sorted().collect(Collectors.toList());
 		final List<Long> authIds = paramMap.get("authIds").stream().map(Long::parseLong)
 				.filter(a -> !Arrays.asList(idArray).contains(a)).sorted().collect(Collectors.toList());
-		if (list2.equals(authIds)) {
+		if (CommonProjectUtils.isEqual(authIds, list2)) {
 			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_NOCHANGE);
 		}
 		this.roleExRepository.deleteAll(list1);
@@ -125,10 +121,10 @@ public final class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public List<String> getAuthIdsById(final Long id) {
-		final Specification<RoleAuth> where = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(ROLE_ID),
-				id);
-		final Specification<RoleAuth> specification = Specification.where(where);
-		return this.roleExRepository.findAll(specification).stream().map(a -> a.getAuthId().toString())
+		final RoleAuth aRoleAuth = new RoleAuth();
+		aRoleAuth.setRoleId(id);
+		final Example<RoleAuth> example = Example.of(aRoleAuth, ExampleMatcher.matching());
+		return this.roleExRepository.findAll(example).stream().map(a -> a.getAuthId().toString())
 				.collect(Collectors.toList());
 	}
 
@@ -145,10 +141,14 @@ public final class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public RoleDto getRoleById(final Long id) {
-		final RoleDto roleDto = new RoleDto();
-		final Role role = this.roleRepository.findById(id).orElseThrow(() -> {
+		final Role aRole = new Role();
+		aRole.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
+		aRole.setId(id);
+		final Example<Role> example = Example.of(aRole, ExampleMatcher.matching());
+		final Role role = this.roleRepository.findOne(example).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_NOT_EXISTS);
 		});
+		final RoleDto roleDto = new RoleDto();
 		SecondBeanUtils.copyNullableProperties(role, roleDto);
 		roleDto.setId(role.getId().toString());
 		return roleDto;
@@ -160,10 +160,10 @@ public final class RoleServiceImpl implements IRoleService {
 		final RoleDto secondRole = new RoleDto();
 		secondRole.setId("0");
 		secondRole.setName(PgCrowdConstants.DEFAULT_ROLE_NAME);
-		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(DELETE_FLG),
-				PgCrowdConstants.LOGIC_DELETE_INITIAL);
-		final Specification<Role> specification1 = Specification.where(where1);
-		final List<RoleDto> roleDtos = this.roleRepository.findAll(specification1).stream().map(item -> {
+		final Role aRole = new Role();
+		aRole.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
+		final Example<Role> example = Example.of(aRole, ExampleMatcher.matching());
+		final List<RoleDto> roleDtos = this.roleRepository.findAll(example).stream().map(item -> {
 			final RoleDto roleDto = new RoleDto();
 			SecondBeanUtils.copyNullableProperties(item, roleDto);
 			roleDto.setId(item.getId().toString());
@@ -191,9 +191,8 @@ public final class RoleServiceImpl implements IRoleService {
 	public Pagination<RoleDto> getRolesByKeyword(final Integer pageNum, final String keyword) {
 		final PageRequest pageRequest = PageRequest.of(pageNum - 1, PgCrowdConstants.DEFAULT_PAGE_SIZE,
 				Sort.by(Direction.ASC, "id"));
-		final Specification<Role> where1 = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(DELETE_FLG),
-				PgCrowdConstants.LOGIC_DELETE_INITIAL);
-		final Specification<Role> specification = Specification.where(where1);
+		final Specification<Role> specification = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get(DELETE_FLG), PgCrowdConstants.LOGIC_DELETE_INITIAL);
 		if (CommonProjectUtils.isEmpty(keyword)) {
 			final Page<Role> pages = this.roleRepository.findAll(specification, pageRequest);
 			final List<RoleDto> roleDtos = pages.stream().map(item -> {
@@ -203,17 +202,6 @@ public final class RoleServiceImpl implements IRoleService {
 				return roleDto;
 			}).collect(Collectors.toList());
 			return Pagination.of(roleDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
-		}
-		if (CommonProjectUtils.isDigital(keyword)) {
-			final Page<Role> byIdLike = this.roleRepository.findByIdLike(keyword,
-					PgCrowdConstants.LOGIC_DELETE_INITIAL, pageRequest);
-			final List<RoleDto> roleDtos = byIdLike.stream().map(item -> {
-				final RoleDto roleDto = new RoleDto();
-				SecondBeanUtils.copyNullableProperties(item, roleDto);
-				roleDto.setId(item.getId().toString());
-				return roleDto;
-			}).collect(Collectors.toList());
-			return Pagination.of(roleDtos, byIdLike.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 		}
 		final String searchStr = CommonProjectUtils.getDetailKeyword(keyword);
 		final Specification<Role> where2 = (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get(ROLE_NAME),
@@ -230,14 +218,18 @@ public final class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public ResultDto<String> remove(final Long id) {
-		final Specification<EmployeeRole> where = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get(ROLE_ID), id);
-		final Specification<EmployeeRole> specification = Specification.where(where);
-		final List<EmployeeRole> list = this.employeeRoleRepository.findAll(specification);
+		final EmployeeRole employeeRole = new EmployeeRole();
+		employeeRole.setRoleId(id);
+		final Example<EmployeeRole> example = Example.of(employeeRole, ExampleMatcher.matching());
+		final List<EmployeeRole> list = this.employeeRoleRepository.findAll(example);
 		if (!list.isEmpty()) {
 			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_FORBIDDEN);
 		}
-		final Role role = this.roleRepository.findById(id).orElseThrow(() -> {
+		final Role aRole = new Role();
+		aRole.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
+		aRole.setId(id);
+		final Example<Role> example2 = Example.of(aRole, ExampleMatcher.matching());
+		final Role role = this.roleRepository.findOne(example2).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
 		role.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_FLG);
@@ -256,13 +248,17 @@ public final class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public ResultDto<String> update(final RoleDto roleDto) {
-		final Role role = this.roleRepository.findById(Long.parseLong(roleDto.getId())).orElseThrow(() -> {
+		final Role aRole = new Role();
+		aRole.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
+		aRole.setId(Long.parseLong(roleDto.getId()));
+		final Example<Role> example = Example.of(aRole, ExampleMatcher.matching());
+		final Role role = this.roleRepository.findOne(example).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
 		final Role originalEntity = new Role();
 		SecondBeanUtils.copyNullableProperties(role, originalEntity);
 		SecondBeanUtils.copyNullableProperties(roleDto, role);
-		if (originalEntity.equals(role)) {
+		if (CommonProjectUtils.isEqual(originalEntity, role)) {
 			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_NOCHANGE);
 		}
 		try {
