@@ -177,8 +177,8 @@ public final class DistrictServiceImpl implements IDistrictService {
 	@Override
 	public ResultDto<String> update(final DistrictDto districtDto) {
 		final District originalEntity = new District();
-		originalEntity.setId(Long.parseLong(districtDto.getId()));
 		originalEntity.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
+		originalEntity.setId(Long.parseLong(districtDto.getId()));
 		final Example<District> example = Example.of(originalEntity, ExampleMatcher.matching());
 		final District district = this.districtRepository.findOne(example).orElseThrow(() -> {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
@@ -192,6 +192,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 		});
 		SecondBeanUtils.copyNullableProperties(districtDto, district);
 		district.setChihoId(chiho2.getId());
+		district.setShutoId(Long.parseLong(districtDto.getShutoId()));
 		if (CommonProjectUtils.isEqual(originalEntity, district)) {
 			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_NOCHANGE);
 		}
