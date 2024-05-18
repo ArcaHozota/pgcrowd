@@ -87,9 +87,9 @@ public final class CityServiceImpl implements ICityService {
 		final String searchStr = CommonProjectUtils.getDetailKeyword(keyword);
 		final Specification<City> specification = (root, query, criteriaBuilder) -> {
 			criteriaBuilder.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
-			return criteriaBuilder.and(criteriaBuilder.or(criteriaBuilder.like(root.get("name"), searchStr),
+			return criteriaBuilder.or(criteriaBuilder.like(root.get("name"), searchStr),
 					criteriaBuilder.like(root.get("pronunciation"), searchStr),
-					criteriaBuilder.like(root.get("district").get("name"), searchStr)));
+					criteriaBuilder.like(root.get("district").get("name"), searchStr));
 		};
 		final Page<City> pages = this.cityRepository.findAll(specification, pageRequest);
 		final List<CityDto> cityDtos = pages.stream().map(item -> {
