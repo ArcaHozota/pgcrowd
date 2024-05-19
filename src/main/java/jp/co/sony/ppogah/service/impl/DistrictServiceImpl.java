@@ -21,12 +21,10 @@ import jp.co.sony.ppogah.dto.DistrictDto;
 import jp.co.sony.ppogah.entity.Chiho;
 import jp.co.sony.ppogah.entity.City;
 import jp.co.sony.ppogah.entity.District;
-import jp.co.sony.ppogah.entity.Shuto;
 import jp.co.sony.ppogah.exception.PgCrowdException;
 import jp.co.sony.ppogah.repository.ChihoRepository;
 import jp.co.sony.ppogah.repository.CityRepository;
 import jp.co.sony.ppogah.repository.DistrictRepository;
-import jp.co.sony.ppogah.repository.ShutoRepository;
 import jp.co.sony.ppogah.service.IDistrictService;
 import jp.co.sony.ppogah.utils.CommonProjectUtils;
 import jp.co.sony.ppogah.utils.Pagination;
@@ -59,11 +57,6 @@ public final class DistrictServiceImpl implements IDistrictService {
 	 * 都市管理リポジトリ
 	 */
 	private final CityRepository cityRepository;
-
-	/**
-	 * 州都管理リポジトリ
-	 */
-	private final ShutoRepository shutoRepository;
 
 	@Override
 	public List<String> getDistrictChihos(final String chihoName) {
@@ -151,9 +144,11 @@ public final class DistrictServiceImpl implements IDistrictService {
 			return Pagination.of(districtDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 		}
 		final String searchStr = CommonProjectUtils.getDetailKeyword(keyword);
-		final Specification<Shuto> specification1 = (root, query, criteriaBuilder) -> criteriaBuilder
-				.like(root.get("shutoName"), searchStr);
-		final List<Long> shutoIds = this.shutoRepository.findAll(specification1).stream().map(Shuto::getId)
+		final Specification<City> specification1 = (root, query, criteriaBuilder) -> {
+			criteriaBuilder.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
+			return criteriaBuilder.and(criteriaBuilder.like(root.get("name"), searchStr));
+		};
+		final List<Long> shutoIds = this.cityRepository.findAll(specification1).stream().map(City::getId)
 				.collect(Collectors.toList());
 		final Specification<District> specification2 = (root, query, criteriaBuilder) -> {
 			criteriaBuilder.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
