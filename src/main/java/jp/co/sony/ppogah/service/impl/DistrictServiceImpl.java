@@ -77,12 +77,13 @@ public final class DistrictServiceImpl implements IDistrictService {
 		aCity.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
 		aCity.setDistrictId(Long.parseLong(districtDto.getId()));
 		final Example<City> example = Example.of(aCity, ExampleMatcher.matching());
-		final List<CityDto> cities = this.cityRepository.findAll(example).stream().map(item -> {
-			final CityDto cityDto = new CityDto();
-			cityDto.setId(item.getId().toString());
-			cityDto.setName(item.getName());
-			return cityDto;
-		}).collect(Collectors.toList());
+		final List<CityDto> cities = this.cityRepository.findAll(example, Sort.by(Direction.ASC, "id")).stream()
+				.map(item -> {
+					final CityDto cityDto = new CityDto();
+					cityDto.setId(item.getId().toString());
+					cityDto.setName(item.getName());
+					return cityDto;
+				}).collect(Collectors.toList());
 		final CityDto cityDto = cities.stream()
 				.filter(a -> CommonProjectUtils.isEqual(a.getName(), districtDto.getShutoName()))
 				.collect(Collectors.toList()).get(0);
