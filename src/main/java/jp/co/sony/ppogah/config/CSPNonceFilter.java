@@ -18,7 +18,7 @@ import org.springframework.web.filter.GenericFilterBean;
  * 任意CSPNonce生成フィルタ
  *
  * @author Bozhio
- * @since 1.43
+ * @since 4.24
  */
 public class CSPNonceFilter extends GenericFilterBean {
 	// Wrapper to fill the nonce value
@@ -40,7 +40,7 @@ public class CSPNonceFilter extends GenericFilterBean {
 		}
 	}
 
-	private static final int NONCE_SIZE = 32; // Recommended size is at least 128 bits/16 bytes
+	private static final int NONCE_SIZE = 24; // Recommended size is at least 128 bits/16 bytes
 	private static final String CSP_NONCE_ATTRIBUTE = "cspNonce";
 
 	private final SecureRandom secureRandom = new SecureRandom();
