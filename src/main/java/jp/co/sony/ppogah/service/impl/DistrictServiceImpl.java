@@ -15,9 +15,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import jp.co.sony.ppogah.common.PgCrowdConstants;
+import jp.co.sony.ppogah.dto.ChihoDto;
 import jp.co.sony.ppogah.dto.CityDto;
 import jp.co.sony.ppogah.dto.DistrictDto;
-import jp.co.sony.ppogah.entity.Chiho;
 import jp.co.sony.ppogah.entity.City;
 import jp.co.sony.ppogah.entity.District;
 import jp.co.sony.ppogah.exception.PgCrowdException;
@@ -58,15 +58,19 @@ public final class DistrictServiceImpl implements IDistrictService {
 	private final CityRepository cityRepository;
 
 	@Override
-	public List<String> getDistrictChihos(final String chihoName) {
-		final List<String> chihos = new ArrayList<>();
-		final Specification<Chiho> specification = (root, query, criteriaBuilder) -> criteriaBuilder
-				.notEqual(root.get("name"), chihoName);
-		final List<String> chihoList = this.chihoRepository.findAll(specification, Sort.by(Direction.ASC, "id"))
-				.stream().map(Chiho::getName).collect(Collectors.toList());
-		chihos.add(chihoName);
+	public List<ChihoDto> getDistrictChihos(final String chihoName) {
+		final List<ChihoDto> chihos = new ArrayList<>();
+		final List<ChihoDto> chihoList = this.chihoRepository.findAll(Sort.by(Direction.ASC, "id")).stream()
+				.map(item -> {
+					final ChihoDto chihoDto = new ChihoDto();
+					SecondBeanUtils.copyNullableProperties(item, chihoDto);
+					chihoDto.setId(item.getId().toString());
+					return chihoDto;
+				}).collect(Collectors.toList());
+		chihos.addAll(chihoList.stream().filter(a -> CommonProjectUtils.isEqual(a.getName(), chihoName))
+				.collect(Collectors.toList()));
 		chihos.addAll(chihoList);
-		return chihos;
+		return chihos.stream().distinct().collect(Collectors.toList());
 	}
 
 	@Override
@@ -99,14 +103,14 @@ public final class DistrictServiceImpl implements IDistrictService {
 			final DistrictDto districtDto = new DistrictDto();
 			SecondBeanUtils.copyNullableProperties(item, districtDto);
 			districtDto.setId(item.getId().toString());
-			districtDto.setChiho(item.getChiho().getName());
+			districtDto.setChihoName(item.getChiho().getName());
 			return districtDto;
 		}).collect(Collectors.toList());
 		if (!CommonProjectUtils.isDigital(cityId)) {
 			final DistrictDto districtDto = new DistrictDto();
 			districtDto.setId("0");
 			districtDto.setName(PgCrowdConstants.DEFAULT_ROLE_NAME);
-			districtDto.setChiho(CommonProjectUtils.EMPTY_STRING);
+			districtDto.setChihoName(CommonProjectUtils.EMPTY_STRING);
 			districtDtos.add(districtDto);
 		} else {
 			final City city = this.cityRepository.findById(Long.parseLong(cityId)).orElseThrow(() -> {
@@ -133,7 +137,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 				final DistrictDto districtDto = new DistrictDto();
 				SecondBeanUtils.copyNullableProperties(item, districtDto);
 				districtDto.setId(item.getId().toString());
-				districtDto.setChiho(item.getChiho().getName());
+				districtDto.setChihoName(item.getChiho().getName());
 				districtDto.setShutoName(item.getShutoCity().getName());
 				districtDto.setPopulation(
 						item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get());
@@ -153,7 +157,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 			final DistrictDto districtDto = new DistrictDto();
 			SecondBeanUtils.copyNullableProperties(item, districtDto);
 			districtDto.setId(item.getId().toString());
-			districtDto.setChiho(item.getChiho().getName());
+			districtDto.setChihoName(item.getChiho().getName());
 			districtDto.setShutoName(item.getShutoCity().getName());
 			districtDto.setPopulation(item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get());
 			return districtDto;
@@ -171,14 +175,8 @@ public final class DistrictServiceImpl implements IDistrictService {
 			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
 		});
 		SecondBeanUtils.copyNullableProperties(district, originalEntity);
-		final Chiho chiho = new Chiho();
-		chiho.setName(districtDto.getChiho());
-		final Example<Chiho> example2 = Example.of(chiho, ExampleMatcher.matching());
-		final Chiho chiho2 = this.chihoRepository.findOne(example2).orElseThrow(() -> {
-			throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
-		});
 		SecondBeanUtils.copyNullableProperties(districtDto, district);
-		district.setChihoId(chiho2.getId());
+		district.setChihoId(Long.parseLong(districtDto.getChihoId()));
 		district.setShutoId(Long.parseLong(districtDto.getShutoId()));
 		if (CommonProjectUtils.isEqual(originalEntity, district)) {
 			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_NOCHANGE);

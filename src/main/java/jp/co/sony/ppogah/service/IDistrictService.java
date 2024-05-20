@@ -2,6 +2,7 @@ package jp.co.sony.ppogah.service;
 
 import java.util.List;
 
+import jp.co.sony.ppogah.dto.ChihoDto;
 import jp.co.sony.ppogah.dto.CityDto;
 import jp.co.sony.ppogah.dto.DistrictDto;
 import jp.co.sony.ppogah.utils.Pagination;
@@ -18,10 +19,10 @@ public interface IDistrictService {
 	/**
 	 * 地方リストを取得する
 	 *
-	 * @param chiho 地方名称
+	 * @param chihoName 地方名称
 	 * @return List<String>
 	 */
-	List<String> getDistrictChihos(String chiho);
+	List<ChihoDto> getDistrictChihos(String chihoName);
 
 	/**
 	 * 地域都市リストを取得する
