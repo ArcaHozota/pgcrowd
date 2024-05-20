@@ -84,7 +84,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 					return cityDto;
 				}).collect(Collectors.toList());
 		final CityDto cityDto = cities.stream()
-				.filter(a -> CommonProjectUtils.isEqual(a.getName(), districtDto.getShutoName()))
+				.filter(a -> CommonProjectUtils.isEqual(a.getId(), Long.parseLong(districtDto.getShutoId())))
 				.collect(Collectors.toList()).get(0);
 		cityDtos.add(cityDto);
 		cityDtos.addAll(cities);
