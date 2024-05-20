@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.EqualsAndHashCode;
@@ -83,4 +84,11 @@ public class District implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "chihoId", insertable = false, updatable = false)
 	private Chiho chiho;
+
+	/**
+	 * 地域州都関連
+	 */
+	@OneToOne
+	@JoinColumn(name = "shutoId", insertable = false, updatable = false)
+	private City shutoCity;
 }
