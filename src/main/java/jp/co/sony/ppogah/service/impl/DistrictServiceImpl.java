@@ -2,7 +2,6 @@ package jp.co.sony.ppogah.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.dao.DataIntegrityViolationException;
@@ -135,9 +134,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 				SecondBeanUtils.copyNullableProperties(item, districtDto);
 				districtDto.setId(item.getId().toString());
 				districtDto.setChiho(item.getChiho().getName());
-				districtDto.setShutoName(
-						item.getCities().stream().filter(a -> Objects.equals(a.getId(), item.getShutoId()))
-								.collect(Collectors.toList()).get(0).getName());
+				districtDto.setShutoName(item.getShutoCity().getName());
 				districtDto.setPopulation(
 						item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get());
 				return districtDto;
@@ -145,16 +142,11 @@ public final class DistrictServiceImpl implements IDistrictService {
 			return Pagination.of(districtDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
 		}
 		final String searchStr = CommonProjectUtils.getDetailKeyword(keyword);
-		final Specification<City> specification1 = (root, query, criteriaBuilder) -> {
-			criteriaBuilder.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
-			return criteriaBuilder.and(criteriaBuilder.like(root.get("name"), searchStr));
-		};
-		final List<Long> shutoIds = this.cityRepository.findAll(specification1).stream().map(City::getId)
-				.collect(Collectors.toList());
 		final Specification<District> specification2 = (root, query, criteriaBuilder) -> {
 			criteriaBuilder.equal(root.get("deleteFlg"), PgCrowdConstants.LOGIC_DELETE_INITIAL);
 			return criteriaBuilder.or(criteriaBuilder.like(root.get("name"), searchStr),
-					criteriaBuilder.like(root.get("chiho").get("name"), searchStr), root.get("shutoId").in(shutoIds));
+					criteriaBuilder.like(root.get("chiho").get("name"), searchStr),
+					criteriaBuilder.like(root.get("shutoCity").get("name"), searchStr));
 		};
 		final Page<District> pages = this.districtRepository.findAll(specification2, pageRequest);
 		final List<DistrictDto> districtDtos = pages.stream().map(item -> {
@@ -162,8 +154,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 			SecondBeanUtils.copyNullableProperties(item, districtDto);
 			districtDto.setId(item.getId().toString());
 			districtDto.setChiho(item.getChiho().getName());
-			districtDto.setShutoName(item.getCities().stream().filter(a -> Objects.equals(a.getId(), item.getShutoId()))
-					.collect(Collectors.toList()).get(0).getName());
+			districtDto.setShutoName(item.getShutoCity().getName());
 			districtDto.setPopulation(item.getCities().stream().map(City::getPopulation).reduce((a, v) -> a + v).get());
 			return districtDto;
 		}).collect(Collectors.toList());
