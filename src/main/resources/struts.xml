@@ -13,7 +13,7 @@
 	</package>
 	<constant
 		name="struts.convention.package.locators.basePackage"
-		value="jp.co.sony.ppogah" />
+		value="jp.co.toshiba.ppocph" />
 	<!-- 包名后缀，默认为action、actions、struts、struts2 -->
 	<constant name="struts.convention.package.locators"
 		value="controller" />
@@ -46,5 +46,5 @@
 	<constant name="struts.devMode" value="false" />
 	<!-- 自定义异常处理器 -->
 	<constant name="struts.dispatcher.errorHandler"
-		value="jp.co.sony.ppogah.listener.PgCrowdExceptionHandler" />
+		value="jp.co.toshiba.ppocph.listener.PgCrowdExceptionHandler" />
 </struts>
