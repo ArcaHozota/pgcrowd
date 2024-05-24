@@ -51,6 +51,16 @@ import lombok.RequiredArgsConstructor;
 public final class EmployeeServiceImpl implements IEmployeeService {
 
 	/**
+	 * 日時フォマーター
+	 */
+	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+	/**
+	 * パスワードエンコーダ
+	 */
+	private static final PasswordEncoder ENCODER = new BCryptPasswordEncoder(BCryptVersion.$2Y, 7);
+
+	/**
 	 * Randomナンバー
 	 */
 	private static final Random RANDOM = new Random();
@@ -69,16 +79,6 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 	 * 役割管理リポジトリ
 	 */
 	private final RoleRepository roleRepository;
-
-	/**
-	 * 日時フォマーター
-	 */
-	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-	/**
-	 * パスワードエンコーダ
-	 */
-	private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(BCryptVersion.$2Y, 7);
 
 	@Override
 	public ResultDto<String> checkDuplicated(final String loginAccount) {
@@ -105,7 +105,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		SecondBeanUtils.copyNullableProperties(employee, employeeDto);
 		employeeDto.setId(employee.getId().toString());
 		employeeDto.setPassword(PgCrowdConstants.DEFAULT_ROLE_NAME);
-		employeeDto.setDateOfBirth(this.formatter.format(employee.getDateOfBirth()));
+		employeeDto.setDateOfBirth(EmployeeServiceImpl.FORMATTER.format(employee.getDateOfBirth()));
 		employeeDto.setRoleId(employeeRole.getRoleId().toString());
 		return employeeDto;
 	}
@@ -125,7 +125,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 			final EmployeeDto employeeDto = new EmployeeDto();
 			SecondBeanUtils.copyNullableProperties(employee, employeeDto);
 			employeeDto.setId(employee.getId().toString());
-			employeeDto.setDateOfBirth(this.formatter.format(employee.getDateOfBirth()));
+			employeeDto.setDateOfBirth(EmployeeServiceImpl.FORMATTER.format(employee.getDateOfBirth()));
 			final List<EmployeeDto> employeeDtos = new ArrayList<>();
 			employeeDtos.add(employeeDto);
 			return Pagination.of(employeeDtos, employeeDtos.size(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
@@ -138,7 +138,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 				final EmployeeDto employeeDto = new EmployeeDto();
 				SecondBeanUtils.copyNullableProperties(item, employeeDto);
 				employeeDto.setId(item.getId().toString());
-				employeeDto.setDateOfBirth(this.formatter.format(item.getDateOfBirth()));
+				employeeDto.setDateOfBirth(EmployeeServiceImpl.FORMATTER.format(item.getDateOfBirth()));
 				return employeeDto;
 			}).collect(Collectors.toList());
 			return Pagination.of(employeeDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
@@ -155,7 +155,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 			final EmployeeDto employeeDto = new EmployeeDto();
 			SecondBeanUtils.copyNullableProperties(item, employeeDto);
 			employeeDto.setId(item.getId().toString());
-			employeeDto.setDateOfBirth(this.formatter.format(item.getDateOfBirth()));
+			employeeDto.setDateOfBirth(EmployeeServiceImpl.FORMATTER.format(item.getDateOfBirth()));
 			return employeeDto;
 		}).collect(Collectors.toList());
 		return Pagination.of(employeeDtos, pages.getTotalElements(), pageNum, PgCrowdConstants.DEFAULT_PAGE_SIZE);
@@ -192,7 +192,7 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		employee.setLoginAccount(this.getRandomStr());
 		employee.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
 		employee.setCreatedTime(LocalDateTime.now());
-		employee.setDateOfBirth(LocalDate.parse(employeeDto.getDateOfBirth(), this.formatter));
+		employee.setDateOfBirth(LocalDate.parse(employeeDto.getDateOfBirth(), EmployeeServiceImpl.FORMATTER));
 		this.employeeRepository.saveAndFlush(employee);
 		final Role aRole = new Role();
 		aRole.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
@@ -228,9 +228,9 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
 		employee.setId(SnowflakeUtils.snowflakeId());
 		employee.setDeleteFlg(PgCrowdConstants.LOGIC_DELETE_INITIAL);
-		employee.setPassword(this.passwordEncoder.encode(employeeDto.getPassword()));
+		employee.setPassword(EmployeeServiceImpl.ENCODER.encode(employeeDto.getPassword()));
 		employee.setCreatedTime(LocalDateTime.now());
-		employee.setDateOfBirth(LocalDate.parse(employeeDto.getDateOfBirth(), this.formatter));
+		employee.setDateOfBirth(LocalDate.parse(employeeDto.getDateOfBirth(), EmployeeServiceImpl.FORMATTER));
 		this.employeeRepository.saveAndFlush(employee);
 		if (CommonProjectUtils.isNotEmpty(employeeDto.getRoleId())
 				&& !Objects.equals(Long.valueOf(0L), Long.parseLong(employeeDto.getRoleId()))) {
@@ -243,23 +243,36 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
 	public ResultDto<String> update(final EmployeeDto employeeDto) {
+		final String password = employeeDto.getPassword();
 		final Employee employee = this.employeeRepository.findById(Long.parseLong(employeeDto.getId()))
 				.orElseThrow(() -> {
 					throw new PgCrowdException(PgCrowdConstants.MESSAGE_STRING_FATAL_ERROR);
 				});
-		final Employee originalEntity = new Employee();
-		SecondBeanUtils.copyNullableProperties(employee, originalEntity);
 		final EmployeeRole employeeRole = this.employeeRoleRepository.findById(Long.parseLong(employeeDto.getId()))
 				.orElseGet(EmployeeRole::new);
-		SecondBeanUtils.copyNullableProperties(employeeDto, employee);
-		if (CommonProjectUtils.isNotEmpty(employeeDto.getPassword())) {
-			employee.setPassword(this.passwordEncoder.encode(employeeDto.getPassword()));
+		boolean passwordMatch = false;
+		if (CommonProjectUtils.isNotEmpty(password)) {
+			passwordMatch = ENCODER.matches(password, employee.getPassword());
+		} else {
+			passwordMatch = true;
 		}
-		employee.setDateOfBirth(LocalDate.parse(employeeDto.getDateOfBirth(), this.formatter));
-		if (originalEntity.equals(employee)
-				&& Objects.equals(employeeRole.getRoleId(), Long.parseLong(employeeDto.getRoleId()))) {
+		employeeDto.setPassword(CommonProjectUtils.EMPTY_STRING);
+		final EmployeeDto aEmployeeDto = new EmployeeDto();
+		SecondBeanUtils.copyNullableProperties(employee, aEmployeeDto);
+		aEmployeeDto.setId(employee.getId().toString());
+		aEmployeeDto.setPassword(CommonProjectUtils.EMPTY_STRING);
+		aEmployeeDto.setDateOfBirth(FORMATTER.format(employee.getDateOfBirth()));
+		aEmployeeDto.setRoleId(employeeRole.getRoleId().toString());
+		if (CommonProjectUtils.isNotEqual(aEmployeeDto, employeeDto) && passwordMatch) {
 			return ResultDto.failed(PgCrowdConstants.MESSAGE_STRING_NOCHANGE);
 		}
+		employee.setLoginAccount(employeeDto.getLoginAccount());
+		employee.setUsername(employeeDto.getUsername());
+		if (!passwordMatch) {
+			employee.setPassword(ENCODER.encode(password));
+		}
+		employee.setEmail(employeeDto.getEmail());
+		employee.setDateOfBirth(LocalDate.parse(employeeDto.getDateOfBirth(), FORMATTER));
 		employeeRole.setRoleId(Long.parseLong(employeeDto.getRoleId()));
 		this.employeeRoleRepository.saveAndFlush(employeeRole);
 		this.employeeRepository.saveAndFlush(employee);
