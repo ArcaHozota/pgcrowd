@@ -138,6 +138,20 @@ $(document).ready(function() {
 		checkPermissionAndTransfer(url);
 	});
 });
+document.addEventListener("mousemove", function(e) {
+	let body = $('body');
+	let star = document.createElement('span');
+	let size = Math.random() * 40;
+	let transformVal = Math.random() * 360;
+	star.style.left = e.offsetX + 'px';
+	star.style.top = e.offsetY + 'px';
+	star.style.fontSize = 10 + size + 'px';
+	star.style.transform = 'rotate(' + transformVal + 'deg)';
+	body.appendChild(star);
+	setTimeout(function() {
+		star.remove();
+	}, 1000);
+});
 function checkPermissionAndTransfer(stringUrl) {
 	let ajaxResult = $.ajax({
 		url: stringUrl,
@@ -310,7 +324,7 @@ function normalDeletebtnFunction(url, message, deleteId) {
 		confirmButtonColor: '#7F0020'
 	}).then((result) => {
 		if (result.isConfirmed) {
-			pgcrowdAjaxModify(url + 'infoDelete?id=' +deleteId, 'DELETE', null, normalDeleteSuccessFunction);
+			pgcrowdAjaxModify(url + 'infoDelete?id=' + deleteId, 'DELETE', null, normalDeleteSuccessFunction);
 		} else {
 			$(this).close();
 		}

@@ -256,11 +256,10 @@ public final class EmployeeServiceImpl implements IEmployeeService {
 		} else {
 			passwordMatch = true;
 		}
-		employeeDto.setPassword(CommonProjectUtils.EMPTY_STRING);
 		final EmployeeDto aEmployeeDto = new EmployeeDto();
 		SecondBeanUtils.copyNullableProperties(employee, aEmployeeDto);
 		aEmployeeDto.setId(employee.getId().toString());
-		aEmployeeDto.setPassword(CommonProjectUtils.EMPTY_STRING);
+		aEmployeeDto.setPassword(password);
 		aEmployeeDto.setDateOfBirth(FORMATTER.format(employee.getDateOfBirth()));
 		aEmployeeDto.setRoleId(employeeRole.getRoleId().toString());
 		if (CommonProjectUtils.isNotEqual(aEmployeeDto, employeeDto) && passwordMatch) {
