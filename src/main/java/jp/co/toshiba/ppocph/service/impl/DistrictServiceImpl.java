@@ -89,7 +89,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 				}).collect(Collectors.toList());
 		final CityDto cityDto = cities.stream()
 				.filter(a -> CommonProjectUtils.isEqual(a.getId(), Long.parseLong(districtDto.getShutoId())))
-				.collect(Collectors.toList()).get(0);
+				.findFirst().get();
 		cityDtos.add(cityDto);
 		cityDtos.addAll(cities);
 		return cityDtos.stream().distinct().collect(Collectors.toList());
@@ -118,7 +118,7 @@ public final class DistrictServiceImpl implements IDistrictService {
 			});
 			final DistrictDto selecteDistrictDto = districtDtos1.stream()
 					.filter(a -> CommonProjectUtils.isEqual(Long.parseLong(a.getId()), city.getDistrictId()))
-					.collect(Collectors.toList()).get(0);
+					.findFirst().get();
 			districtDtos.add(selecteDistrictDto);
 		}
 		districtDtos.addAll(districtDtos1);

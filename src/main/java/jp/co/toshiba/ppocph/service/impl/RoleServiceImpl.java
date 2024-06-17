@@ -180,9 +180,9 @@ public final class RoleServiceImpl implements IRoleService {
 		}
 		secondRoles.clear();
 		final Long roleId = roledOptional.get().getRoleId();
-		final List<RoleDto> selectedRole = roleDtos.stream()
-				.filter(a -> CommonProjectUtils.isEqual(roleId.toString(), a.getId())).collect(Collectors.toList());
-		secondRoles.addAll(selectedRole);
+		final RoleDto selectedRole = roleDtos.stream()
+				.filter(a -> CommonProjectUtils.isEqual(roleId.toString(), a.getId())).findFirst().get();
+		secondRoles.add(selectedRole);
 		secondRoles.addAll(roleDtos);
 		return secondRoles.stream().distinct().collect(Collectors.toList());
 	}
